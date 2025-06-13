@@ -1,8 +1,8 @@
-# Neural Networks-based Predictive process monitoring
-This repository contains the source code of a Neural Network-based predictive process monitoring system that provides:
+# Predictive process monitoring with online constraints
+This repository contains the source code of a Neuro-symbolic predictive process monitoring system that provides:
 - prediction of next activities of a process instance
 - prediction of next activities with allocated resources of a process instance 
-- prediction of a process instance outcome
+
 ## Requirements
 The following Python packages are required:
 
@@ -26,6 +26,7 @@ The system has been tested with Python 3.10 After installing the requirements, p
 - `media/output` contains the trained models and results of predictive process monitoring;
 - `src/commons` contains the code defining the main settings for the experiments (training and evaluation);
 - `src/training` contains the code for Neural Networks model training;
+- `src/ProbDeclmonitor` contains the code for probabilistic declare monitoring;
 - `src/evaluation` contains the code for evaluating the trained model and generating predictions; 
 - `experiments_runner.py` is the main Python script for running the experiments;
 - `results_aggregator.py` is a Python script for aggregating the results of each dataset and presenting in a more 
@@ -38,70 +39,94 @@ The system has been tested with Python 3.10 After installing the requirements, p
 To train a Neural Networks model: **LSTM**: `--model="LSTM"` or **transformer** `--model="keras_trans"` for a 
 given dataset (event log), type: 
 ```
-python run_experiments.py --log='helpdesk.xes' --model="keras_trans" --train
+python run_experiments.py --log='helpdesk.xes' --model="keras_trans" --pipeline="train"
 ```
+#### (a) Encoding
 The categorical data is used in training model as defined in the event log. 
-By default, this data is encoded using Index-based encoding. If you prefer to use one-hot encoding,
-simply add`--one_hot_encoding`
+By default, this data is encoded using Index-based encoding.
+If you prefer other encoding methods, you can specify them using the `--encoding=` option:
+- **One-hot encoding**. add `--encoding="one-hot"`:
 ```
-$ python run_experiments.py --log='helpdesk.xes' --model="keras_trans" --train --one_hot_encoding
+python run_experiments.py --log='helpdesk.xes' --model="keras_trans" --train --encoding="one-hot"
 ```
-If you prefer to use Product-Index-based encoding, add`--product_index_based`
+- **Shrinked-Index-based**. use `--encoding="shrinked index-based"`:
 ```
-$ python run_experiments.py --log='helpdesk.xes' --model="keras_trans" --train --product_index_based
+python run_experiments.py --log='helpdesk.xes' --model="keras_trans" --train --encoding="shrinked index-based"
 ```
-if you need to use Multi-Encoders, add`--multi_enc`
+- **Multi-Encoders**. use `--encoding="multi_encoders"`
 ```
-$ python run_experiments.py --log='helpdesk.xes' --model="keras_trans" --train --multi_enc
+python run_experiments.py --log='helpdesk.xes' --model="keras_trans" --train --encoding="multi_encoders"
 ```
-By default, the given dataset is split in 80% for the training and 20% for the testing. 
-If you need to use a variant-based sampling split of training and testing datasets, then, just add`--use_variant_split` 
+#### (a) Dataset splitting
+By default, the given dataset is split in 80% for the training and 20% for the testing.
+
+If you want to change the splitting strategy:
+- **Variant-based splitting**. add `--use_variant_split` to split based on process variants:
 ```
 python run_experiments.py --log='helpdesk.xes' --model="keras_trans" --train --use_variant_split
 ```
+- **Using a separate test set**. to use an external test log, specify it with `--test_log` option:
+```
+python run_experiments.py --log='helpdesk.xes' --model="keras_trans" --train --test_log="helpdesk_test.xes"
+```
 ### (2) Evaluation
 To run the evaluation for a given (pretrained) dataset, you need to specify the prediction algorithm: baseline `--algo="baseline"` 
-to select the best prediction 
-or `--algo="beamsearch"` to use a [Beam Search](https://towardsdatascience.com/foundations-of-nlp-explained-visually-beam-search-how-it-works-1586b9849a24) algorithm:
+to select the best prediction or `--algo="beamsearch"` to use a [Beam Search](https://towardsdatascience.com/foundations-of-nlp-explained-visually-beam-search-how-it-works-1586b9849a24) algorithm:
 
 ```
-python run_experiments.py --log='helpdesk.xes' --model="keras_trans" --algo="baseline" --evaluate
+python run_experiments.py --log='helpdesk.xes' --model="keras_trans" --algo="baseline" --pipeline="evaluate"
 ```
+
 Additionally, if you want to add the conformance checking of the Background Knowledge (BK) during the `beamsearch` algorithm 
-to optimize the evaluation process, you can use the 'BK_weight' option that enables you to set the importance of the BK:
+to optimize the evaluation process, you need use the 'BK_weight' option that enables you to set the importance of the BK:
 
 ```
-python run_experiments.py --log='helpdesk.xes' --model="keras_trans" --algo="beamsearch" --evaluate --BK_weight 0.9
+python run_experiments.py --log='helpdesk.xes' --model="keras_trans" --algo="beamsearch" --pipeline="evaluate" --BK_weight 0.9
 ```
-Moreover, the `--BK_end` option allows you to check the BK at the end of the prediction process.
+To specify the type of BK used, you can provide:
+- `--Decl_BK="Prob_decl"` for **Probabilistic declare**:
+```
+python run_experiments.py --log='helpdesk.xes' --pipeline="evaluate" --test_log="helpdesk_test.xes" --BK_weight 0.9 --Decl_BK="Prob_decl"
+```
+
+- `--Decl_BK="Crisp_decl"` for **Crisp declare**:
+```
+python run_experiments.py --log='helpdesk.xes' --pipeline="evaluate" --test_log="helpdesk_test.xes" --BK_weight 0.9 --Decl_BK="Crisp_decl"
+```
+- `--method_fitness` for **Petri Net BK**, where you need to specify the used fitness method:
 
 ```
-python run_experiments.py --log='helpdesk.xes' --model="keras_trans" --algo="beamsearch" --evaluate --BK_end
+python run_experiments.py --log='helpdesk.xes' --pipeline="evaluate" --test_log="helpdesk_test.xes" --BK_weight 0.9 --method_fitness="fitness_token_based_replay"
+```
+Additionally, you can use the `--BK_end` option to check the BK at the end of the prediction process.
+
+```
+python run_experiments.py --log='helpdesk.xes' --model="keras_trans" --algo="beamsearch" --pipeline="evaluate" --BK_end
 ```
 
-if you want to minimise the prediction of redundant activities/resources, 
+Moreover, if you want to minimise the prediction of redundant activities/resources, 
 you need to apply the probability reduction for repetitive activities/resources
 in a trace prefix by adding`--use_Prob_reduction`:
 ```
-python run_experiments.py --log='helpdesk.xes' --model="keras_trans" --algo="baseline" --evaluate --use_Prob_reduction
+python run_experiments.py --log='helpdesk.xes' --model="keras_trans" --algo="baseline" --pipeline="evaluate" --use_Prob_reduction
 ```
 ### Training and evaluation
-if you want to train and evaluate your model in the same experiment, you need to set the `--full_run` option instead of using `--train` and then `--evaluate` :
+if you want to train and evaluate your model in the same experiment, you need to set the `full_run` option to pipeline instead of using `train` and then `evaluate` :
 ```
-$ python run_experiments.py --log='helpdesk.xes' --model="keras_trans" --algo="baseline" --full_run
+python run_experiments.py --log='helpdesk.xes' --model="keras_trans" --algo="baseline" --pipeline="full_run"
 ```
 
 ### Gathering the results
 After running the experiments, type:
 ```
-$ python results_aggregator.py 
+python results_aggregator.py 
 ```
 to aggregate the Damerau-Levenshtein distance of activities and resources for all datasets. The results will be in the 
 file`aggregated_results_performance.csv` in `media/output`folder. 
 
 Type
 ```
-$ python plot_results.py
+python plot_results.py
 ```
 to have a plot of aggregated results per process prefix length for each dataset. The plot will be in the file `aggregated_distances_per_prefix.pdf` in the `media/output` 
 folder.
