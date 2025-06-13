@@ -6,7 +6,7 @@ code more clear
 from pathlib import Path
 from src.ProbDeclmonitor.probDeclPredictor import AggregationMethod
 
-BK_version = None
+BK_type = None
 aggregationMethod= AggregationMethod.SUM
 ascii_offset = 161
 beam_size = 3

@@ -96,11 +96,11 @@ if __name__ == '__main__':
     shared.BK_end = args.BK_end
     #shared.prefix_start = int(args.prefix)
     if Decl_BK is not None:
-        shared.BK_version=(shared.BK_version or '') + Decl_BK
+        shared.BK_type= (shared.BK_type or '') + Decl_BK
     if method_fitness is not None:
-        shared.BK_version=(shared.BK_version or '') + "Petri_net"
+        shared.BK_type= (shared.BK_type or '') + "Petri_net"
     if shared.BK_end:
-        shared.BK_version=(shared.BK_version or '') + "BK_END"
+        shared.BK_type= (shared.BK_type or '') + "BK_END"
 
     if args.encoding =='one-hot':
         shared.One_hot_encoding = True

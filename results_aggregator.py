@@ -118,7 +118,7 @@ def aggregate_results(log_path, alg,models_folder,beam_size=3, resource=False,ti
         #print(f"fold {fold} - {eval_algorithm}")
         evaluation_prefix_start, test_trace_ids = set_log_ths(log_path)
         if alg == "beamsearch":
-            filename = f'{log_name}_beam{str(beam_size)}_fold{str(fold)}_cluster{evaluation_prefix_start}{BK_end*"_BK_END"}{f"_{shared.BK_version}"*BK}.csv'
+            filename = f'{log_name}_beam{str(beam_size)}_fold{str(fold)}_cluster{evaluation_prefix_start}{BK_end*"_BK_END"}{f"_{shared.BK_type}" * BK}.csv'
         else:
             filename = f'{log_name}_{str(alg)}_fold{str(fold)}_cluster{evaluation_prefix_start}.csv'
         file_path = os.path.join(folder_path, filename)
@@ -184,7 +184,7 @@ def aggregate_results(log_path, alg,models_folder,beam_size=3, resource=False,ti
         df_all_folds = pd.concat(all_folds_data, ignore_index=True)
         if not Path.exists(Path.cwd() /'predictedlog'/ models_folder):
             Path.mkdir(Path.cwd() /'predictedlog'/ models_folder, parents=True)
-        save_path = Path.cwd() /'predictedlog'/ models_folder / f"{log_name}_{eval_algorithm}_{weight}_{BK*(shared.BK_version or '')}{BK_end*'BK_end'}.csv"
+        save_path = Path.cwd() /'predictedlog'/ models_folder / f"{log_name}_{eval_algorithm}_{weight}_{BK*(shared.BK_type or '')}{BK_end * 'BK_end'}.csv"
         df_all_folds.to_csv(save_path, index=False)
     if resource:
         print(f"{log_name}_{models_folder} - {eval_algorithm} -{BK * 'BK'}-{BK_end * 'BK_END'}", ":", round(mean(average_act), 3), ":",
@@ -235,6 +235,6 @@ if __name__ == "__main__":
                 else:
                     algo = 'beamsearch'
                     for encoder in encoders: #BS
-                        shared.BK_version = 'Petri_net'
+                        shared.BK_type = 'Petri_net'
                         results = getresults(log_list, algo,encoder,models_folder,beam_size=beam_size, resource=resource,BK=True, BK_end=False)
                         writer.writerow([algo,beam_size,encoder.removeprefix("_")]+[res for res in results]+[0.0])

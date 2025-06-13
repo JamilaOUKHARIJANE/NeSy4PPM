@@ -47,15 +47,15 @@ By default, this data is encoded using Index-based encoding.
 If you prefer other encoding methods, you can specify them using the `--encoding=` option:
 - **One-hot encoding**. add `--encoding="one-hot"`:
 ```
-python run_experiments.py --log='helpdesk.xes' --model="keras_trans" --train --encoding="one-hot"
+python run_experiments.py --log='helpdesk.xes' --model="keras_trans" --pipeline="train" --encoding="one-hot"
 ```
 - **Shrinked-Index-based**. use `--encoding="shrinked index-based"`:
 ```
-python run_experiments.py --log='helpdesk.xes' --model="keras_trans" --train --encoding="shrinked index-based"
+python run_experiments.py --log='helpdesk.xes' --model="keras_trans" --pipeline="train" --encoding="shrinked index-based"
 ```
 - **Multi-Encoders**. use `--encoding="multi_encoders"`
 ```
-python run_experiments.py --log='helpdesk.xes' --model="keras_trans" --train --encoding="multi_encoders"
+python run_experiments.py --log='helpdesk.xes' --model="keras_trans" --pipeline="train" --encoding="multi_encoders"
 ```
 #### (a) Dataset splitting
 By default, the given dataset is split in 80% for the training and 20% for the testing.
@@ -63,15 +63,15 @@ By default, the given dataset is split in 80% for the training and 20% for the t
 If you want to change the splitting strategy:
 - **Variant-based splitting**. add `--use_variant_split` to split based on process variants:
 ```
-python run_experiments.py --log='helpdesk.xes' --model="keras_trans" --train --use_variant_split
+python run_experiments.py --log='helpdesk.xes' --model="keras_trans" --pipeline="train" --use_variant_split
 ```
 - **Using a separate test set**. to use an external test log, specify it with `--test_log` option:
 ```
-python run_experiments.py --log='helpdesk.xes' --model="keras_trans" --train --test_log="helpdesk_test.xes"
+python run_experiments.py --log='helpdesk.xes' --model="keras_trans" --pipeline="train" --test_log="helpdesk_test.xes"
 ```
 ### (2) Evaluation
 To run the evaluation for a given (pretrained) dataset, you need to specify the prediction algorithm: baseline `--algo="baseline"` 
-to select the best prediction or `--algo="beamsearch"` to use a [Beam Search](https://towardsdatascience.com/foundations-of-nlp-explained-visually-beam-search-how-it-works-1586b9849a24) algorithm:
+for simple autoregressive prediction or `--algo="beamsearch"` to use a [Beam Search](https://towardsdatascience.com/foundations-of-nlp-explained-visually-beam-search-how-it-works-1586b9849a24) algorithm:
 
 ```
 python run_experiments.py --log='helpdesk.xes' --model="keras_trans" --algo="baseline" --pipeline="evaluate"
@@ -83,15 +83,15 @@ to optimize the evaluation process, you need use the 'BK_weight' option that ena
 ```
 python run_experiments.py --log='helpdesk.xes' --model="keras_trans" --algo="beamsearch" --pipeline="evaluate" --BK_weight 0.9
 ```
-To specify the type of BK used, you can provide:
+To specify the type of used BK, you can provide:
+
+- `--Decl_BK="Crisp_decl"` for **(MP-) declare**:
+```
+python run_experiments.py --log='helpdesk.xes' --pipeline="evaluate" --test_log="helpdesk_test.xes" --BK_weight 0.9 --Decl_BK="Crisp_decl"
+```
 - `--Decl_BK="Prob_decl"` for **Probabilistic declare**:
 ```
 python run_experiments.py --log='helpdesk.xes' --pipeline="evaluate" --test_log="helpdesk_test.xes" --BK_weight 0.9 --Decl_BK="Prob_decl"
-```
-
-- `--Decl_BK="Crisp_decl"` for **Crisp declare**:
-```
-python run_experiments.py --log='helpdesk.xes' --pipeline="evaluate" --test_log="helpdesk_test.xes" --BK_weight 0.9 --Decl_BK="Crisp_decl"
 ```
 - `--method_fitness` for **Petri Net BK**, where you need to specify the used fitness method:
 
@@ -122,11 +122,4 @@ After running the experiments, type:
 python results_aggregator.py 
 ```
 to aggregate the Damerau-Levenshtein distance of activities and resources for all datasets. The results will be in the 
-file`aggregated_results_performance.csv` in `media/output`folder. 
-
-Type
-```
-python plot_results.py
-```
-to have a plot of aggregated results per process prefix length for each dataset. The plot will be in the file `aggregated_distances_per_prefix.pdf` in the `media/output` 
-folder.
+file`aggregated_results.csv` in `media/output`folder. 
