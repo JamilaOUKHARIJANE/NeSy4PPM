@@ -1,6 +1,7 @@
 
 from __future__ import division
 import csv
+from enum import Enum
 from pathlib import Path
 from queue import PriorityQueue
 import distance
@@ -17,6 +18,9 @@ import absl.logging
 absl.logging.set_verbosity(absl.logging.ERROR)
 from tqdm import tqdm
 
+class BK_type(Enum):
+    Petri_net = 'Petri_netBK_END'
+    Declare = 'Crisp_declBK_END'
 
 def run_experiments(log_data: LogData, compliant_traces: pd.DataFrame, maxlen, predict_size, char_indices,
                     target_char_indices, target_indices_char, char_indices_group, target_char_indices_group,
@@ -138,11 +142,17 @@ def run_experiments(log_data: LogData, compliant_traces: pd.DataFrame, maxlen, p
                                                                                     NodePrediction) else prefix_trace
                                 prefix_trace = prefix_trace[:-1]
                                 if resource:
-                                    BK_res = compliance_checking(log_data, child_node.cropped_line[-1],
-                                                         child_node.cropped_line_group[-1], bk_model, prefix_trace,resource)
+                                    BK_res = compliance_checking(log_data, child_node.cropped_line[-1],child_node.cropped_line_group[-1], \
+                                                                 bk_model, prefix_trace,resource) if shared.BK_type == BK_type.Declare.value else 0
                                 else:
-                                    BK_res = compliance_checking(log_data, child_node.cropped_line[-1],
+                                    if shared.BK_type == BK_type.Declare.value:
+                                        BK_res = compliance_checking(log_data, child_node.cropped_line[-1],
                                                          None,bk_model, prefix_trace,resource)
+                                    if shared.BK_type == BK_type.Petri_net.value:
+                                        print(child_node.cropped_line[-1])
+                                        fitness = get_pn_fitness(bk_file, method_fitness, prefix_trace, log_data)[
+                                                trace_name]
+                                        BK_res = fitness if fitness == 1.0 else np.NINF
                             if k == 0:
                                 if shared.BK_end and BK_res == np.NINF:  # violated: continue the search
                                     if not is_violated:
