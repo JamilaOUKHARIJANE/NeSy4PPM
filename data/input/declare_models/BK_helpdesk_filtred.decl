@@ -1,0 +1,16 @@
+activity Resolve ticket
+bind Resolve ticket: org:resource
+activity Closed
+bind Closed: org:resource
+activity Assign seriousness
+bind Assign seriousness: org:resource
+activity Take in charge ticket
+bind Take in charge ticket: org:resource
+activity Wait
+bind Wait: org:resource
+org:resource: Value 5, Value 6, Value 21, Value 10, Value 3, Value 11, Value 22, Value 4, Value 1, Value 2, Value 9, Value 7, Value 8, Value 16, Value 17, Value 19, Value 12, Value 13, Value 14, Value 15
+Alternate Precedence[Wait, Closed] | | |
+Alternate Response[Assign seriousness, Wait] | | |
+Alternate Precedence[Wait, Resolve ticket] | | |
+Exactly1[Wait] | |
+Chain Response[Take in charge ticket, Wait] | | |
