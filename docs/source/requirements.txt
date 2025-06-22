@@ -1,0 +1,17 @@
+ipykernel
+nbsphinx
+declare4py>=2.2.0
+tensorflow==2.10.1
+Distance==0.1.3
+keras==2.10.0
+keras-nlp==0.4.1
+jellyfish==0.9.0
+absl-py==2.3.0
+
+pandas>=1.5.3
+numpy>=1.26.4
+pm4py>=2.5.2
+logaut~=0.2.0
+pythomata~=0.3.2
+matplotlib>=3.6.3
+ltlf2dfa==1.0.2
