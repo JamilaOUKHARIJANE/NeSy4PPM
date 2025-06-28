@@ -1,0 +1,59 @@
+NeSy4PPM documentation
+======================
+
+NeSy4PPM is the first Python package designed for both single-attribute (e.g., activity) and multi-attribute (e.g., activity and resource) suffix prediction in predictive process monitoring. It implements a Neuro-Symbolic (NeSy) system that integrates neural models with various types of symbolic background knowledge (BK), enabling accurate and compliant predictions even under concept drift.
+
+NeSy4PPM offers the following key features:
+
+1. **Symbolic knowledge integration**: supports declarative and procedural BK, including DECLARE, MP-DECLARE (multi-perspective DECLARE), ProbDECLARE (probabilistic DECLARE), and Petri nets.
+
+2. **Flexible learning**: provides multiple prefix encoding methods and supports LSTM (Long Short-Term Memory) and Transformer architectures.
+
+3. **Drift-aware prediction**: contextualizes neural predictions using BK in real-time, enhancing prediction accuracy and compliance in dynamic environments.
+
+Installation
+============
+
+We recommend using a virtual environment to avoid conflicts between your local Python setup and required libraries. You can use `Conda <https://conda.io>`_ or `venv <https://docs.python.org/3/library/venv.html>`_:
+
+1. Clone/download the NeSy4PPM project.
+2. Activate your virtual environment.
+3. Install the dependencies listed in ``requirements.txt`` using:: pip install -r requirements.txt
+
+Alternatively, you can install NeSy4PPM directly from `PyPi <https://pypi.org/project/nesy4ppm/>`_.
+
+For ProbDECLARE BK conformance checking, install the `Lydia <https://github.com/whitemech/lydia>`_ backend using Docker:
+
+1. `Install Docker <https://www.docker.com/get-started>`_
+2. Pull the Lydia image:
+
+   .. code-block:: bash
+
+      docker pull whitemech/lydia:latest
+
+
+3. Make the Docker image executable under the name ``lydia``. On Linux and macOS machines, the following commands should work:
+
+   .. code-block:: bash
+
+      echo '#!/usr/bin/env sh' > lydia
+      echo 'docker run -v$(pwd):/home/default whitemech/lydia lydia "$@"' >> lydia
+      sudo chmod u+x lydia
+      sudo mv lydia /usr/local/bin/
+
+
+More information can be found at `Logaut repository <https://github.com/whitemech/logaut>`_.
+
+Tutorials
+=========
+
+Here, you will find tutorials explaining how to utilize the different functionalities of NeSy4PPM.
+All tutorials can be downloaded and run from our
+`Github. <https://github.com/JamilaOUKHARIJANE/NeSy4PPM/tree/master/docs/source/tutorials>`_ The tutorials use the `Helpdesk log <https://data.4tu.nl/articles/dataset/Dataset_belonging_to_the_help_desk_log_of_an_Italian_Company/12675977>`_ as a running example.
+
+Repository Structure
+====================
+- ``NeSy4PPM/learning``: contains the implementation of event log encoding and Neural Networks model training.
+- ``NeSy4PPM/ProbDeclmonitor``: contains the implementation of suffix prediction using a contextualized Neural predictions with BK.
+- ``tests/``: provides evaluation scripts for assessing the NeSy4PPM prediction performance.
+- ``docs/tutorials/``: contains step-by-step guides and examples to help users get started with NeSy4PPM.

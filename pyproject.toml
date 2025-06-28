@@ -11,7 +11,7 @@ name = "nesy4ppm"
 version = "0.1.0"
 #dynamic = ["version"]
 description = "Python library to perform learning and suffix prediction with background knowledge under concept drifts."
-readme = "README.md"
+readme = "README.rst"
 requires-python = ">=3.9.7"
 #license = {text = "GPL"}
 keywords = ["python", "process mining", "predictive process monitoring", "suffix prediction", "background knowledge"]
