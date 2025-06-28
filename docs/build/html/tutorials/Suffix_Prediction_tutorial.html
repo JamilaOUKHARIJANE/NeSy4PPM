@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>NeSy4PPM: Suffix prediction Tutorial &#8212; NeSy4PPM 0.1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic.css?v=686e5160" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=27fed22d" />
+    <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css?v=2aa19091" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css" />
+    <script src="../_static/documentation_options.js?v=01f34227"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Repository Structure" href="../structure.html" />
+    <link rel="prev" title="Tutorials" href="../tutorials.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="NeSy4PPM:-Suffix-prediction-Tutorial">
+<h1>NeSy4PPM: Suffix prediction Tutorial<a class="headerlink" href="#NeSy4PPM:-Suffix-prediction-Tutorial" title="Link to this heading">¶</a></h1>
+<p>This notebook demonstrates how to use the NeSy4PPM framework for suffix prediction, specifically focused on activity and resource or activity-only prediction using neural architectures like LSTM and Transformer models. NeSy4PPM combines neural learning with symbolic background knowledge (BK) to produce accurate and compliant predictions under various conditions, including concept drift.</p>
+<p>This notebook walks through the entire NeSy4PPM pipeline, including:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>1. Data preprocessing
+2. Training
+3. Prediction
+4. Evaluation
+</pre></div>
+</div>
+</section>
+<section id="1-Data-preprocessing">
+<h1>1 Data preprocessing<a class="headerlink" href="#1-Data-preprocessing" title="Link to this heading">¶</a></h1>
+<p>The <strong>Data preprocessing</strong> is responsible for loading and transforming event log into neural-compatible inputs. This phase involves:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Data</span> <span class="pre">loading</span></code>, which involves reading the event log from the input file,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Prefixes</span> <span class="pre">extraction</span></code>,which refers to extracting prefixes (i.e., partial trace executions) from the training log.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Prefixes</span> <span class="pre">encoding</span></code>,which handles the conversion of input prefixes and their corresponding labels into numerical representations suitable for neural models.</p></li>
+</ul>
+<section id="1.1-Data-loading">
+<h2>1.1 Data loading<a class="headerlink" href="#1.1-Data-loading" title="Link to this heading">¶</a></h2>
+<p>The first step in the <strong>data preprocessing</strong> pipeline is to load the event log (in a .xes, .csv or .xes.gz files) using the <code class="docutils literal notranslate"><span class="pre">LogData</span></code> class. The input of this step can be:</p>
+<ul class="simple">
+<li><p>A <strong>single event log</strong>, which will be automatically split into training and test sets based on the chronological order of case start timestamps and a defined train ratio.</p></li>
+<li><p>A pair of <strong>separate training and test logs</strong>.</p></li>
+</ul>
+<section id="A.-Single-event-log:">
+<h3>A. Single event log:<a class="headerlink" href="#A.-Single-event-log:" title="Link to this heading">¶</a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">NeSy4PPM.Data_preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">log_utils</span>
+
+<span class="n">log_path</span> <span class="o">=</span> <span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span><span class="o">.</span><span class="n">parent</span><span class="o">/</span><span class="s1">&#39;data&#39;</span><span class="o">/</span><span class="s1">&#39;input&#39;</span><span class="o">/</span><span class="s1">&#39;logs&#39;</span>
+<span class="n">log_name</span> <span class="o">=</span> <span class="s2">&quot;helpdesk.xes&quot;</span>
+<span class="n">train_ratio</span> <span class="o">=</span> <span class="mf">0.8</span>
+<span class="n">case_name_key</span> <span class="o">=</span> <span class="s1">&#39;case:concept:name&#39;</span>
+<span class="n">act_name_key</span> <span class="o">=</span> <span class="s1">&#39;concept:name&#39;</span>
+<span class="n">res_name_key</span> <span class="o">=</span> <span class="s1">&#39;org:resource&#39;</span>
+<span class="n">timestamp_key</span> <span class="o">=</span> <span class="s1">&#39;time:timestamp&#39;</span>
+
+<span class="n">log_data</span> <span class="o">=</span> <span class="n">log_utils</span><span class="o">.</span><span class="n">LogData</span><span class="p">(</span><span class="n">log_path</span><span class="o">=</span><span class="n">log_path</span><span class="p">,</span><span class="n">log_name</span><span class="o">=</span><span class="n">log_name</span><span class="p">,</span><span class="n">train_ratio</span><span class="o">=</span><span class="n">train_ratio</span><span class="p">,</span>
+                             <span class="n">case_name_key</span><span class="o">=</span><span class="n">case_name_key</span><span class="p">,</span><span class="n">act_name_key</span><span class="o">=</span><span class="n">act_name_key</span><span class="p">,</span>
+                             <span class="n">res_name_key</span><span class="o">=</span><span class="n">res_name_key</span><span class="p">,</span><span class="n">timestamp_key</span><span class="o">=</span><span class="n">timestamp_key</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Loaded log: </span><span class="si">{</span><span class="n">log_data</span><span class="o">.</span><span class="n">log_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Trace max size: </span><span class="si">{</span><span class="n">log_data</span><span class="o">.</span><span class="n">max_len</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+parsing log, completed traces :: 100%|██████████| 4580/4580 [00:01&lt;00:00, 2715.77it/s]
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Loaded log: helpdesk
+Trace max size: 15
+</pre></div></div>
+</div>
+</section>
+<section id="B.-Separate-training-and-test-logs:">
+<h3>B. Separate training and test logs:<a class="headerlink" href="#B.-Separate-training-and-test-logs:" title="Link to this heading">¶</a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">NeSy4PPM.Data_preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">log_utils</span>
+
+<span class="n">log_path</span> <span class="o">=</span> <span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span><span class="o">.</span><span class="n">parent</span><span class="o">/</span><span class="s1">&#39;data&#39;</span><span class="o">/</span><span class="s1">&#39;input&#39;</span><span class="o">/</span><span class="s1">&#39;logs&#39;</span>
+<span class="n">train_log</span> <span class="o">=</span> <span class="s2">&quot;helpdesk_train.xes&quot;</span>
+<span class="n">test_log</span> <span class="o">=</span> <span class="s2">&quot;helpdesk_test.xes&quot;</span>
+
+<span class="n">log_data</span> <span class="o">=</span> <span class="n">log_utils</span><span class="o">.</span><span class="n">LogData</span><span class="p">(</span><span class="n">log_path</span><span class="o">=</span><span class="n">log_path</span><span class="p">,</span><span class="n">train_log</span><span class="o">=</span><span class="n">train_log</span><span class="p">,</span><span class="n">test_log</span><span class="o">=</span><span class="n">test_log</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Loaded log: </span><span class="si">{</span><span class="n">log_data</span><span class="o">.</span><span class="n">log_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Trace max size: </span><span class="si">{</span><span class="n">log_data</span><span class="o">.</span><span class="n">max_len</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+parsing log, completed traces :: 100%|██████████| 3664/3664 [00:00&lt;00:00, 5390.36it/s]
+parsing log, completed traces :: 100%|██████████| 820/820 [00:00&lt;00:00, 10806.80it/s]
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Loaded log: helpdesk_train
+Trace max size: 15
+</pre></div></div>
+</div>
+</section>
+</section>
+<section id="1.2-Prefixes-extraction">
+<h2>1.2 Prefixes extraction<a class="headerlink" href="#1.2-Prefixes-extraction" title="Link to this heading">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">extract_trace_prefixes</span></code> function extracts all possible prefixes from each trace in the training log, up to a predefined maximum length. These prefixes represent partial executions of cases and are used as inputs to the neural model.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">NeSy4PPM.Data_preprocessing.data_preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">extract_trace_prefixes</span>
+
+<span class="n">extracted_prefixes</span> <span class="o">=</span> <span class="n">extract_trace_prefixes</span><span class="p">(</span><span class="n">log_data</span><span class="o">=</span><span class="n">log_data</span><span class="p">,</span> <span class="n">resource</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="1.3-Prefixes-encodings">
+<h2>1.3 Prefixes encodings<a class="headerlink" href="#1.3-Prefixes-encodings" title="Link to this heading">¶</a></h2>
+<p>Before training a neural model, extracted prefixes must be converted into vectorized formats. NeSy4PPM supports four encoding techniques for multi-attribute:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">One-hot</span> <span class="pre">encoding</span></code>,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Index-based</span> <span class="pre">encoding</span></code>,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Shrinked</span> <span class="pre">index-based</span> <span class="pre">encoding</span></code>,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Multi-encoders</span> <span class="pre">encoding</span></code>.</p></li>
+</ul>
+<p>Each encoding is implemented via the function <code class="docutils literal notranslate"><span class="pre">encode_prefixes</span></code> and prepares both input features (<code class="docutils literal notranslate"><span class="pre">x</span></code>) and targets labels: <code class="docutils literal notranslate"><span class="pre">y_a</span></code> for activity prediction and <code class="docutils literal notranslate"><span class="pre">y_g</span></code> for resource prediction when <code class="docutils literal notranslate"><span class="pre">resource</span> <span class="pre">=</span> <span class="pre">True</span></code>. Note that only <code class="docutils literal notranslate"><span class="pre">One-hot</span></code> and <code class="docutils literal notranslate"><span class="pre">Index-based</span></code> encodings are applicable when performing activity-only prediction.</p>
+<section id="One-hot-encoding">
+<h3>One-hot encoding<a class="headerlink" href="#One-hot-encoding" title="Link to this heading">¶</a></h3>
+<p>In the <strong>One-hot encoding</strong>, sequences of events are converted into high-dimensional binary feature vectors. Each feature corresponds to a concatenation of one-hot encoded activity and resource values derived from the log. To apply index-based encoding, set the <code class="docutils literal notranslate"><span class="pre">encoder</span></code> parameter to <code class="docutils literal notranslate"><span class="pre">Encodings.One_hot</span></code> when calling the <code class="docutils literal notranslate"><span class="pre">encode_prefixes</span></code> function:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">NeSy4PPM.Data_preprocessing.data_preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">encode_prefixes</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">NeSy4PPM.Data_preprocessing.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">Encodings</span>
+<span class="n">encoder</span><span class="o">=</span><span class="n">Encodings</span><span class="o">.</span><span class="n">One_hot</span>
+<span class="n">x</span><span class="p">,</span> <span class="n">y_a</span><span class="p">,</span> <span class="n">y_g</span><span class="o">=</span> <span class="n">encode_prefixes</span><span class="p">(</span><span class="n">log_data</span><span class="p">,</span><span class="n">prefixes</span><span class="o">=</span><span class="n">extracted_prefixes</span><span class="p">,</span><span class="n">encoder</span><span class="o">=</span><span class="n">encoder</span><span class="p">,</span><span class="n">resource</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Total resources: 22 - Target resources: 23
+         [&#39;Value 2&#39;, &#39;Value 5&#39;, &#39;Value 16&#39;, &#39;Value 15&#39;, &#39;Value 21&#39;, &#39;Value 10&#39;, &#39;Value 11&#39;, &#39;Value 12&#39;, &#39;Value 6&#39;, &#39;Value 7&#39;, &#39;Value 9&#39;, &#39;Value 14&#39;, &#39;Value 19&#39;, &#39;Value 17&#39;, &#39;Value 8&#39;, &#39;Value 13&#39;, &#39;Value 22&#39;, &#39;Value 1&#39;, &#39;Value 4&#39;, &#39;Value 3&#39;, &#39;Value 18&#39;, &#39;Value 20&#39;]
+Total activities: 14 - Target activities: 15
+         [&#39;Assign seriousness&#39;, &#39;Take in charge ticket&#39;, &#39;Resolve ticket&#39;, &#39;Closed&#39;, &#39;Wait&#39;, &#39;Create SW anomaly&#39;, &#39;Insert ticket&#39;, &#39;Schedule intervention&#39;, &#39;INVALID&#39;, &#39;RESOLVED&#39;, &#39;VERIFIED&#39;, &#39;Resolve SW anomaly&#39;, &#39;Require upgrade&#39;, &#39;DUPLICATE&#39;]
+Num. of Training sequences: 16937
+Encoding...
+Num. of features: 36
+</pre></div></div>
+</div>
+</section>
+<section id="Index-based-encoding">
+<h3>Index-based encoding<a class="headerlink" href="#Index-based-encoding" title="Link to this heading">¶</a></h3>
+<p>In the <strong>Index-based encoding</strong>, sequences of events are transformed into numerical feature vectors, where each event is represented by a pair of indices: one for the activity and one for the resource. These indices correspond to the positions of the activity and resource in their respective predefined sets. To apply index-based encoding, set the <code class="docutils literal notranslate"><span class="pre">encoder</span></code> parameter to <code class="docutils literal notranslate"><span class="pre">Encodings.Index_based</span></code> when calling the <code class="docutils literal notranslate"><span class="pre">encode_prefixes</span></code> function:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">NeSy4PPM.Data_preprocessing.data_preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">encode_prefixes</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">NeSy4PPM.Data_preprocessing.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">Encodings</span>
+<span class="n">encoder</span><span class="o">=</span><span class="n">Encodings</span><span class="o">.</span><span class="n">Index_based</span>
+<span class="n">x</span><span class="p">,</span> <span class="n">y_a</span><span class="p">,</span> <span class="n">y_g</span> <span class="o">=</span> <span class="n">encode_prefixes</span><span class="p">(</span><span class="n">log_data</span><span class="p">,</span><span class="n">prefixes</span><span class="o">=</span><span class="n">extracted_prefixes</span><span class="p">,</span> <span class="n">encoder</span><span class="o">=</span><span class="n">encoder</span><span class="p">,</span><span class="n">resource</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Total resources: 22 - Target resources: 23
+         [&#39;Value 2&#39;, &#39;Value 5&#39;, &#39;Value 16&#39;, &#39;Value 15&#39;, &#39;Value 21&#39;, &#39;Value 10&#39;, &#39;Value 11&#39;, &#39;Value 12&#39;, &#39;Value 6&#39;, &#39;Value 7&#39;, &#39;Value 9&#39;, &#39;Value 14&#39;, &#39;Value 19&#39;, &#39;Value 17&#39;, &#39;Value 8&#39;, &#39;Value 13&#39;, &#39;Value 22&#39;, &#39;Value 1&#39;, &#39;Value 4&#39;, &#39;Value 3&#39;, &#39;Value 18&#39;, &#39;Value 20&#39;]
+Total activities: 14 - Target activities: 15
+         [&#39;Assign seriousness&#39;, &#39;Take in charge ticket&#39;, &#39;Resolve ticket&#39;, &#39;Closed&#39;, &#39;Wait&#39;, &#39;Create SW anomaly&#39;, &#39;Insert ticket&#39;, &#39;Schedule intervention&#39;, &#39;INVALID&#39;, &#39;RESOLVED&#39;, &#39;VERIFIED&#39;, &#39;Resolve SW anomaly&#39;, &#39;Require upgrade&#39;, &#39;DUPLICATE&#39;]
+Num. of Training sequences: 16937
+Encoding...
+Num. of features: 30
+</pre></div></div>
+</div>
+</section>
+<section id="Shrinked-index-based-encoding">
+<h3>Shrinked index-based encoding<a class="headerlink" href="#Shrinked-index-based-encoding" title="Link to this heading">¶</a></h3>
+<p>In the <strong>Shrinked index-based encoding</strong>, sequences of events are transformed into numerical feature vectors by assigning a unique integer index to each activity–resource pair. To apply shrinked index-based encoding, set the encoder parameter to <code class="docutils literal notranslate"><span class="pre">Encodings.Shrinked_based</span></code> when calling the <code class="docutils literal notranslate"><span class="pre">encode_prefixes</span></code> function:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">NeSy4PPM.Data_preprocessing.data_preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">encode_prefixes</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">NeSy4PPM.Data_preprocessing.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">Encodings</span>
+
+<span class="n">encoder</span><span class="o">=</span><span class="n">Encodings</span><span class="o">.</span><span class="n">Shrinked_based</span>
+<span class="n">x</span><span class="p">,</span> <span class="n">y_a</span><span class="p">,</span> <span class="n">y_g</span> <span class="o">=</span> <span class="n">encode_prefixes</span><span class="p">(</span><span class="n">log_data</span><span class="p">,</span><span class="n">prefixes</span><span class="o">=</span><span class="n">extracted_prefixes</span><span class="p">,</span> <span class="n">encoder</span><span class="o">=</span><span class="n">encoder</span><span class="p">,</span> <span class="n">resource</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Total resources: 22 - Target resources: 23
+         [&#39;Value 2&#39;, &#39;Value 5&#39;, &#39;Value 16&#39;, &#39;Value 15&#39;, &#39;Value 21&#39;, &#39;Value 10&#39;, &#39;Value 11&#39;, &#39;Value 12&#39;, &#39;Value 6&#39;, &#39;Value 7&#39;, &#39;Value 9&#39;, &#39;Value 14&#39;, &#39;Value 19&#39;, &#39;Value 17&#39;, &#39;Value 8&#39;, &#39;Value 13&#39;, &#39;Value 22&#39;, &#39;Value 1&#39;, &#39;Value 4&#39;, &#39;Value 3&#39;, &#39;Value 18&#39;, &#39;Value 20&#39;]
+Total activities: 14 - Target activities: 15
+         [&#39;Assign seriousness&#39;, &#39;Take in charge ticket&#39;, &#39;Resolve ticket&#39;, &#39;Closed&#39;, &#39;Wait&#39;, &#39;Create SW anomaly&#39;, &#39;Insert ticket&#39;, &#39;Schedule intervention&#39;, &#39;INVALID&#39;, &#39;RESOLVED&#39;, &#39;VERIFIED&#39;, &#39;Resolve SW anomaly&#39;, &#39;Require upgrade&#39;, &#39;DUPLICATE&#39;]
+Num. of Training sequences: 16937
+Encoding...
+Num. of features: 15
+</pre></div></div>
+</div>
+</section>
+<section id="Multi-encoders-encoding">
+<h3>Multi-encoders encoding<a class="headerlink" href="#Multi-encoders-encoding" title="Link to this heading">¶</a></h3>
+<p>In the <strong>Multi-encoders encoding</strong>, sequences of events are represented using separate embedding spaces for activities and resources. Each activity and resource is first embedded independently, and then enriched with cross-information using a modulation mechanism that captures their interactions. The final representation combines the modulated embeddings using learned alignment weights. To apply multi-encoders encoding, set the encoder parameter to <code class="docutils literal notranslate"><span class="pre">Encodings.Multi_encoders</span></code> when calling the
+<code class="docutils literal notranslate"><span class="pre">encode_prefixes</span></code> function:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">NeSy4PPM.Data_preprocessing.data_preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">encode_prefixes</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">NeSy4PPM.Data_preprocessing.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">Encodings</span>
+
+<span class="n">encoder</span><span class="o">=</span><span class="n">Encodings</span><span class="o">.</span><span class="n">Multi_encoders</span>
+<span class="n">x</span><span class="p">,</span> <span class="n">y_a</span><span class="p">,</span> <span class="n">y_g</span> <span class="o">=</span> <span class="n">encode_prefixes</span><span class="p">(</span><span class="n">log_data</span><span class="p">,</span><span class="n">prefixes</span><span class="o">=</span><span class="n">extracted_prefixes</span><span class="p">,</span> <span class="n">encoder</span><span class="o">=</span><span class="n">encoder</span><span class="p">,</span> <span class="n">resource</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Total resources: 22 - Target resources: 23
+         [&#39;Value 2&#39;, &#39;Value 5&#39;, &#39;Value 16&#39;, &#39;Value 15&#39;, &#39;Value 21&#39;, &#39;Value 10&#39;, &#39;Value 11&#39;, &#39;Value 12&#39;, &#39;Value 6&#39;, &#39;Value 7&#39;, &#39;Value 9&#39;, &#39;Value 14&#39;, &#39;Value 19&#39;, &#39;Value 17&#39;, &#39;Value 8&#39;, &#39;Value 13&#39;, &#39;Value 22&#39;, &#39;Value 1&#39;, &#39;Value 4&#39;, &#39;Value 3&#39;, &#39;Value 18&#39;, &#39;Value 20&#39;]
+Total activities: 14 - Target activities: 15
+         [&#39;Assign seriousness&#39;, &#39;Take in charge ticket&#39;, &#39;Resolve ticket&#39;, &#39;Closed&#39;, &#39;Wait&#39;, &#39;Create SW anomaly&#39;, &#39;Insert ticket&#39;, &#39;Schedule intervention&#39;, &#39;INVALID&#39;, &#39;RESOLVED&#39;, &#39;VERIFIED&#39;, &#39;Resolve SW anomaly&#39;, &#39;Require upgrade&#39;, &#39;DUPLICATE&#39;]
+Num. of Training sequences: 16937
+Encoding...
+Num. of features: 15
+</pre></div></div>
+</div>
+</section>
+</section>
+<section id="End-to-end-data-preprocessing">
+<h2>End-to-end data preprocessing<a class="headerlink" href="#End-to-end-data-preprocessing" title="Link to this heading">¶</a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[37]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">NeSy4PPM.Data_preprocessing.data_preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">end_to_end_process</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">NeSy4PPM.Data_preprocessing.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">Encodings</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+
+<span class="n">log_path</span> <span class="o">=</span> <span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span><span class="o">.</span><span class="n">parent</span><span class="o">/</span><span class="s1">&#39;data&#39;</span><span class="o">/</span><span class="s1">&#39;input&#39;</span><span class="o">/</span><span class="s1">&#39;logs&#39;</span>
+<span class="n">train_log</span> <span class="o">=</span> <span class="s2">&quot;helpdesk_train.xes&quot;</span>
+<span class="n">test_log</span> <span class="o">=</span> <span class="s2">&quot;helpdesk_test.xes&quot;</span>
+<span class="n">encoder</span> <span class="o">=</span> <span class="n">Encodings</span><span class="o">.</span><span class="n">Index_based</span>
+<span class="n">log_data</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y_a</span><span class="p">,</span> <span class="n">y_g</span> <span class="o">=</span> <span class="n">end_to_end_process</span><span class="p">(</span><span class="n">log_path</span><span class="o">=</span><span class="n">log_path</span><span class="p">,</span><span class="n">train_log</span><span class="o">=</span><span class="n">train_log</span><span class="p">,</span><span class="n">test_log</span><span class="o">=</span><span class="n">test_log</span><span class="p">,</span> <span class="n">encoder</span><span class="o">=</span><span class="n">encoder</span><span class="p">,</span> <span class="n">resource</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+parsing log, completed traces :: 100%|██████████| 3664/3664 [00:00&lt;00:00, 8690.64it/s]
+parsing log, completed traces :: 100%|██████████| 820/820 [00:00&lt;00:00, 8723.79it/s]
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Total resources: 22 - Target resources: 23
+         [&#39;Value 2&#39;, &#39;Value 5&#39;, &#39;Value 16&#39;, &#39;Value 15&#39;, &#39;Value 21&#39;, &#39;Value 10&#39;, &#39;Value 11&#39;, &#39;Value 12&#39;, &#39;Value 6&#39;, &#39;Value 7&#39;, &#39;Value 9&#39;, &#39;Value 14&#39;, &#39;Value 19&#39;, &#39;Value 17&#39;, &#39;Value 8&#39;, &#39;Value 13&#39;, &#39;Value 22&#39;, &#39;Value 1&#39;, &#39;Value 4&#39;, &#39;Value 3&#39;, &#39;Value 18&#39;, &#39;Value 20&#39;]
+Total activities: 14 - Target activities: 15
+         [&#39;Assign seriousness&#39;, &#39;Take in charge ticket&#39;, &#39;Resolve ticket&#39;, &#39;Closed&#39;, &#39;Wait&#39;, &#39;Create SW anomaly&#39;, &#39;Insert ticket&#39;, &#39;Schedule intervention&#39;, &#39;INVALID&#39;, &#39;RESOLVED&#39;, &#39;VERIFIED&#39;, &#39;Resolve SW anomaly&#39;, &#39;Require upgrade&#39;, &#39;DUPLICATE&#39;]
+Num. of Training sequences: 16937
+Encoding...
+Num. of features: 30
+</pre></div></div>
+</div>
+</section>
+</section>
+<section id="2-Training">
+<h1>2 Training<a class="headerlink" href="#2-Training" title="Link to this heading">¶</a></h1>
+<p>Once the prefixes are encoded, NeSy4PPM proceeds to train a neural network that learns to predict the next activity and resource given a partial trace. The training is handled via the <code class="docutils literal notranslate"><span class="pre">train</span></code> function, which takes the encoded prefix data (<code class="docutils literal notranslate"><span class="pre">x</span></code>, <code class="docutils literal notranslate"><span class="pre">y_a</span></code>, <code class="docutils literal notranslate"><span class="pre">y_g</span></code>) and builds a model according to the chosen architecture. NeSy4PPM supports two neural architectures:</p>
+<ul class="simple">
+<li><p><strong>LSTM (Long Short-Term Memory)</strong> networks, which are recurrent neural networks designed to handle sequential data with long-range dependencies. To use LSTM, set the <code class="docutils literal notranslate"><span class="pre">model_arch</span></code> parameter to <code class="docutils literal notranslate"><span class="pre">NN_model.LSTM</span></code>.</p></li>
+<li><p><strong>Transformer</strong> architectures, which use attention mechanisms to model relationships across all positions in the prefix sequence simultaneously. To use a Transformer, set the <code class="docutils literal notranslate"><span class="pre">model_arch</span></code> parameter to <code class="docutils literal notranslate"><span class="pre">NN_model.Transformer</span></code>.</p></li>
+</ul>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">NeSy4PPM.Training.train_model</span><span class="w"> </span><span class="kn">import</span> <span class="n">train</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">NeSy4PPM.Data_preprocessing.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">NN_model</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">NN_model</span><span class="o">.</span><span class="n">Transformer</span>
+<span class="n">model_folder</span><span class="o">=</span> <span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span><span class="o">.</span><span class="n">parent</span><span class="o">/</span><span class="s1">&#39;data&#39;</span><span class="o">/</span><span class="s1">&#39;output&#39;</span>
+<span class="n">train</span><span class="p">(</span><span class="n">log_data</span><span class="p">,</span> <span class="n">encoder</span><span class="p">,</span> <span class="n">model_arch</span><span class="o">=</span><span class="n">model</span><span class="p">,</span> <span class="n">output_folder</span><span class="o">=</span><span class="n">model_folder</span><span class="p">,</span> <span class="n">X</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">y_a</span><span class="o">=</span><span class="n">y_a</span><span class="p">,</span> <span class="n">y_g</span><span class="o">=</span><span class="n">y_g</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="3-Prediction">
+<h1>3 Prediction<a class="headerlink" href="#3-Prediction" title="Link to this heading">¶</a></h1>
+<p>The <strong>Prediction</strong> in NeSy4PPM is responsible for generating suffix predictions from a prefix (i.e., an incomplete trace) using a trained neural model. To improve both accuracy and compliance, particularly under concept drift, NeSy4PPM supports three main prediction modes:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Purely</span> <span class="pre">Neural</span> <span class="pre">predictions</span></code>: The suffix is predicted mainly based on the output of the neural model, without considering background knowledge (BK).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">BK-Contextualized</span> <span class="pre">predictions</span></code>: BK is integrated during either the greedy or beam search process. It guides the search by pruning branches that violate compliance constraints, ensuring that only valid continuations are explored.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">BK-filtering</span></code>: BK is applied after generating candidate suffixes. Predicted suffixes that do not satisfy the compliance constraints are filtered out.</p></li>
+</ul>
+<section id="3.1-Set-prediction-parameters">
+<h2>3.1 Set prediction parameters<a class="headerlink" href="#3.1-Set-prediction-parameters" title="Link to this heading">¶</a></h2>
+<p>The prediction process begins by specifying the following parameters that control how the prediction algorithm operates:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">log_data.evaluation_prefix_start</span></code>: the minimum prefix length (in events) for prediction.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">log_data.evaluation_prefix_end</span></code>: the maximum prefix length for prediction.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">model_arch</span></code>: the trained model architecture (<code class="docutils literal notranslate"><span class="pre">NN_model.LSTM</span></code> or <code class="docutils literal notranslate"><span class="pre">NN_model.Transformer</span></code>).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">output_folder</span></code>: the path where the trained model and prediction results are saved.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">encoder</span></code>: the encoding method used during training (<code class="docutils literal notranslate"><span class="pre">Encodings.One_hot</span></code>, <code class="docutils literal notranslate"><span class="pre">Encodings.Index_based</span></code>, <code class="docutils literal notranslate"><span class="pre">Encodings.Shrinked_index_based</span></code> or <code class="docutils literal notranslate"><span class="pre">Encodings.Multi_Encoders</span></code> ).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">beam_size</span></code>: the number of alternative suffixes explored in parallel by the beam search. A <code class="docutils literal notranslate"><span class="pre">simple</span> <span class="pre">autoregressive</span> <span class="pre">prediction</span></code> can be performed by setting <code class="docutils literal notranslate"><span class="pre">beam_size</span></code> to <code class="docutils literal notranslate"><span class="pre">1</span></code> (greedy search).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bk_file_path</span></code>: the path to the <code class="docutils literal notranslate"><span class="pre">BK</span></code> (background knowledge) file. <code class="docutils literal notranslate"><span class="pre">BK</span></code> can represent domain constraints or business rules, and can be encoded in various formats:</p>
+<ul>
+<li><p><strong>Procedural models</strong>: <code class="docutils literal notranslate"><span class="pre">.bpmn</span></code> (Business Process Model and Notation), <code class="docutils literal notranslate"><span class="pre">.pnml</span></code> (Petri Nets),</p></li>
+<li><p><strong>Declare models</strong>: <code class="docutils literal notranslate"><span class="pre">.decl</span></code> (Crisp or Multi-perspective Declare constraints)</p></li>
+<li><p><strong>Probabilistic Declare models</strong>: <code class="docutils literal notranslate"><span class="pre">.txt</span></code> (Declare constraints annotated with probabilities).</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">weight</span></code>: a float value in [0, 1] that balances the importance of neural predictions and BK compliance. A value of 0 uses only the neural model, while higher values increase the importance of BK during the search.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">BK_end</span></code>: a boolean parameter indicating whether BK is applied at the end (i.e., filtering) instead of during the search.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">resource</span></code>: a boolean parameter indicating whether the resource prediction is performed onlongside activty prediction.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">fitness_method</span></code>: the method used to compute compliance scores, i.e., the alignment or replay fitness between the predicted trace and the procedural model. This parameter is only applicable when the BK model is procedural, and must be set to one of the following: : <code class="docutils literal notranslate"><span class="pre">conformance_diagnostics_alignments</span></code>, <code class="docutils literal notranslate"><span class="pre">fitness_alignments</span></code>, <code class="docutils literal notranslate"><span class="pre">conformance_diagnostics_token_based_replay</span></code> or <code class="docutils literal notranslate"><span class="pre">fitness_token_based_replay</span></code>.</p></li>
+</ul>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">NeSy4PPM.Data_preprocessing.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">NN_model</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">NeSy4PPM.Data_preprocessing.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">Encodings</span>
+
+<span class="p">(</span><span class="n">log_data</span><span class="o">.</span><span class="n">evaluation_prefix_start</span><span class="p">,</span> <span class="n">log_data</span><span class="o">.</span><span class="n">evaluation_prefix_end</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">model_arch</span> <span class="o">=</span> <span class="n">NN_model</span><span class="o">.</span><span class="n">Transformer</span>
+<span class="n">encoder</span> <span class="o">=</span> <span class="n">Encodings</span><span class="o">.</span><span class="n">Index_based</span>
+<span class="n">output_folder</span><span class="o">=</span> <span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span><span class="o">.</span><span class="n">parent</span><span class="o">/</span><span class="s1">&#39;data&#39;</span><span class="o">/</span><span class="s1">&#39;output&#39;</span>
+<span class="n">bk_file_path</span> <span class="o">=</span> <span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span><span class="o">.</span><span class="n">parent</span><span class="o">/</span><span class="s1">&#39;data&#39;</span><span class="o">/</span><span class="s1">&#39;input&#39;</span><span class="o">/</span><span class="s1">&#39;declare_models&#39;</span><span class="o">/</span><span class="s1">&#39;BK_helpdesk.decl&#39;</span>
+<span class="n">beam_size</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">weight</span> <span class="o">=</span> <span class="mf">0.9</span>
+<span class="n">BK_end</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="n">resource</span> <span class="o">=</span> <span class="kc">True</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="2.2-Load-the-Background-Knowledge-(BK)">
+<h2>2.2 Load the Background Knowledge (BK)<a class="headerlink" href="#2.2-Load-the-Background-Knowledge-(BK)" title="Link to this heading">¶</a></h2>
+<p>After setting the parameters, a background knowledge (BK) model must be loaded using the <code class="docutils literal notranslate"><span class="pre">load_bk</span></code> function.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">NeSy4PPM.Data_preprocessing.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_bk</span>
+
+<span class="n">bk_model</span> <span class="o">=</span> <span class="n">load_bk</span><span class="p">(</span><span class="n">bk_file_path</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+0 Existence1[Closed] |A.org:resource is Value 3 |
+1 Chain Precedence[Resolve ticket, Closed] |A.org:resource is Value 3 | |
+</pre></div></div>
+</div>
+</section>
+<section id="2.3-Perform-Prediction">
+<h2>2.3 Perform Prediction<a class="headerlink" href="#2.3-Perform-Prediction" title="Link to this heading">¶</a></h2>
+<p>NeSy4PPM implements the <code class="docutils literal notranslate"><span class="pre">predict_evaluate</span></code> function, which generates activity-resource suffixes using the proposed neuro-symbolic beam search algorithm and computes two evaluation metrics:</p>
+<ul class="simple">
+<li><p><strong>Damerau-Levenshtein Similarity</strong>, measuring the similarity between the predicted and actual suffixes based on edit distance,</p></li>
+<li><p><strong>Jaccard Similarity</strong>, measuring the overlap between the sets of predicted and actual activities. suffix prediction using a trained neural model and loaded <code class="docutils literal notranslate"><span class="pre">BK</span></code> model.</p></li>
+</ul>
+<p>By default, this function operates on the <strong>entire test log</strong>, predicting suffixes for all traces defined in the test set.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Entire test log Prediction</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">NeSy4PPM.Prediction</span><span class="w"> </span><span class="kn">import</span> <span class="n">predict_suffix</span>
+<span class="n">prediction_filename</span> <span class="o">=</span> <span class="s1">&#39;helpdesk_test_prediction.csv&#39;</span>
+<span class="n">predict_suffix</span><span class="o">.</span><span class="n">predict_evaluate</span><span class="p">(</span><span class="n">log_data</span><span class="p">,</span> <span class="n">model_arch</span><span class="o">=</span><span class="n">model_arch</span><span class="p">,</span> <span class="n">encoder</span><span class="o">=</span><span class="n">encoder</span><span class="p">,</span><span class="n">output_filename</span><span class="o">=</span><span class="n">prediction_filename</span><span class="p">,</span>
+                            <span class="n">output_folder</span><span class="o">=</span><span class="n">output_folder</span><span class="p">,</span> <span class="n">bk_model</span><span class="o">=</span><span class="n">bk_model</span><span class="p">,</span> <span class="n">beam_size</span><span class="o">=</span><span class="n">beam_size</span><span class="p">,</span> <span class="n">resource</span><span class="o">=</span><span class="n">resource</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="n">weight</span><span class="p">,</span> <span class="n">bk_end</span><span class="o">=</span><span class="n">BK_end</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>However, <code class="docutils literal notranslate"><span class="pre">predict_evaluate</span></code> function can also be used to predict suffixes for a specific <strong>subset of traces</strong> by providing a list of case IDs from the test log.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## A subset of test log Prediction Beam search with KB-contextualized</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">NeSy4PPM.Prediction</span><span class="w"> </span><span class="kn">import</span> <span class="n">predict_suffix</span>
+<span class="n">traces_ids</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Case 1327&#39;</span><span class="p">]</span>
+<span class="n">prediction_filename</span> <span class="o">=</span> <span class="s1">&#39;helpdesk_case1327_prediction.csv&#39;</span>
+<span class="n">predict_suffix</span><span class="o">.</span><span class="n">predict_evaluate</span><span class="p">(</span><span class="n">log_data</span><span class="p">,</span> <span class="n">model_arch</span><span class="o">=</span><span class="n">model_arch</span><span class="p">,</span> <span class="n">encoder</span><span class="o">=</span><span class="n">encoder</span><span class="p">,</span><span class="n">output_filename</span><span class="o">=</span><span class="n">prediction_filename</span><span class="p">,</span>
+                                <span class="n">output_folder</span><span class="o">=</span><span class="n">output_folder</span><span class="p">,</span> <span class="n">evaluation_trace_ids</span><span class="o">=</span> <span class="n">traces_ids</span><span class="p">,</span> <span class="n">bk_model</span><span class="o">=</span><span class="n">bk_model</span><span class="p">,</span> <span class="n">beam_size</span><span class="o">=</span><span class="n">beam_size</span><span class="p">,</span>
+                                <span class="n">resource</span><span class="o">=</span><span class="n">resource</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="n">weight</span><span class="p">,</span> <span class="n">bk_end</span><span class="o">=</span><span class="n">BK_end</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Activity &amp; Resource Prediction ...
+Model filepath: C:\Users\JOukharijane\Desktop\PostDoc\NeSy4PPM\docs\source\data\output\keras_trans_index-based\models\CFR\helpdesk_train
+Latest checkpoint file: C:\Users\JOukharijane\Desktop\PostDoc\NeSy4PPM\docs\source\data\output\keras_trans_index-based\models\CFR\helpdesk_train\model_015-1.198.keras
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+C:\Users\JOukharijane\AppData\Local\Programs\Python\Python310\lib\random.py:370: DeprecationWarning: non-integer arguments to randrange() have been deprecated since Python 3.10 and will be removed in a subsequent version
+  return self.randrange(a, b+1)
+C:\Users\JOukharijane\AppData\Local\Programs\Python\Python310\lib\random.py:370: DeprecationWarning: non-integer arguments to randrange() have been deprecated since Python 3.10 and will be removed in a subsequent version
+  return self.randrange(a, b+1)
+C:\Users\JOukharijane\AppData\Local\Programs\Python\Python310\lib\random.py:370: DeprecationWarning: non-integer arguments to randrange() have been deprecated since Python 3.10 and will be removed in a subsequent version
+  return self.randrange(a, b+1)
+C:\Users\JOukharijane\AppData\Local\Programs\Python\Python310\lib\random.py:370: DeprecationWarning: non-integer arguments to randrange() have been deprecated since Python 3.10 and will be removed in a subsequent version
+  return self.randrange(a, b+1)
+C:\Users\JOukharijane\AppData\Local\Programs\Python\Python310\lib\random.py:370: DeprecationWarning: non-integer arguments to randrange() have been deprecated since Python 3.10 and will be removed in a subsequent version
+  return self.randrange(a, b+1)
+C:\Users\JOukharijane\AppData\Local\Programs\Python\Python310\lib\random.py:370: DeprecationWarning: non-integer arguments to randrange() have been deprecated since Python 3.10 and will be removed in a subsequent version
+  return self.randrange(a, b+1)
+C:\Users\JOukharijane\AppData\Local\Programs\Python\Python310\lib\random.py:370: DeprecationWarning: non-integer arguments to randrange() have been deprecated since Python 3.10 and will be removed in a subsequent version
+  return self.randrange(a, b+1)
+C:\Users\JOukharijane\AppData\Local\Programs\Python\Python310\lib\random.py:370: DeprecationWarning: non-integer arguments to randrange() have been deprecated since Python 3.10 and will be removed in a subsequent version
+  return self.randrange(a, b+1)
+C:\Users\JOukharijane\AppData\Local\Programs\Python\Python310\lib\random.py:370: DeprecationWarning: non-integer arguments to randrange() have been deprecated since Python 3.10 and will be removed in a subsequent version
+  return self.randrange(a, b+1)
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[&#39;Case ID&#39;, &#39;Prefix length&#39;, &#39;Trace Prefix Act&#39;, &#39;Ground truth&#39;, &#39;Predicted Acts&#39;, &#39;Damerau-Levenshtein Acts&#39;, &#39;Jaccard Acts&#39;, &#39;Trace Prefix Res&#39;, &#39;Ground Truth Resources&#39;, &#39;Predicted Resources&#39;, &#39;Damerau-Levenshtein Resources&#39;, &#39;Jaccard Resources&#39;, &#39;Weight&#39;, &#39;Time&#39;]
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+  0%|          | 0/1 [00:00&lt;?, ?it/s]C:\Users\JOukharijane\Desktop\PostDoc\NeSy4PPM\venv\lib\site-packages\tqdm\std.py:917: FutureWarning: DataFrameGroupBy.apply operated on the grouping columns. This behavior is deprecated, and in a future version of pandas the grouping columns will be excluded from the operation. Either pass `include_groups=False` to exclude the groupings or explicitly select the grouping columns after groupby to silence this warning.
+  return getattr(df, df_function)(wrapper, **kwargs)
+100%|██████████| 1/1 [00:20&lt;00:00, 20.76s/it]
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[&#39;Case 1327&#39;, 1, &#39;Assign seriousness&#39;, &#39;Wait&gt;&gt;Resolve ticket&gt;&gt;Closed&#39;, &#39;Take in charge ticket&gt;&gt;Resolve ticket&gt;&gt;Closed&#39;, 0.6666666666666667, 0.5, &#39;Value 13&#39;, &#39;Value 1&gt;&gt;Value 13&gt;&gt;Value 3&#39;, &#39;Value 13&gt;&gt;Value 13&gt;&gt;Value 3&#39;, 0.6666666666666667, 0.6666666666666666, 0.9, 20.74420714378357]
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+  0%|          | 0/1 [00:00&lt;?, ?it/s]C:\Users\JOukharijane\Desktop\PostDoc\NeSy4PPM\venv\lib\site-packages\tqdm\std.py:917: FutureWarning: DataFrameGroupBy.apply operated on the grouping columns. This behavior is deprecated, and in a future version of pandas the grouping columns will be excluded from the operation. Either pass `include_groups=False` to exclude the groupings or explicitly select the grouping columns after groupby to silence this warning.
+  return getattr(df, df_function)(wrapper, **kwargs)
+100%|██████████| 1/1 [00:12&lt;00:00, 12.49s/it]
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[&#39;Case 1327&#39;, 2, &#39;Assign seriousness&gt;&gt;Wait&#39;, &#39;Resolve ticket&gt;&gt;Closed&#39;, &#39;Resolve ticket&gt;&gt;Closed&#39;, 1.0, 1.0, &#39;Value 13&gt;&gt;Value 1&#39;, &#39;Value 13&gt;&gt;Value 3&#39;, &#39;Value 1&gt;&gt;Value 3&#39;, 0.5, 0.33333333333333326, 0.9, 12.488699197769165]
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+  0%|          | 0/1 [00:00&lt;?, ?it/s]C:\Users\JOukharijane\Desktop\PostDoc\NeSy4PPM\venv\lib\site-packages\tqdm\std.py:917: FutureWarning: DataFrameGroupBy.apply operated on the grouping columns. This behavior is deprecated, and in a future version of pandas the grouping columns will be excluded from the operation. Either pass `include_groups=False` to exclude the groupings or explicitly select the grouping columns after groupby to silence this warning.
+  return getattr(df, df_function)(wrapper, **kwargs)
+100%|██████████| 1/1 [00:07&lt;00:00,  7.09s/it]
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[&#39;Case 1327&#39;, 3, &#39;Assign seriousness&gt;&gt;Wait&gt;&gt;Resolve ticket&#39;, &#39;Closed&#39;, &#39;Closed&#39;, 1.0, 1.0, &#39;Value 13&gt;&gt;Value 1&gt;&gt;Value 13&#39;, &#39;Value 3&#39;, &#39;Value 3&#39;, 1.0, 1.0, 0.9, 7.0855488777160645]
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+  0%|          | 0/1 [00:00&lt;?, ?it/s]C:\Users\JOukharijane\Desktop\PostDoc\NeSy4PPM\venv\lib\site-packages\tqdm\std.py:917: FutureWarning: DataFrameGroupBy.apply operated on the grouping columns. This behavior is deprecated, and in a future version of pandas the grouping columns will be excluded from the operation. Either pass `include_groups=False` to exclude the groupings or explicitly select the grouping columns after groupby to silence this warning.
+  return getattr(df, df_function)(wrapper, **kwargs)
+100%|██████████| 1/1 [00:00&lt;?, ?it/s]
+</pre></div></div>
+</div>
+</section>
+</section>
+<section id="4-Evaluation">
+<h1>4 Evaluation<a class="headerlink" href="#4-Evaluation" title="Link to this heading">¶</a></h1>
+<p>The <strong>evaluation</strong> assesses the performance of the prediction by computing a variety of metrics, including:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Time</span></code>: Computes the average and standard deviation of prediction times.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Jaccard</span> <span class="pre">similarity</span></code>: Measures the jaccard similarity between the predicted and ground-truth sequences of activities, and resources if <code class="docutils literal notranslate"><span class="pre">resource</span> <span class="pre">=</span> <span class="pre">True</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Damerau-Levenshtein</span> <span class="pre">similarity</span></code>: Computes the Damerau-Levenshtein similarity between predicted and ground-truth sequences of activities, and resources if <code class="docutils literal notranslate"><span class="pre">resource</span> <span class="pre">=</span> <span class="pre">True</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Compliance</span></code>: Measures the proportion of predicted traces (i.e., the prefix concatenated with the predicted suffix) that satisfy the (MP)-Declare background knowledge.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Fitness</span></code>: Evaluates how well the predicted traces can be replayed in the discovered Petri net, using the specified <code class="docutils literal notranslate"><span class="pre">fitness_method</span></code> (e.g., <code class="docutils literal notranslate"><span class="pre">token-based</span> <span class="pre">replay</span></code>).</p></li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">NeSy4PPM.Evaluation</span><span class="w"> </span><span class="kn">import</span> <span class="n">evaluate_all</span><span class="p">,</span> <span class="n">discover_petri_net</span>
+
+<span class="c1"># discover a petri nets model from test log:</span>
+<span class="n">petri_net_model</span> <span class="o">=</span> <span class="n">discover_petri_net</span><span class="p">(</span><span class="n">log_path</span><span class="o">/</span><span class="n">test_log</span><span class="p">)</span>
+
+<span class="n">metrics</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Time&quot;</span><span class="p">,</span> <span class="s2">&quot;Jaccard similarity&quot;</span><span class="p">,</span> <span class="s2">&quot;Damerau-Levenshtien similarity&quot;</span><span class="p">,</span> <span class="s2">&quot;Compliance&quot;</span><span class="p">,</span> <span class="s2">&quot;Fitness&quot;</span><span class="p">]</span>
+<span class="n">prediction_filename</span> <span class="o">=</span> <span class="s1">&#39;helpdesk_case1327_prediction.csv&#39;</span>
+
+<span class="n">metrics_results</span> <span class="o">=</span> <span class="n">evaluate_all</span><span class="p">(</span><span class="n">log_data</span><span class="o">=</span><span class="n">log_data</span><span class="p">,</span> <span class="n">model_arch</span><span class="o">=</span><span class="n">model_arch</span><span class="p">,</span> <span class="n">encoder</span><span class="o">=</span><span class="n">encoder</span><span class="p">,</span> <span class="n">output_folder</span><span class="o">=</span><span class="n">output_folder</span><span class="p">,</span>
+                               <span class="n">filename</span><span class="o">=</span><span class="n">prediction_filename</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="n">metrics</span><span class="p">,</span> <span class="n">resource</span><span class="o">=</span><span class="n">resource</span><span class="p">,</span> <span class="n">declare_model</span><span class="o">=</span><span class="n">bk_model</span><span class="p">,</span><span class="n">petri_net_model</span><span class="o">=</span><span class="n">petri_net_model</span><span class="p">,</span> <span class="n">fitness_method</span><span class="o">=</span><span class="s2">&quot;fitness_token_based_replay&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">metric</span> <span class="ow">in</span> <span class="n">metrics</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">metric</span><span class="p">,</span><span class="s2">&quot;:&quot;</span><span class="p">,</span><span class="n">metrics_results</span><span class="p">[</span><span class="n">metric</span><span class="p">],</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+parsing log, completed traces :: 100%|██████████| 820/820 [00:00&lt;00:00, 2480.57it/s]
+DEBUG:graphviz._tools:os.makedirs(&#39;C:\\Users\\JOUKHA~1\\AppData\\Local\\Temp&#39;)
+DEBUG:graphviz.saving:write lines to &#39;C:\\Users\\JOUKHA~1\\AppData\\Local\\Temp\\tmpyzof20bn.gv&#39;
+DEBUG:graphviz.backend.execute:run [WindowsPath(&#39;dot&#39;), &#39;-Kdot&#39;, &#39;-Tpng&#39;, &#39;-O&#39;, &#39;tmpyzof20bn.gv&#39;]
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_Suffix_Prediction_tutorial_32_1.png" src="../_images/tutorials_Suffix_Prediction_tutorial_32_1.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+replaying log with TBR, completed traces :: 100%|██████████| 2/2 [00:00&lt;00:00, 249.25it/s]
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Time : {&#39;Average time&#39;: 13.439, &#39;Standard deviation time&#39;: 6.879}
+Jaccard similarity : {&#39;Activities&#39;: 0.833, &#39;Resources&#39;: 0.667}
+Damerau-Levenshtien similarity : {&#39;Activities&#39;: 0.889, &#39;Resources&#39;: 0.722}
+Compliance : 1.0
+Fitness : 1.0
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+</div>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">NeSy4PPM</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">NeSy4PPM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../tutorials.html">Tutorials</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">NeSy4PPM: Suffix prediction Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#1-Data-preprocessing">1 Data preprocessing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#2-Training">2 Training</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#3-Prediction">3 Prediction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#4-Evaluation">4 Evaluation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../structure.html">Repository Structure</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="../tutorials.html">Tutorials</a><ul>
+      <li>Previous: <a href="../tutorials.html" title="previous chapter">Tutorials</a></li>
+      <li>Next: <a href="../structure.html" title="next chapter">Repository Structure</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2025, Jamila Oukharijane, Ivan Donadello, Fabrizio Maria Maggi.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 8.1.3</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="../_sources/tutorials/Suffix_Prediction_tutorial.ipynb.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

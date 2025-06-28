@@ -1,4 +1,0 @@
-Case ID,Prefix length,Trace Prefix Act,Ground truth,Predicted,Damerau-Levenshtein,Jaccard,Weight
-Case 1327,1,Assign seriousness,|Wait, Resolve ticket, Closed|,|Wait, Resolve ticket, Closed|,1.0,1.0,0.9
-Case 1327,2,|Assign seriousness, Wait|,|Resolve ticket, Closed|,|Resolve ticket, Closed|,1.0,1.0,0.9
-Case 1327,3,|Assign seriousness, Wait, Resolve ticket|,Closed,Closed,1.0,1.0,0.9

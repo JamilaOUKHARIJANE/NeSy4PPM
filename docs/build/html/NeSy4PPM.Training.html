@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>NeSy4PPM.Training package &#8212; NeSy4PPM 0.1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="_static/basic.css?v=686e5160" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=27fed22d" />
+    <link rel="stylesheet" type="text/css" href="_static/css/custom.css" />
+    <script src="_static/documentation_options.js?v=01f34227"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Installation" href="installation.html" />
+    <link rel="prev" title="NeSy4PPM.ProbDeclmonitor package" href="NeSy4PPM.ProbDeclmonitor.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="nesy4ppm-training-package">
+<h1>NeSy4PPM.Training package<a class="headerlink" href="#nesy4ppm-training-package" title="Link to this heading">¶</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">¶</a></h2>
+</section>
+<section id="module-NeSy4PPM.Training.Modulator">
+<span id="nesy4ppm-training-modulator-module"></span><h2>NeSy4PPM.Training.Modulator module<a class="headerlink" href="#module-NeSy4PPM.Training.Modulator" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="NeSy4PPM.Training.Modulator.Modulator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">NeSy4PPM.Training.Modulator.</span></span><span class="sig-name descname"><span class="pre">Modulator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#NeSy4PPM.Training.Modulator.Modulator" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Layer</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="NeSy4PPM.Training.Modulator.Modulator.build">
+<span class="sig-name descname"><span class="pre">build</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_shape</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#NeSy4PPM.Training.Modulator.Modulator.build" title="Link to this definition">¶</a></dt>
+<dd><p>Creates the variables of the layer (optional, for subclass implementers).</p>
+<p>This is a method that implementers of subclasses of <cite>Layer</cite> or <cite>Model</cite>
+can override if they need a state-creation step in-between
+layer instantiation and layer call. It is invoked automatically before
+the first execution of <cite>call()</cite>.</p>
+<p>This is typically used to create the weights of <cite>Layer</cite> subclasses
+(at the discretion of the subclass implementer).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>input_shape</strong> – Instance of <cite>TensorShape</cite>, or list of instances of
+<cite>TensorShape</cite> if the layer expects a list of inputs
+(one instance per input).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="NeSy4PPM.Training.Modulator.Modulator.call">
+<span class="sig-name descname"><span class="pre">call</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#NeSy4PPM.Training.Modulator.Modulator.call" title="Link to this definition">¶</a></dt>
+<dd><p>Forward pass of the modulator layer.</p>
+<p>Splits the input into different representation vectors,
+computes element-wise products, concatenates them,
+and applies learned weights and biases.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>x</strong> (<em>tf.Tensor</em>) – Input tensor with shape (batch_size, time_steps, features).</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Modulated tensor with shape (batch_size, time_steps, features).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tf.Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="NeSy4PPM.Training.Modulator.Modulator.compute_output_shape">
+<span class="sig-name descname"><span class="pre">compute_output_shape</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_shape</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#NeSy4PPM.Training.Modulator.Modulator.compute_output_shape" title="Link to this definition">¶</a></dt>
+<dd><p>Computes the output shape of the layer.</p>
+<p>This method will cause the layer’s state to be built, if that has not
+happened before. This requires that the layer will later be used with
+inputs that match the input shape provided here.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>input_shape</strong> – Shape tuple (tuple of integers)
+or list of shape tuples (one per output tensor of the layer).
+Shape tuples can include None for free dimensions,
+instead of an integer.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>An input shape tuple.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="NeSy4PPM.Training.Modulator.Modulator.get_config">
+<span class="sig-name descname"><span class="pre">get_config</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#NeSy4PPM.Training.Modulator.Modulator.get_config" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the config of the layer.</p>
+<p>A layer config is a Python dictionary (serializable)
+containing the configuration of a layer.
+The same layer can be reinstantiated later
+(without its trained weights) from this configuration.</p>
+<p>The config of a layer does not include connectivity
+information, nor the layer class name. These are handled
+by <cite>Network</cite> (one layer of abstraction above).</p>
+<p>Note that <cite>get_config()</cite> does not guarantee to return a fresh copy of
+dict every time it is called. The callers should make a copy of the
+returned dict if they want to modify it.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Python dictionary.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-NeSy4PPM.Training.train_common">
+<span id="nesy4ppm-training-train-common-module"></span><h2>NeSy4PPM.Training.train_common module<a class="headerlink" href="#module-NeSy4PPM.Training.train_common" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="NeSy4PPM.Training.train_common.CustomTransformer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">NeSy4PPM.Training.train_common.</span></span><span class="sig-name descname"><span class="pre">CustomTransformer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#NeSy4PPM.Training.train_common.CustomTransformer" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Layer</span></code></p>
+<p>Custom Transformer block consisting of multi-head attention and feed-forward layers.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="NeSy4PPM.Training.train_common.CustomTransformer.call">
+<span class="sig-name descname"><span class="pre">call</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#NeSy4PPM.Training.train_common.CustomTransformer.call" title="Link to this definition">¶</a></dt>
+<dd><p>Forward pass of the CustomTransformer layer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>inputs</strong> (<em>tf.Tensor</em>) – Input tensor.</p></li>
+<li><p><strong>mask</strong> (<em>tf.Tensor</em><em>, </em><em>optional</em>) – Attention mask.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Output tensor after attention and feed-forward layers.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tf.Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="NeSy4PPM.Training.train_common.CustomTransformer.get_config">
+<span class="sig-name descname"><span class="pre">get_config</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#NeSy4PPM.Training.train_common.CustomTransformer.get_config" title="Link to this definition">¶</a></dt>
+<dd><p>Return the config dictionary for recreating this layer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Configuration parameters.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="NeSy4PPM.Training.train_common.create_checkpoints_path">
+<span class="sig-prename descclassname"><span class="pre">NeSy4PPM.Training.train_common.</span></span><span class="sig-name descname"><span class="pre">create_checkpoints_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">log_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="NeSy4PPM.Data_preprocessing.html#NeSy4PPM.Data_preprocessing.utils.NN_model" title="NeSy4PPM.Data_preprocessing.utils.NN_model"><span class="pre">NN_model</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="NeSy4PPM.Data_preprocessing.html#NeSy4PPM.Data_preprocessing.utils.Encodings" title="NeSy4PPM.Data_preprocessing.utils.Encodings"><span class="pre">Encodings</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_folder</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#NeSy4PPM.Training.train_common.create_checkpoints_path" title="Link to this definition">¶</a></dt>
+<dd><p>Create a directory path and filename pattern for model checkpoints.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>log_name</strong> (<em>str</em>) – Name of the log.</p></li>
+<li><p><strong>model</strong> (<a class="reference internal" href="NeSy4PPM.Data_preprocessing.html#NeSy4PPM.Data_preprocessing.utils.NN_model" title="NeSy4PPM.Data_preprocessing.utils.NN_model"><em>NN_model</em></a>) – Enum representing the model type.</p></li>
+<li><p><strong>model_type</strong> (<em>str</em>) – Specific model type (e.g., ‘LSTM’, ‘Transformer’).</p></li>
+<li><p><strong>encoder</strong> (<a class="reference internal" href="NeSy4PPM.Data_preprocessing.html#NeSy4PPM.Data_preprocessing.utils.Encodings" title="NeSy4PPM.Data_preprocessing.utils.Encodings"><em>Encodings</em></a>) – Enum representing the encoding method.</p></li>
+<li><p><strong>output_folder</strong> (<em>Path</em>) – Base output folder path.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Full path pattern for saving checkpoint files.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="NeSy4PPM.Training.train_common.plot_loss">
+<span class="sig-prename descclassname"><span class="pre">NeSy4PPM.Training.train_common.</span></span><span class="sig-name descname"><span class="pre">plot_loss</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">history</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dir_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#NeSy4PPM.Training.train_common.plot_loss" title="Link to this definition">¶</a></dt>
+<dd><p>Plot and save the training and validation loss curves.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>history</strong> (<em>keras.callbacks.History</em>) – Keras training history object.</p></li>
+<li><p><strong>dir_name</strong> (<em>str</em><em> or </em><em>Path</em>) – Directory to save the plot image.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-NeSy4PPM.Training.train_model">
+<span id="nesy4ppm-training-train-model-module"></span><h2>NeSy4PPM.Training.train_model module<a class="headerlink" href="#module-NeSy4PPM.Training.train_model" title="Link to this heading">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="NeSy4PPM.Training.train_model.learn">
+<span class="sig-prename descclassname"><span class="pre">NeSy4PPM.Training.train_model.</span></span><span class="sig-name descname"><span class="pre">learn</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">log_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="NeSy4PPM.Data_preprocessing.html#NeSy4PPM.Data_preprocessing.log_utils.LogData" title="NeSy4PPM.Data_preprocessing.log_utils.LogData"><span class="pre">LogData</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="NeSy4PPM.Data_preprocessing.html#NeSy4PPM.Data_preprocessing.utils.Encodings" title="NeSy4PPM.Data_preprocessing.utils.Encodings"><span class="pre">Encodings</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_arch</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="NeSy4PPM.Data_preprocessing.html#NeSy4PPM.Data_preprocessing.utils.NN_model" title="NeSy4PPM.Data_preprocessing.utils.NN_model"><span class="pre">NN_model</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">resource</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_folder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">WindowsPath('C:/Users/JOukharijane/Desktop/PostDoc/NeSy4PPM/docs/source/data/output')</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#NeSy4PPM.Training.train_model.learn" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="NeSy4PPM.Training.train_model.train">
+<span class="sig-prename descclassname"><span class="pre">NeSy4PPM.Training.train_model.</span></span><span class="sig-name descname"><span class="pre">train</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">log_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="NeSy4PPM.Data_preprocessing.html#NeSy4PPM.Data_preprocessing.log_utils.LogData" title="NeSy4PPM.Data_preprocessing.log_utils.LogData"><span class="pre">LogData</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="NeSy4PPM.Data_preprocessing.html#NeSy4PPM.Data_preprocessing.utils.Encodings" title="NeSy4PPM.Data_preprocessing.utils.Encodings"><span class="pre">Encodings</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_arch</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="NeSy4PPM.Data_preprocessing.html#NeSy4PPM.Data_preprocessing.utils.NN_model" title="NeSy4PPM.Data_preprocessing.utils.NN_model"><span class="pre">NN_model</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_g</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_folder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">WindowsPath('C:/Users/JOukharijane/Desktop/PostDoc/NeSy4PPM/docs/source/data/output')</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#NeSy4PPM.Training.train_model.train" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-NeSy4PPM.Training">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-NeSy4PPM.Training" title="Link to this heading">¶</a></h2>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">NeSy4PPM</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">NeSy4PPM</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="NeSy4PPM.html">NeSy4PPM package</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="structure.html">Repository Structure</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="modules.html">NeSy4PPM</a><ul>
+  <li><a href="NeSy4PPM.html">NeSy4PPM package</a><ul>
+      <li>Previous: <a href="NeSy4PPM.ProbDeclmonitor.html" title="previous chapter">NeSy4PPM.ProbDeclmonitor package</a></li>
+      <li>Next: <a href="installation.html" title="next chapter">Installation</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2025, Jamila Oukharijane, Ivan Donadello, Fabrizio Maria Maggi.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 8.1.3</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="_sources/NeSy4PPM.Training.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

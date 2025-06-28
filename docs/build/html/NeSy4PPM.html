@@ -6,15 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>NeSy4PPM package &#8212; NeSy4PPM 0.1.0 documentation</title>
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d1102ebc" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=5ecbeea2" />
     <link rel="stylesheet" type="text/css" href="_static/basic.css?v=686e5160" />
     <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=27fed22d" />
+    <link rel="stylesheet" type="text/css" href="_static/css/custom.css" />
     <script src="_static/documentation_options.js?v=01f34227"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="NeSy4PPM.ProbDeclmonitor package" href="NeSy4PPM.ProbDeclmonitor.html" />
+    <link rel="next" title="NeSy4PPM.Data_preprocessing package" href="NeSy4PPM.Data_preprocessing.html" />
     <link rel="prev" title="NeSy4PPM" href="modules.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
@@ -39,48 +41,186 @@
 <h2>Subpackages<a class="headerlink" href="#subpackages" title="Link to this heading">¶</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="NeSy4PPM.Data_preprocessing.html">NeSy4PPM.Data_preprocessing package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="NeSy4PPM.Data_preprocessing.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="NeSy4PPM.Data_preprocessing.html#module-NeSy4PPM.Data_preprocessing.data_preprocessing">NeSy4PPM.Data_preprocessing.data_preprocessing module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="NeSy4PPM.Data_preprocessing.html#NeSy4PPM.Data_preprocessing.data_preprocessing.encode_prefixes"><code class="docutils literal notranslate"><span class="pre">encode_prefixes()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="NeSy4PPM.Data_preprocessing.html#NeSy4PPM.Data_preprocessing.data_preprocessing.end_to_end_process"><code class="docutils literal notranslate"><span class="pre">end_to_end_process()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="NeSy4PPM.Data_preprocessing.html#NeSy4PPM.Data_preprocessing.data_preprocessing.extract_encode_prefixes"><code class="docutils literal notranslate"><span class="pre">extract_encode_prefixes()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="NeSy4PPM.Data_preprocessing.html#NeSy4PPM.Data_preprocessing.data_preprocessing.extract_trace_prefixes"><code class="docutils literal notranslate"><span class="pre">extract_trace_prefixes()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="NeSy4PPM.Data_preprocessing.html#module-NeSy4PPM.Data_preprocessing.log_utils">NeSy4PPM.Data_preprocessing.log_utils module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="NeSy4PPM.Data_preprocessing.html#NeSy4PPM.Data_preprocessing.log_utils.LogData"><code class="docutils literal notranslate"><span class="pre">LogData</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="NeSy4PPM.Data_preprocessing.html#NeSy4PPM.Data_preprocessing.log_utils.LogData.act_enc_mapping"><code class="docutils literal notranslate"><span class="pre">LogData.act_enc_mapping</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="NeSy4PPM.Data_preprocessing.html#NeSy4PPM.Data_preprocessing.log_utils.LogData.act_name_key"><code class="docutils literal notranslate"><span class="pre">LogData.act_name_key</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="NeSy4PPM.Data_preprocessing.html#NeSy4PPM.Data_preprocessing.log_utils.LogData.case_name_key"><code class="docutils literal notranslate"><span class="pre">LogData.case_name_key</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="NeSy4PPM.Data_preprocessing.html#NeSy4PPM.Data_preprocessing.log_utils.LogData.compliance_th"><code class="docutils literal notranslate"><span class="pre">LogData.compliance_th</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="NeSy4PPM.Data_preprocessing.html#NeSy4PPM.Data_preprocessing.log_utils.LogData.encode_log"><code class="docutils literal notranslate"><span class="pre">LogData.encode_log()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="NeSy4PPM.Data_preprocessing.html#NeSy4PPM.Data_preprocessing.log_utils.LogData.evaluation_prefix_end"><code class="docutils literal notranslate"><span class="pre">LogData.evaluation_prefix_end</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="NeSy4PPM.Data_preprocessing.html#NeSy4PPM.Data_preprocessing.log_utils.LogData.evaluation_prefix_start"><code class="docutils literal notranslate"><span class="pre">LogData.evaluation_prefix_start</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="NeSy4PPM.Data_preprocessing.html#NeSy4PPM.Data_preprocessing.log_utils.LogData.evaluation_th"><code class="docutils literal notranslate"><span class="pre">LogData.evaluation_th</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="NeSy4PPM.Data_preprocessing.html#NeSy4PPM.Data_preprocessing.log_utils.LogData.evaluation_trace_ids"><code class="docutils literal notranslate"><span class="pre">LogData.evaluation_trace_ids</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="NeSy4PPM.Data_preprocessing.html#NeSy4PPM.Data_preprocessing.log_utils.LogData.label_name_key"><code class="docutils literal notranslate"><span class="pre">LogData.label_name_key</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="NeSy4PPM.Data_preprocessing.html#NeSy4PPM.Data_preprocessing.log_utils.LogData.label_neg_val"><code class="docutils literal notranslate"><span class="pre">LogData.label_neg_val</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="NeSy4PPM.Data_preprocessing.html#NeSy4PPM.Data_preprocessing.log_utils.LogData.label_pos_val"><code class="docutils literal notranslate"><span class="pre">LogData.label_pos_val</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="NeSy4PPM.Data_preprocessing.html#NeSy4PPM.Data_preprocessing.log_utils.LogData.log"><code class="docutils literal notranslate"><span class="pre">LogData.log</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="NeSy4PPM.Data_preprocessing.html#NeSy4PPM.Data_preprocessing.log_utils.LogData.log_name"><code class="docutils literal notranslate"><span class="pre">LogData.log_name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="NeSy4PPM.Data_preprocessing.html#NeSy4PPM.Data_preprocessing.log_utils.LogData.max_len"><code class="docutils literal notranslate"><span class="pre">LogData.max_len</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="NeSy4PPM.Data_preprocessing.html#NeSy4PPM.Data_preprocessing.log_utils.LogData.read_log"><code class="docutils literal notranslate"><span class="pre">LogData.read_log()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="NeSy4PPM.Data_preprocessing.html#NeSy4PPM.Data_preprocessing.log_utils.LogData.res_enc_mapping"><code class="docutils literal notranslate"><span class="pre">LogData.res_enc_mapping</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="NeSy4PPM.Data_preprocessing.html#NeSy4PPM.Data_preprocessing.log_utils.LogData.res_name_key"><code class="docutils literal notranslate"><span class="pre">LogData.res_name_key</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="NeSy4PPM.Data_preprocessing.html#NeSy4PPM.Data_preprocessing.log_utils.LogData.test_log_name"><code class="docutils literal notranslate"><span class="pre">LogData.test_log_name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="NeSy4PPM.Data_preprocessing.html#NeSy4PPM.Data_preprocessing.log_utils.LogData.timestamp_key"><code class="docutils literal notranslate"><span class="pre">LogData.timestamp_key</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="NeSy4PPM.Data_preprocessing.html#NeSy4PPM.Data_preprocessing.log_utils.LogData.timestamp_key2"><code class="docutils literal notranslate"><span class="pre">LogData.timestamp_key2</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="NeSy4PPM.Data_preprocessing.html#NeSy4PPM.Data_preprocessing.log_utils.LogData.timestamp_key3"><code class="docutils literal notranslate"><span class="pre">LogData.timestamp_key3</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="NeSy4PPM.Data_preprocessing.html#NeSy4PPM.Data_preprocessing.log_utils.LogData.timestamp_key4"><code class="docutils literal notranslate"><span class="pre">LogData.timestamp_key4</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="NeSy4PPM.Data_preprocessing.html#NeSy4PPM.Data_preprocessing.log_utils.LogData.train_log_name"><code class="docutils literal notranslate"><span class="pre">LogData.train_log_name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="NeSy4PPM.Data_preprocessing.html#NeSy4PPM.Data_preprocessing.log_utils.LogData.training_trace_ids"><code class="docutils literal notranslate"><span class="pre">LogData.training_trace_ids</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="NeSy4PPM.Data_preprocessing.html#module-NeSy4PPM.Data_preprocessing.shared_variables">NeSy4PPM.Data_preprocessing.shared_variables module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="NeSy4PPM.Data_preprocessing.html#module-NeSy4PPM.Data_preprocessing.utils">NeSy4PPM.Data_preprocessing.utils module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="NeSy4PPM.Data_preprocessing.html#NeSy4PPM.Data_preprocessing.utils.BK_type"><code class="docutils literal notranslate"><span class="pre">BK_type</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="NeSy4PPM.Data_preprocessing.html#NeSy4PPM.Data_preprocessing.utils.BK_type.Declare"><code class="docutils literal notranslate"><span class="pre">BK_type.Declare</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="NeSy4PPM.Data_preprocessing.html#NeSy4PPM.Data_preprocessing.utils.BK_type.Declare_End"><code class="docutils literal notranslate"><span class="pre">BK_type.Declare_End</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="NeSy4PPM.Data_preprocessing.html#NeSy4PPM.Data_preprocessing.utils.BK_type.ProbDeclare"><code class="docutils literal notranslate"><span class="pre">BK_type.ProbDeclare</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="NeSy4PPM.Data_preprocessing.html#NeSy4PPM.Data_preprocessing.utils.BK_type.Procedural"><code class="docutils literal notranslate"><span class="pre">BK_type.Procedural</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="NeSy4PPM.Data_preprocessing.html#NeSy4PPM.Data_preprocessing.utils.BK_type.Procedural_End"><code class="docutils literal notranslate"><span class="pre">BK_type.Procedural_End</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="NeSy4PPM.Data_preprocessing.html#NeSy4PPM.Data_preprocessing.utils.Encodings"><code class="docutils literal notranslate"><span class="pre">Encodings</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="NeSy4PPM.Data_preprocessing.html#NeSy4PPM.Data_preprocessing.utils.Encodings.Index_based"><code class="docutils literal notranslate"><span class="pre">Encodings.Index_based</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="NeSy4PPM.Data_preprocessing.html#NeSy4PPM.Data_preprocessing.utils.Encodings.Multi_encoders"><code class="docutils literal notranslate"><span class="pre">Encodings.Multi_encoders</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="NeSy4PPM.Data_preprocessing.html#NeSy4PPM.Data_preprocessing.utils.Encodings.One_hot"><code class="docutils literal notranslate"><span class="pre">Encodings.One_hot</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="NeSy4PPM.Data_preprocessing.html#NeSy4PPM.Data_preprocessing.utils.Encodings.Shrinked_based"><code class="docutils literal notranslate"><span class="pre">Encodings.Shrinked_based</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="NeSy4PPM.Data_preprocessing.html#NeSy4PPM.Data_preprocessing.utils.NN_model"><code class="docutils literal notranslate"><span class="pre">NN_model</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="NeSy4PPM.Data_preprocessing.html#NeSy4PPM.Data_preprocessing.utils.NN_model.LSTM"><code class="docutils literal notranslate"><span class="pre">NN_model.LSTM</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="NeSy4PPM.Data_preprocessing.html#NeSy4PPM.Data_preprocessing.utils.NN_model.Transformer"><code class="docutils literal notranslate"><span class="pre">NN_model.Transformer</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="NeSy4PPM.Data_preprocessing.html#NeSy4PPM.Data_preprocessing.utils.discover_Petri_nets"><code class="docutils literal notranslate"><span class="pre">discover_Petri_nets()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="NeSy4PPM.Data_preprocessing.html#NeSy4PPM.Data_preprocessing.utils.extract_last_model_checkpoint"><code class="docutils literal notranslate"><span class="pre">extract_last_model_checkpoint()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="NeSy4PPM.Data_preprocessing.html#NeSy4PPM.Data_preprocessing.utils.load_bk"><code class="docutils literal notranslate"><span class="pre">load_bk()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="NeSy4PPM.Data_preprocessing.html#NeSy4PPM.Data_preprocessing.utils.prepare_encoded_data"><code class="docutils literal notranslate"><span class="pre">prepare_encoded_data()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="NeSy4PPM.Data_preprocessing.html#module-NeSy4PPM.Data_preprocessing">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="NeSy4PPM.Prediction.html">NeSy4PPM.Prediction package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="NeSy4PPM.Prediction.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="NeSy4PPM.Prediction.html#module-NeSy4PPM.Prediction.Checkers">NeSy4PPM.Prediction.Checkers module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="NeSy4PPM.Prediction.html#NeSy4PPM.Prediction.Checkers.Constraint_checker"><code class="docutils literal notranslate"><span class="pre">Constraint_checker</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="NeSy4PPM.Prediction.html#NeSy4PPM.Prediction.Checkers.Constraint_checker.check_trace_conformance"><code class="docutils literal notranslate"><span class="pre">Constraint_checker.check_trace_conformance()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="NeSy4PPM.Prediction.html#NeSy4PPM.Prediction.Checkers.TraceDeclareAnalyzer"><code class="docutils literal notranslate"><span class="pre">TraceDeclareAnalyzer</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="NeSy4PPM.Prediction.html#NeSy4PPM.Prediction.Checkers.TraceDeclareAnalyzer.run"><code class="docutils literal notranslate"><span class="pre">TraceDeclareAnalyzer.run()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="NeSy4PPM.Prediction.html#module-NeSy4PPM.Prediction.create_event_log">NeSy4PPM.Prediction.create_event_log module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="NeSy4PPM.Prediction.html#NeSy4PPM.Prediction.create_event_log.convert_to_log"><code class="docutils literal notranslate"><span class="pre">convert_to_log()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="NeSy4PPM.Prediction.html#NeSy4PPM.Prediction.create_event_log.convert_trace"><code class="docutils literal notranslate"><span class="pre">convert_trace()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="NeSy4PPM.Prediction.html#module-NeSy4PPM.Prediction.inference_algorithm">NeSy4PPM.Prediction.inference_algorithm module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="NeSy4PPM.Prediction.html#NeSy4PPM.Prediction.inference_algorithm.run_experiments"><code class="docutils literal notranslate"><span class="pre">run_experiments()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="NeSy4PPM.Prediction.html#module-NeSy4PPM.Prediction.predict_suffix">NeSy4PPM.Prediction.predict_suffix module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="NeSy4PPM.Prediction.html#NeSy4PPM.Prediction.predict_suffix.predict_evaluate"><code class="docutils literal notranslate"><span class="pre">predict_evaluate()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="NeSy4PPM.Prediction.html#module-NeSy4PPM.Prediction.prepare_data">NeSy4PPM.Prediction.prepare_data module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="NeSy4PPM.Prediction.html#NeSy4PPM.Prediction.prepare_data.ConstraintChecker"><code class="docutils literal notranslate"><span class="pre">ConstraintChecker</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="NeSy4PPM.Prediction.html#NeSy4PPM.Prediction.prepare_data.ConstraintChecker.POSSIBLY_SATISFIED"><code class="docutils literal notranslate"><span class="pre">ConstraintChecker.POSSIBLY_SATISFIED</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="NeSy4PPM.Prediction.html#NeSy4PPM.Prediction.prepare_data.ConstraintChecker.POSSIBLY_VIOLATED"><code class="docutils literal notranslate"><span class="pre">ConstraintChecker.POSSIBLY_VIOLATED</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="NeSy4PPM.Prediction.html#NeSy4PPM.Prediction.prepare_data.ConstraintChecker.SATISFIED"><code class="docutils literal notranslate"><span class="pre">ConstraintChecker.SATISFIED</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="NeSy4PPM.Prediction.html#NeSy4PPM.Prediction.prepare_data.ConstraintChecker.VIOLATED"><code class="docutils literal notranslate"><span class="pre">ConstraintChecker.VIOLATED</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="NeSy4PPM.Prediction.html#NeSy4PPM.Prediction.prepare_data.compliance_checking"><code class="docutils literal notranslate"><span class="pre">compliance_checking()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="NeSy4PPM.Prediction.html#NeSy4PPM.Prediction.prepare_data.encode"><code class="docutils literal notranslate"><span class="pre">encode()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="NeSy4PPM.Prediction.html#NeSy4PPM.Prediction.prepare_data.get_beam_size"><code class="docutils literal notranslate"><span class="pre">get_beam_size()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="NeSy4PPM.Prediction.html#NeSy4PPM.Prediction.prepare_data.get_pn_fitness"><code class="docutils literal notranslate"><span class="pre">get_pn_fitness()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="NeSy4PPM.Prediction.html#module-NeSy4PPM.Prediction">Module contents</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="NeSy4PPM.ProbDeclmonitor.html">NeSy4PPM.ProbDeclmonitor package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="NeSy4PPM.ProbDeclmonitor.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="NeSy4PPM.ProbDeclmonitor.html#nesy4ppm-probdeclmonitor-aututils-module">NeSy4PPM.ProbDeclmonitor.autUtils module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="NeSy4PPM.ProbDeclmonitor.html#nesy4ppm-probdeclmonitor-ltlutils-module">NeSy4PPM.ProbDeclmonitor.ltlUtils module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="NeSy4PPM.ProbDeclmonitor.html#nesy4ppm-probdeclmonitor-probdeclpredictor-module">NeSy4PPM.ProbDeclmonitor.probDeclPredictor module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="NeSy4PPM.ProbDeclmonitor.html#module-contents">Module contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="NeSy4PPM.ProbDeclmonitor.html#module-NeSy4PPM.ProbDeclmonitor.autUtils">NeSy4PPM.ProbDeclmonitor.autUtils module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="NeSy4PPM.ProbDeclmonitor.html#NeSy4PPM.ProbDeclmonitor.autUtils.TruthValue"><code class="docutils literal notranslate"><span class="pre">TruthValue</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="NeSy4PPM.ProbDeclmonitor.html#NeSy4PPM.ProbDeclmonitor.autUtils.TruthValue.PERM_SAT"><code class="docutils literal notranslate"><span class="pre">TruthValue.PERM_SAT</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="NeSy4PPM.ProbDeclmonitor.html#NeSy4PPM.ProbDeclmonitor.autUtils.TruthValue.PERM_VIOL"><code class="docutils literal notranslate"><span class="pre">TruthValue.PERM_VIOL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="NeSy4PPM.ProbDeclmonitor.html#NeSy4PPM.ProbDeclmonitor.autUtils.TruthValue.POSS_SAT"><code class="docutils literal notranslate"><span class="pre">TruthValue.POSS_SAT</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="NeSy4PPM.ProbDeclmonitor.html#NeSy4PPM.ProbDeclmonitor.autUtils.TruthValue.POSS_VIOL"><code class="docutils literal notranslate"><span class="pre">TruthValue.POSS_VIOL</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="NeSy4PPM.commons.html">NeSy4PPM.commons package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="NeSy4PPM.commons.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="NeSy4PPM.commons.html#nesy4ppm-commons-log-utils-module">NeSy4PPM.commons.log_utils module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="NeSy4PPM.commons.html#nesy4ppm-commons-shared-variables-module">NeSy4PPM.commons.shared_variables module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="NeSy4PPM.commons.html#nesy4ppm-commons-utils-module">NeSy4PPM.commons.utils module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="NeSy4PPM.commons.html#module-contents">Module contents</a></li>
+<li class="toctree-l3"><a class="reference internal" href="NeSy4PPM.ProbDeclmonitor.html#NeSy4PPM.ProbDeclmonitor.autUtils.get_state_for_prefix"><code class="docutils literal notranslate"><span class="pre">get_state_for_prefix()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="NeSy4PPM.ProbDeclmonitor.html#NeSy4PPM.ProbDeclmonitor.autUtils.get_state_truth_value"><code class="docutils literal notranslate"><span class="pre">get_state_truth_value()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="NeSy4PPM.ProbDeclmonitor.html#NeSy4PPM.ProbDeclmonitor.autUtils.prefix_to_word"><code class="docutils literal notranslate"><span class="pre">prefix_to_word()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="NeSy4PPM.evaluation.html">NeSy4PPM.evaluation package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="NeSy4PPM.evaluation.html#subpackages">Subpackages</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="NeSy4PPM.evaluation.inference_algorithms.html">NeSy4PPM.evaluation.inference_algorithms package</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="NeSy4PPM.evaluation.inference_algorithms.html#submodules">Submodules</a></li>
-<li class="toctree-l4"><a class="reference internal" href="NeSy4PPM.evaluation.inference_algorithms.html#nesy4ppm-evaluation-inference-algorithms-checkers-module">NeSy4PPM.evaluation.inference_algorithms.Checkers module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="NeSy4PPM.evaluation.inference_algorithms.html#nesy4ppm-evaluation-inference-algorithms-baseline-cf-module">NeSy4PPM.evaluation.inference_algorithms.baseline_cf module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="NeSy4PPM.evaluation.inference_algorithms.html#nesy4ppm-evaluation-inference-algorithms-beamsearch-cf-module">NeSy4PPM.evaluation.inference_algorithms.beamsearch_cf module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="NeSy4PPM.evaluation.inference_algorithms.html#module-contents">Module contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="NeSy4PPM.ProbDeclmonitor.html#module-NeSy4PPM.ProbDeclmonitor.ltlUtils">NeSy4PPM.ProbDeclmonitor.ltlUtils module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="NeSy4PPM.ProbDeclmonitor.html#NeSy4PPM.ProbDeclmonitor.ltlUtils.get_constraint_formula"><code class="docutils literal notranslate"><span class="pre">get_constraint_formula()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="NeSy4PPM.ProbDeclmonitor.html#module-NeSy4PPM.ProbDeclmonitor.probDeclPredictor">NeSy4PPM.ProbDeclmonitor.probDeclPredictor module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="NeSy4PPM.ProbDeclmonitor.html#NeSy4PPM.ProbDeclmonitor.probDeclPredictor.AggregationMethod"><code class="docutils literal notranslate"><span class="pre">AggregationMethod</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="NeSy4PPM.ProbDeclmonitor.html#NeSy4PPM.ProbDeclmonitor.probDeclPredictor.AggregationMethod.AVG"><code class="docutils literal notranslate"><span class="pre">AggregationMethod.AVG</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="NeSy4PPM.ProbDeclmonitor.html#NeSy4PPM.ProbDeclmonitor.probDeclPredictor.AggregationMethod.MAX"><code class="docutils literal notranslate"><span class="pre">AggregationMethod.MAX</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="NeSy4PPM.ProbDeclmonitor.html#NeSy4PPM.ProbDeclmonitor.probDeclPredictor.AggregationMethod.MIN"><code class="docutils literal notranslate"><span class="pre">AggregationMethod.MIN</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="NeSy4PPM.ProbDeclmonitor.html#NeSy4PPM.ProbDeclmonitor.probDeclPredictor.AggregationMethod.SUM"><code class="docutils literal notranslate"><span class="pre">AggregationMethod.SUM</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="NeSy4PPM.ProbDeclmonitor.html#NeSy4PPM.ProbDeclmonitor.probDeclPredictor.ProbDeclarePredictor"><code class="docutils literal notranslate"><span class="pre">ProbDeclarePredictor</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="NeSy4PPM.ProbDeclmonitor.html#NeSy4PPM.ProbDeclmonitor.probDeclPredictor.ProbDeclarePredictor.loadProbDeclModel"><code class="docutils literal notranslate"><span class="pre">ProbDeclarePredictor.loadProbDeclModel()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="NeSy4PPM.ProbDeclmonitor.html#NeSy4PPM.ProbDeclmonitor.probDeclPredictor.ProbDeclarePredictor.processPrefix"><code class="docutils literal notranslate"><span class="pre">ProbDeclarePredictor.processPrefix()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="NeSy4PPM.ProbDeclmonitor.html#NeSy4PPM.ProbDeclmonitor.probDeclPredictor.get_aggregate_score"><code class="docutils literal notranslate"><span class="pre">get_aggregate_score()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="NeSy4PPM.ProbDeclmonitor.html#module-NeSy4PPM.ProbDeclmonitor">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="NeSy4PPM.Training.html">NeSy4PPM.Training package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="NeSy4PPM.Training.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="NeSy4PPM.Training.html#module-NeSy4PPM.Training.Modulator">NeSy4PPM.Training.Modulator module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="NeSy4PPM.Training.html#NeSy4PPM.Training.Modulator.Modulator"><code class="docutils literal notranslate"><span class="pre">Modulator</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="NeSy4PPM.Training.html#NeSy4PPM.Training.Modulator.Modulator.build"><code class="docutils literal notranslate"><span class="pre">Modulator.build()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="NeSy4PPM.Training.html#NeSy4PPM.Training.Modulator.Modulator.call"><code class="docutils literal notranslate"><span class="pre">Modulator.call()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="NeSy4PPM.Training.html#NeSy4PPM.Training.Modulator.Modulator.compute_output_shape"><code class="docutils literal notranslate"><span class="pre">Modulator.compute_output_shape()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="NeSy4PPM.Training.html#NeSy4PPM.Training.Modulator.Modulator.get_config"><code class="docutils literal notranslate"><span class="pre">Modulator.get_config()</span></code></a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="NeSy4PPM.evaluation.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="NeSy4PPM.evaluation.html#nesy4ppm-evaluation-checkers-module">NeSy4PPM.evaluation.Checkers module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="NeSy4PPM.evaluation.html#nesy4ppm-evaluation-create-event-log-module">NeSy4PPM.evaluation.create_event_log module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="NeSy4PPM.evaluation.html#nesy4ppm-evaluation-evaluation-module">NeSy4PPM.evaluation.evaluation module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="NeSy4PPM.evaluation.html#nesy4ppm-evaluation-prepare-data-module">NeSy4PPM.evaluation.prepare_data module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="NeSy4PPM.evaluation.html#module-contents">Module contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="NeSy4PPM.Training.html#module-NeSy4PPM.Training.train_common">NeSy4PPM.Training.train_common module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="NeSy4PPM.Training.html#NeSy4PPM.Training.train_common.CustomTransformer"><code class="docutils literal notranslate"><span class="pre">CustomTransformer</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="NeSy4PPM.Training.html#NeSy4PPM.Training.train_common.CustomTransformer.call"><code class="docutils literal notranslate"><span class="pre">CustomTransformer.call()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="NeSy4PPM.Training.html#NeSy4PPM.Training.train_common.CustomTransformer.get_config"><code class="docutils literal notranslate"><span class="pre">CustomTransformer.get_config()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="NeSy4PPM.training.html">NeSy4PPM.training package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="NeSy4PPM.training.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="NeSy4PPM.training.html#nesy4ppm-training-modulator-module">NeSy4PPM.training.Modulator module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="NeSy4PPM.training.html#nesy4ppm-training-train-common-module">NeSy4PPM.training.train_common module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="NeSy4PPM.training.html#nesy4ppm-training-train-model-module">NeSy4PPM.training.train_model module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="NeSy4PPM.training.html#module-contents">Module contents</a></li>
+<li class="toctree-l3"><a class="reference internal" href="NeSy4PPM.Training.html#NeSy4PPM.Training.train_common.create_checkpoints_path"><code class="docutils literal notranslate"><span class="pre">create_checkpoints_path()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="NeSy4PPM.Training.html#NeSy4PPM.Training.train_common.plot_loss"><code class="docutils literal notranslate"><span class="pre">plot_loss()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="NeSy4PPM.Training.html#module-NeSy4PPM.Training.train_model">NeSy4PPM.Training.train_model module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="NeSy4PPM.Training.html#NeSy4PPM.Training.train_model.learn"><code class="docutils literal notranslate"><span class="pre">learn()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="NeSy4PPM.Training.html#NeSy4PPM.Training.train_model.train"><code class="docutils literal notranslate"><span class="pre">train()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="NeSy4PPM.Training.html#module-NeSy4PPM.Training">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -89,17 +229,31 @@
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">¶</a></h2>
 </section>
-<section id="nesy4ppm-csv-to-xes-module">
-<h2>NeSy4PPM.csv_to_xes module<a class="headerlink" href="#nesy4ppm-csv-to-xes-module" title="Link to this heading">¶</a></h2>
+<section id="module-NeSy4PPM.Evaluation">
+<span id="nesy4ppm-evaluation-module"></span><h2>NeSy4PPM.Evaluation module<a class="headerlink" href="#module-NeSy4PPM.Evaluation" title="Link to this heading">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="NeSy4PPM.Evaluation.discover_petri_net">
+<span class="sig-prename descclassname"><span class="pre">NeSy4PPM.Evaluation.</span></span><span class="sig-name descname"><span class="pre">discover_petri_net</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">log_path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#NeSy4PPM.Evaluation.discover_petri_net" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="NeSy4PPM.Evaluation.evaluate_all">
+<span class="sig-prename descclassname"><span class="pre">NeSy4PPM.Evaluation.</span></span><span class="sig-name descname"><span class="pre">evaluate_all</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">log_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="NeSy4PPM.Data_preprocessing.html#NeSy4PPM.Data_preprocessing.log_utils.LogData" title="NeSy4PPM.Data_preprocessing.log_utils.LogData"><span class="pre">LogData</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_arch</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="NeSy4PPM.Data_preprocessing.html#NeSy4PPM.Data_preprocessing.utils.NN_model" title="NeSy4PPM.Data_preprocessing.utils.NN_model"><span class="pre">NN_model</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="NeSy4PPM.Data_preprocessing.html#NeSy4PPM.Data_preprocessing.utils.Encodings" title="NeSy4PPM.Data_preprocessing.utils.Encodings"><span class="pre">Encodings</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_folder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metrics</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resource</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">declare_model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">petri_net_model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fitness_method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#NeSy4PPM.Evaluation.evaluate_all" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="NeSy4PPM.Evaluation.get_fitness">
+<span class="sig-prename descclassname"><span class="pre">NeSy4PPM.Evaluation.</span></span><span class="sig-name descname"><span class="pre">get_fitness</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event_log</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bk_model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method_fitness</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'fitness_token_based_replay'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#NeSy4PPM.Evaluation.get_fitness" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="NeSy4PPM.Evaluation.log_conformance">
+<span class="sig-prename descclassname"><span class="pre">NeSy4PPM.Evaluation.</span></span><span class="sig-name descname"><span class="pre">log_conformance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">log</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bk_model</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#NeSy4PPM.Evaluation.log_conformance" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </section>
-<section id="nesy4ppm-results-aggregator-module">
-<h2>NeSy4PPM.results_aggregator module<a class="headerlink" href="#nesy4ppm-results-aggregator-module" title="Link to this heading">¶</a></h2>
-</section>
-<section id="nesy4ppm-run-experiments-module">
-<h2>NeSy4PPM.run_experiments module<a class="headerlink" href="#nesy4ppm-run-experiments-module" title="Link to this heading">¶</a></h2>
-</section>
-<section id="module-contents">
-<h2>Module contents<a class="headerlink" href="#module-contents" title="Link to this heading">¶</a></h2>
+<section id="module-NeSy4PPM">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-NeSy4PPM" title="Link to this heading">¶</a></h2>
 </section>
 </section>
 
@@ -129,6 +283,7 @@
     </div>
 </search>
 <script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">NeSy4PPM</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">NeSy4PPM package</a></li>
@@ -145,7 +300,7 @@
   <li><a href="index.html">Documentation overview</a><ul>
   <li><a href="modules.html">NeSy4PPM</a><ul>
       <li>Previous: <a href="modules.html" title="previous chapter">NeSy4PPM</a></li>
-      <li>Next: <a href="NeSy4PPM.ProbDeclmonitor.html" title="next chapter">NeSy4PPM.ProbDeclmonitor package</a></li>
+      <li>Next: <a href="NeSy4PPM.Data_preprocessing.html" title="next chapter">NeSy4PPM.Data_preprocessing package</a></li>
   </ul></li>
   </ul></li>
 </ul>
@@ -163,7 +318,7 @@
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &#169;2025, Jamila Oukharijane.
+      &#169;2025, Jamila Oukharijane, Ivan Donadello, Fabrizio Maria Maggi.
       
       |
       Powered by <a href="https://www.sphinx-doc.org/">Sphinx 8.1.3</a>

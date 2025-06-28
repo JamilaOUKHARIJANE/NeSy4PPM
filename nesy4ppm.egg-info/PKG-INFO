@@ -1,0 +1,72 @@
+Metadata-Version: 2.4
+Name: nesy4ppm
+Version: 0.1.0
+Summary: Python library to perform learning and suffix prediction with background knowledge under concept drifts.
+Author-email: Jamila Oukharijane <jamila.oukharijane@unibz.it>, Ivan Donadello <ivan.donadello@unibz.it>, Fabrizio Maria Maggi <maggi@inf.unibz.it>
+Project-URL: Homepage, https://github.com/JamilaOUKHARIJANE/NeSy4PPM
+Keywords: python,process mining,predictive process monitoring,suffix prediction,background knowledge
+Requires-Python: >=3.9.7
+Description-Content-Type: text/markdown
+Requires-Dist: declare4py>=2.2.0
+Requires-Dist: tensorflow==2.10.1
+Requires-Dist: Distance==0.1.3
+Requires-Dist: keras==2.10.0
+Requires-Dist: keras-nlp==0.4.1
+Requires-Dist: jellyfish==0.9.0
+Requires-Dist: absl-py==2.3.0
+
+# NeSy4PPM
+
+## About
+
+NeSy4PPM is the first Python package designed for both single-attribute (e.g., activity) and multi-attribute (e.g., activity and resource) suffix prediction in predictive process monitoring. It implements a Neuro-Symbolic (NeSy) system that integrates neural models with various types of symbolic background knowledge (BK), enabling accurate and compliant predictions even under concept drift.
+
+NeSy4PPM offers the following key features:
+
+1. **Symbolic knowledge integration**: supports declarative and procedural BK, including DECLARE, MP-DECLARE (multi-perspective DECLARE), ProbDECLARE (probabilistic DECLARE), and Petri nets.
+
+2. **Flexible learning**: provides multiple prefix encoding methods and supports LSTM (Long Short-Term Memory) and Transformer architectures.
+
+3. **Drift-aware prediction**: contextualizes neural predictions using BK in real-time, enhancing prediction accuracy and compliance in dynamic environments.
+
+## Installation
+
+We recommend using a virtual environment to avoid conflicts between your local Python setup and required libraries. You can use [Conda](https://conda.io) or [venv](https://docs.python.org/3/library/venv.html):
+
+1. Clone/download the NeSy4PPM project.
+2. Activate your virtual environment.
+3. Install the dependencies listed in `requirements.txt` using `pip install -r requirements.txt`.
+
+Alternatively, you can install NeSy4PPM directly from [PyPi](https://pypi.org/project/nesy4ppm/).
+
+For ProbDECLARE BK conformance checking, install the [Lydia](https://github.com/whitemech/lydia) backend using Docker:
+
+1. [Install Docker](https://www.docker.com/get-started)
+2. Pull the Lydia image:
+   ```bash
+   docker pull whitemech/lydia:latest
+3. Make the Docker image executable under the name `lydia`. On Linux and macOS machines, the following commands should work:
+   ```bash
+   echo '#!/usr/bin/env sh' > lydia
+   echo 'docker run -v$(pwd):/home/default whitemech/lydia lydia "$@"' >> lydia
+   sudo chmod u+x lydia
+   sudo mv lydia /usr/local/bin/
+   ```
+   
+More information can be found [here](https://github.com/whitemech/logaut).
+
+## Tutorials
+The `docs/tutorials/` folder contains hands-on Jupyter notebooks that guide users through the main functionalities of NeSy4PPM. 
+The tutorials use the [Sepsis cases log](https://data.4tu.nl/articles/dataset/Sepsis_Cases_-_Event_Log/12707639) as a running example.
+1. Learning
+   1. [Event log encoding](https://github.com/JamilaOUKHARIJANE/NeSy4PPM/docs/tutorials/1.Encoding_Event_Logs.ipynb): methods for encoding event logs into numeric vectors;
+   2. [NN model training](https://github.com/JamilaOUKHARIJANE/NeSy4PPM/docs/tutorials/2.Training_Neural_Model.ipynb): training LSTM or Transformer models using encoded log;
+   3. [Full learning](https://github.com/JamilaOUKHARIJANE/NeSy4PPM/docs/tutorials/3.Learning.ipynb): full pipeline for Neural model learning.
+2. [Prediction](https://github.com/JamilaOUKHARIJANE/NeSy4PPM/docs/source/tutorials/4.Predicting_Suffix.ipynb): methods for predicting suffix using a trained Neural model and an external BK;
+3. [End to end pipeline](https://github.com/JamilaOUKHARIJANE/NeSy4PPM/docs/source/tutorials/4.Learning_and_Predicting_Suffix.ipynb): combines Neural model learning and prediction.
+
+## Repository Structure
+- `NeSy4PPM/learning` contains the implementation of event log encoding and Neural Networks model training.
+- `NeSy4PPM/ProbDeclmonitor` contains the implementation of suffix prediction using a contextualized Neural predictions with BK.
+- `tests/` provides evaluation scripts for assessing the NeSy4PPM prediction performance.
+- `docs/tutorials/` contains step-by-step guides and examples to help users get started with NeSy4PPM.

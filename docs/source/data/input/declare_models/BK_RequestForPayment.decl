@@ -1,0 +1,20 @@
+activity Request For Payment SUBMITTED by EMPLOYEE
+bind Request For Payment SUBMITTED by EMPLOYEE: org:resource
+activity Request For Payment APPROVED by ADMINISTRATION
+bind Request For Payment APPROVED by ADMINISTRATION: org:resource
+activity Payment Handled
+bind Payment Handled: org:resource
+activity Request Payment
+bind Request Payment: org:resource
+activity Request For Payment FINAL_APPROVED by SUPERVISOR
+bind Request For Payment FINAL_APPROVED by SUPERVISOR: org:resource
+activity Request For Payment APPROVED by BUDGET OWNER
+bind Request For Payment APPROVED by BUDGET OWNER: org:resource
+org:resource: ADMINISTRATION, EMPLOYEE, UNDEFINED, SUPERVISOR, BUDGET OWNER, DIRECTOR
+Existence[Request For Payment APPROVED by BUDGET OWNER] |A.org:resource is BUDGET OWNER |
+Existence[Request For Payment FINAL_APPROVED by SUPERVISOR] |A.org:resource is SUPERVISOR |
+Existence[Payment Handled] |A.org:resource is UNDEFINED |
+Chain Precedence[Request For Payment APPROVED by ADMINISTRATION, Request For Payment APPROVED by BUDGET OWNER] |A.org:resource is BUDGET OWNER | |
+Chain Precedence[Request For Payment APPROVED by BUDGET OWNER, Request For Payment FINAL_APPROVED by SUPERVISOR] |A.org:resource is SUPERVISOR | |
+Alternate Precedence[Request For Payment APPROVED by BUDGET OWNER, Payment Handled] |A.org:resource is UNDEFINED | |
+Alternate Response[Request For Payment SUBMITTED by EMPLOYEE, Request For Payment APPROVED by BUDGET OWNER] |A.org:resource is EMPLOYEE | |

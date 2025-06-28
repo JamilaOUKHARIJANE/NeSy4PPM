@@ -1,4 +1,0 @@
-Case ID,Prefix length,Trace Prefix Act,Ground truth,Predicted Acts,Damerau-Levenshtein Acts,Jaccard Acts,Trace Prefix Res,Ground Truth Resources,Predicted Resources,Damerau-Levenshtein Resources,Jaccard Resources,Damerau-Levenshtein Combined,Weight
-Case 1327,1,Assign seriousness,|Wait, Resolve ticket, Closed|,,0.0,0.0,Value 13,|Value 1, Value 13, Value 3|,,0.0,0.0,0.0,0.0
-Case 1327,2,|Assign seriousness, Wait|,|Resolve ticket, Closed|,,0.0,0.0,|Value 13, Value 1|,|Value 13, Value 3|,,0.0,0.0,0.0,0.0
-Case 1327,3,|Assign seriousness, Wait, Resolve ticket|,Closed,,0.0,0.0,|Value 13, Value 1, Value 13|,Value 3,,0.0,0.0,0.0,0.0

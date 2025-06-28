@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>NeSy4PPM.Data_preprocessing package &#8212; NeSy4PPM 0.1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="_static/basic.css?v=686e5160" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=27fed22d" />
+    <link rel="stylesheet" type="text/css" href="_static/css/custom.css" />
+    <script src="_static/documentation_options.js?v=01f34227"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="NeSy4PPM.Prediction package" href="NeSy4PPM.Prediction.html" />
+    <link rel="prev" title="NeSy4PPM package" href="NeSy4PPM.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="nesy4ppm-data-preprocessing-package">
+<h1>NeSy4PPM.Data_preprocessing package<a class="headerlink" href="#nesy4ppm-data-preprocessing-package" title="Link to this heading">¶</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">¶</a></h2>
+</section>
+<section id="module-NeSy4PPM.Data_preprocessing.data_preprocessing">
+<span id="nesy4ppm-data-preprocessing-data-preprocessing-module"></span><h2>NeSy4PPM.Data_preprocessing.data_preprocessing module<a class="headerlink" href="#module-NeSy4PPM.Data_preprocessing.data_preprocessing" title="Link to this heading">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="NeSy4PPM.Data_preprocessing.data_preprocessing.encode_prefixes">
+<span class="sig-prename descclassname"><span class="pre">NeSy4PPM.Data_preprocessing.data_preprocessing.</span></span><span class="sig-name descname"><span class="pre">encode_prefixes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">log_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#NeSy4PPM.Data_preprocessing.log_utils.LogData" title="NeSy4PPM.Data_preprocessing.log_utils.LogData"><span class="pre">LogData</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefixes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#NeSy4PPM.Data_preprocessing.utils.Encodings" title="NeSy4PPM.Data_preprocessing.utils.Encodings"><span class="pre">Encodings</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">Encodings.Index_based</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resource</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span></span></span><a class="headerlink" href="#NeSy4PPM.Data_preprocessing.data_preprocessing.encode_prefixes" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="NeSy4PPM.Data_preprocessing.data_preprocessing.end_to_end_process">
+<span class="sig-prename descclassname"><span class="pre">NeSy4PPM.Data_preprocessing.data_preprocessing.</span></span><span class="sig-name descname"><span class="pre">end_to_end_process</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">log_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_ratio</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_log</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_log</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">case_name_key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'case:concept:name'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">act_name_key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'concept:name'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">res_name_key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'org:resource'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timestamp_key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'time:timestamp'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#NeSy4PPM.Data_preprocessing.utils.Encodings" title="NeSy4PPM.Data_preprocessing.utils.Encodings"><span class="pre">Encodings</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">Encodings.Index_based</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resource</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#NeSy4PPM.Data_preprocessing.data_preprocessing.end_to_end_process" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="NeSy4PPM.Data_preprocessing.data_preprocessing.extract_encode_prefixes">
+<span class="sig-prename descclassname"><span class="pre">NeSy4PPM.Data_preprocessing.data_preprocessing.</span></span><span class="sig-name descname"><span class="pre">extract_encode_prefixes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">log_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#NeSy4PPM.Data_preprocessing.log_utils.LogData" title="NeSy4PPM.Data_preprocessing.log_utils.LogData"><span class="pre">LogData</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#NeSy4PPM.Data_preprocessing.utils.Encodings" title="NeSy4PPM.Data_preprocessing.utils.Encodings"><span class="pre">Encodings</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">Encodings.Index_based</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resource</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#NeSy4PPM.Data_preprocessing.data_preprocessing.extract_encode_prefixes" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="NeSy4PPM.Data_preprocessing.data_preprocessing.extract_trace_prefixes">
+<span class="sig-prename descclassname"><span class="pre">NeSy4PPM.Data_preprocessing.data_preprocessing.</span></span><span class="sig-name descname"><span class="pre">extract_trace_prefixes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">log_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#NeSy4PPM.Data_preprocessing.log_utils.LogData" title="NeSy4PPM.Data_preprocessing.log_utils.LogData"><span class="pre">LogData</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">resource</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#NeSy4PPM.Data_preprocessing.data_preprocessing.extract_trace_prefixes" title="Link to this definition">¶</a></dt>
+<dd><p>Extract activity and resource sequences starting from a list of trace ids (i.e. trace_names).</p>
+</dd></dl>
+
+</section>
+<section id="module-NeSy4PPM.Data_preprocessing.log_utils">
+<span id="nesy4ppm-data-preprocessing-log-utils-module"></span><h2>NeSy4PPM.Data_preprocessing.log_utils module<a class="headerlink" href="#module-NeSy4PPM.Data_preprocessing.log_utils" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="NeSy4PPM.Data_preprocessing.log_utils.LogData">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">NeSy4PPM.Data_preprocessing.log_utils.</span></span><span class="sig-name descname"><span class="pre">LogData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">log_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_ratio</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_log</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_log</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">case_name_key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'case:concept:name'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">act_name_key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'concept:name'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">res_name_key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'org:resource'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timestamp_key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'time:timestamp'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#NeSy4PPM.Data_preprocessing.log_utils.LogData" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="NeSy4PPM.Data_preprocessing.log_utils.LogData.act_enc_mapping">
+<span class="sig-name descname"><span class="pre">act_enc_mapping</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">{&lt;class</span> <span class="pre">'str'&gt;}</span></em><a class="headerlink" href="#NeSy4PPM.Data_preprocessing.log_utils.LogData.act_enc_mapping" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="NeSy4PPM.Data_preprocessing.log_utils.LogData.act_name_key">
+<span class="sig-name descname"><span class="pre">act_name_key</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#NeSy4PPM.Data_preprocessing.log_utils.LogData.act_name_key" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="NeSy4PPM.Data_preprocessing.log_utils.LogData.case_name_key">
+<span class="sig-name descname"><span class="pre">case_name_key</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#NeSy4PPM.Data_preprocessing.log_utils.LogData.case_name_key" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="NeSy4PPM.Data_preprocessing.log_utils.LogData.compliance_th">
+<span class="sig-name descname"><span class="pre">compliance_th</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#NeSy4PPM.Data_preprocessing.log_utils.LogData.compliance_th" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="NeSy4PPM.Data_preprocessing.log_utils.LogData.encode_log">
+<span class="sig-name descname"><span class="pre">encode_log</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">resource</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ascii_offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">161</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#NeSy4PPM.Data_preprocessing.log_utils.LogData.encode_log" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="NeSy4PPM.Data_preprocessing.log_utils.LogData.evaluation_prefix_end">
+<span class="sig-name descname"><span class="pre">evaluation_prefix_end</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#NeSy4PPM.Data_preprocessing.log_utils.LogData.evaluation_prefix_end" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="NeSy4PPM.Data_preprocessing.log_utils.LogData.evaluation_prefix_start">
+<span class="sig-name descname"><span class="pre">evaluation_prefix_start</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#NeSy4PPM.Data_preprocessing.log_utils.LogData.evaluation_prefix_start" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="NeSy4PPM.Data_preprocessing.log_utils.LogData.evaluation_th">
+<span class="sig-name descname"><span class="pre">evaluation_th</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#NeSy4PPM.Data_preprocessing.log_utils.LogData.evaluation_th" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="NeSy4PPM.Data_preprocessing.log_utils.LogData.evaluation_trace_ids">
+<span class="sig-name descname"><span class="pre">evaluation_trace_ids</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[&lt;class</span> <span class="pre">'str'&gt;]</span></em><a class="headerlink" href="#NeSy4PPM.Data_preprocessing.log_utils.LogData.evaluation_trace_ids" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="NeSy4PPM.Data_preprocessing.log_utils.LogData.label_name_key">
+<span class="sig-name descname"><span class="pre">label_name_key</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#NeSy4PPM.Data_preprocessing.log_utils.LogData.label_name_key" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="NeSy4PPM.Data_preprocessing.log_utils.LogData.label_neg_val">
+<span class="sig-name descname"><span class="pre">label_neg_val</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#NeSy4PPM.Data_preprocessing.log_utils.LogData.label_neg_val" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="NeSy4PPM.Data_preprocessing.log_utils.LogData.label_pos_val">
+<span class="sig-name descname"><span class="pre">label_pos_val</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#NeSy4PPM.Data_preprocessing.log_utils.LogData.label_pos_val" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="NeSy4PPM.Data_preprocessing.log_utils.LogData.log">
+<span class="sig-name descname"><span class="pre">log</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">DataFrame</span></em><a class="headerlink" href="#NeSy4PPM.Data_preprocessing.log_utils.LogData.log" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="NeSy4PPM.Data_preprocessing.log_utils.LogData.log_name">
+<span class="sig-name descname"><span class="pre">log_name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#NeSy4PPM.Data_preprocessing.log_utils.LogData.log_name" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="NeSy4PPM.Data_preprocessing.log_utils.LogData.max_len">
+<span class="sig-name descname"><span class="pre">max_len</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#NeSy4PPM.Data_preprocessing.log_utils.LogData.max_len" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="NeSy4PPM.Data_preprocessing.log_utils.LogData.read_log">
+<span class="sig-name descname"><span class="pre">read_log</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">log_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#NeSy4PPM.Data_preprocessing.log_utils.LogData.read_log" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="NeSy4PPM.Data_preprocessing.log_utils.LogData.res_enc_mapping">
+<span class="sig-name descname"><span class="pre">res_enc_mapping</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">{&lt;class</span> <span class="pre">'str'&gt;}</span></em><a class="headerlink" href="#NeSy4PPM.Data_preprocessing.log_utils.LogData.res_enc_mapping" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="NeSy4PPM.Data_preprocessing.log_utils.LogData.res_name_key">
+<span class="sig-name descname"><span class="pre">res_name_key</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#NeSy4PPM.Data_preprocessing.log_utils.LogData.res_name_key" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="NeSy4PPM.Data_preprocessing.log_utils.LogData.test_log_name">
+<span class="sig-name descname"><span class="pre">test_log_name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#NeSy4PPM.Data_preprocessing.log_utils.LogData.test_log_name" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="NeSy4PPM.Data_preprocessing.log_utils.LogData.timestamp_key">
+<span class="sig-name descname"><span class="pre">timestamp_key</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#NeSy4PPM.Data_preprocessing.log_utils.LogData.timestamp_key" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="NeSy4PPM.Data_preprocessing.log_utils.LogData.timestamp_key2">
+<span class="sig-name descname"><span class="pre">timestamp_key2</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#NeSy4PPM.Data_preprocessing.log_utils.LogData.timestamp_key2" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="NeSy4PPM.Data_preprocessing.log_utils.LogData.timestamp_key3">
+<span class="sig-name descname"><span class="pre">timestamp_key3</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#NeSy4PPM.Data_preprocessing.log_utils.LogData.timestamp_key3" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="NeSy4PPM.Data_preprocessing.log_utils.LogData.timestamp_key4">
+<span class="sig-name descname"><span class="pre">timestamp_key4</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#NeSy4PPM.Data_preprocessing.log_utils.LogData.timestamp_key4" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="NeSy4PPM.Data_preprocessing.log_utils.LogData.train_log_name">
+<span class="sig-name descname"><span class="pre">train_log_name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#NeSy4PPM.Data_preprocessing.log_utils.LogData.train_log_name" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="NeSy4PPM.Data_preprocessing.log_utils.LogData.training_trace_ids">
+<span class="sig-name descname"><span class="pre">training_trace_ids</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[&lt;class</span> <span class="pre">'str'&gt;]</span></em><a class="headerlink" href="#NeSy4PPM.Data_preprocessing.log_utils.LogData.training_trace_ids" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-NeSy4PPM.Data_preprocessing.shared_variables">
+<span id="nesy4ppm-data-preprocessing-shared-variables-module"></span><h2>NeSy4PPM.Data_preprocessing.shared_variables module<a class="headerlink" href="#module-NeSy4PPM.Data_preprocessing.shared_variables" title="Link to this heading">¶</a></h2>
+<p>This file was created in order to bring common variables and functions into one file to make code more clear</p>
+</section>
+<section id="module-NeSy4PPM.Data_preprocessing.utils">
+<span id="nesy4ppm-data-preprocessing-utils-module"></span><h2>NeSy4PPM.Data_preprocessing.utils module<a class="headerlink" href="#module-NeSy4PPM.Data_preprocessing.utils" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="NeSy4PPM.Data_preprocessing.utils.BK_type">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">NeSy4PPM.Data_preprocessing.utils.</span></span><span class="sig-name descname"><span class="pre">BK_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#NeSy4PPM.Data_preprocessing.utils.BK_type" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
+<p>An enumeration.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="NeSy4PPM.Data_preprocessing.utils.BK_type.Declare">
+<span class="sig-name descname"><span class="pre">Declare</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'(MP)Declare'</span></em><a class="headerlink" href="#NeSy4PPM.Data_preprocessing.utils.BK_type.Declare" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="NeSy4PPM.Data_preprocessing.utils.BK_type.Declare_End">
+<span class="sig-name descname"><span class="pre">Declare_End</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Declare_At_end'</span></em><a class="headerlink" href="#NeSy4PPM.Data_preprocessing.utils.BK_type.Declare_End" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="NeSy4PPM.Data_preprocessing.utils.BK_type.ProbDeclare">
+<span class="sig-name descname"><span class="pre">ProbDeclare</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'ProbDeclare'</span></em><a class="headerlink" href="#NeSy4PPM.Data_preprocessing.utils.BK_type.ProbDeclare" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="NeSy4PPM.Data_preprocessing.utils.BK_type.Procedural">
+<span class="sig-name descname"><span class="pre">Procedural</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Procedural'</span></em><a class="headerlink" href="#NeSy4PPM.Data_preprocessing.utils.BK_type.Procedural" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="NeSy4PPM.Data_preprocessing.utils.BK_type.Procedural_End">
+<span class="sig-name descname"><span class="pre">Procedural_End</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Procedural_At_end'</span></em><a class="headerlink" href="#NeSy4PPM.Data_preprocessing.utils.BK_type.Procedural_End" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="NeSy4PPM.Data_preprocessing.utils.Encodings">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">NeSy4PPM.Data_preprocessing.utils.</span></span><span class="sig-name descname"><span class="pre">Encodings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#NeSy4PPM.Data_preprocessing.utils.Encodings" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
+<p>An enumeration.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="NeSy4PPM.Data_preprocessing.utils.Encodings.Index_based">
+<span class="sig-name descname"><span class="pre">Index_based</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'index-based'</span></em><a class="headerlink" href="#NeSy4PPM.Data_preprocessing.utils.Encodings.Index_based" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="NeSy4PPM.Data_preprocessing.utils.Encodings.Multi_encoders">
+<span class="sig-name descname"><span class="pre">Multi_encoders</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'multi-encoders'</span></em><a class="headerlink" href="#NeSy4PPM.Data_preprocessing.utils.Encodings.Multi_encoders" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="NeSy4PPM.Data_preprocessing.utils.Encodings.One_hot">
+<span class="sig-name descname"><span class="pre">One_hot</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'one-hot'</span></em><a class="headerlink" href="#NeSy4PPM.Data_preprocessing.utils.Encodings.One_hot" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="NeSy4PPM.Data_preprocessing.utils.Encodings.Shrinked_based">
+<span class="sig-name descname"><span class="pre">Shrinked_based</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'shrinked</span> <span class="pre">index-based'</span></em><a class="headerlink" href="#NeSy4PPM.Data_preprocessing.utils.Encodings.Shrinked_based" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="NeSy4PPM.Data_preprocessing.utils.NN_model">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">NeSy4PPM.Data_preprocessing.utils.</span></span><span class="sig-name descname"><span class="pre">NN_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#NeSy4PPM.Data_preprocessing.utils.NN_model" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
+<p>An enumeration.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="NeSy4PPM.Data_preprocessing.utils.NN_model.LSTM">
+<span class="sig-name descname"><span class="pre">LSTM</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'LSTM'</span></em><a class="headerlink" href="#NeSy4PPM.Data_preprocessing.utils.NN_model.LSTM" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="NeSy4PPM.Data_preprocessing.utils.NN_model.Transformer">
+<span class="sig-name descname"><span class="pre">Transformer</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'keras_trans'</span></em><a class="headerlink" href="#NeSy4PPM.Data_preprocessing.utils.NN_model.Transformer" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="NeSy4PPM.Data_preprocessing.utils.discover_Petri_nets">
+<span class="sig-prename descclassname"><span class="pre">NeSy4PPM.Data_preprocessing.utils.</span></span><span class="sig-name descname"><span class="pre">discover_Petri_nets</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">log_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#NeSy4PPM.Data_preprocessing.log_utils.LogData" title="NeSy4PPM.Data_preprocessing.log_utils.LogData"><span class="pre">LogData</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">pn_folder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">WindowsPath('C:/Users/JOukharijane/Desktop/PostDoc/NeSy4PPM/docs/source/data/input/petrinets')</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#NeSy4PPM.Data_preprocessing.utils.discover_Petri_nets" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="NeSy4PPM.Data_preprocessing.utils.extract_last_model_checkpoint">
+<span class="sig-prename descclassname"><span class="pre">NeSy4PPM.Data_preprocessing.utils.</span></span><span class="sig-name descname"><span class="pre">extract_last_model_checkpoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">log_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">models_folder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ckeckpoint_folder</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">WindowsPath('C:/Users/JOukharijane/Desktop/PostDoc/NeSy4PPM/docs/source/data/output')</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Path</span></span></span><a class="headerlink" href="#NeSy4PPM.Data_preprocessing.utils.extract_last_model_checkpoint" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="NeSy4PPM.Data_preprocessing.utils.load_bk">
+<span class="sig-prename descclassname"><span class="pre">NeSy4PPM.Data_preprocessing.utils.</span></span><span class="sig-name descname"><span class="pre">load_bk</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">BK_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#NeSy4PPM.Data_preprocessing.utils.load_bk" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="NeSy4PPM.Data_preprocessing.utils.prepare_encoded_data">
+<span class="sig-prename descclassname"><span class="pre">NeSy4PPM.Data_preprocessing.utils.</span></span><span class="sig-name descname"><span class="pre">prepare_encoded_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">log_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#NeSy4PPM.Data_preprocessing.log_utils.LogData" title="NeSy4PPM.Data_preprocessing.log_utils.LogData"><span class="pre">LogData</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">resource</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#NeSy4PPM.Data_preprocessing.utils.prepare_encoded_data" title="Link to this definition">¶</a></dt>
+<dd><p>Get all possible symbols for activities and resources and annotate them with integers.</p>
+</dd></dl>
+
+</section>
+<section id="module-NeSy4PPM.Data_preprocessing">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-NeSy4PPM.Data_preprocessing" title="Link to this heading">¶</a></h2>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">NeSy4PPM</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">NeSy4PPM</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="NeSy4PPM.html">NeSy4PPM package</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="structure.html">Repository Structure</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="modules.html">NeSy4PPM</a><ul>
+  <li><a href="NeSy4PPM.html">NeSy4PPM package</a><ul>
+      <li>Previous: <a href="NeSy4PPM.html" title="previous chapter">NeSy4PPM package</a></li>
+      <li>Next: <a href="NeSy4PPM.Prediction.html" title="next chapter">NeSy4PPM.Prediction package</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2025, Jamila Oukharijane, Ivan Donadello, Fabrizio Maria Maggi.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 8.1.3</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="_sources/NeSy4PPM.Data_preprocessing.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
