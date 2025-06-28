@@ -8,7 +8,7 @@ include = ["NeSy4PPM", "NeSy4PPM.*"]
 
 [project]
 name = "nesy4ppm"
-version = "0.1.0"
+version = "0.1"
 #dynamic = ["version"]
 description = "Python library to perform learning and suffix prediction with background knowledge under concept drifts."
 readme = "README.rst"
@@ -34,5 +34,8 @@ dependencies = [
 
 [project.urls]
 Homepage = "https://github.com/JamilaOUKHARIJANE/NeSy4PPM"
+Documentation = "https://nesy4ppm.readthedocs.io/en/latest"
+
+
 
 
