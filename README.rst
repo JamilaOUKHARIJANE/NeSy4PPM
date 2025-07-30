@@ -14,46 +14,73 @@ NeSy4PPM offers the following key features:
 Installation
 ============
 
-We recommend using a virtual environment to avoid conflicts between your local Python setup and required libraries. You can use `Conda <https://conda.io>`_ or `venv <https://docs.python.org/3/library/venv.html>`_:
+Local Installation
+------------------
 
-1. Clone/download the NeSy4PPM project.
-2. Activate your virtual environment.
-3. Install the dependencies listed in ``requirements.txt`` using:: pip install -r requirements.txt
+1. Clone or download the NeSy4PPM project::
 
-Alternatively, you can install NeSy4PPM directly from `PyPi <https://pypi.org/project/nesy4ppm/>`_.
+     git clone https://github.com/JamilaOUKHARIJANE/NeSy4PPM.git
+     cd NeSy4PPM
 
-For ProbDECLARE BK conformance checking, install the `Lydia <https://github.com/whitemech/lydia>`_ backend using Docker:
+2. Create and activate a virtual environment (Python 3.10 required).
+
+   **Using venv:**
+
+   .. code-block:: bash
+
+      python -m venv nesy4ppm-env
+      source nesy4ppm-env/bin/activate  # On Windows use: nesy4ppm-env\Scripts\activate
+
+   **Using Conda:**
+
+   .. code-block:: bash
+
+      conda create -n nesy4ppm-env python=3.10
+      conda activate nesy4ppm-env
+
+3. Install dependencies::
+
+     pip install -r docs/source/requirements.txt
+
+4. Install the package in editable mode::
+
+     pip install -e .
+
+PyPI Installation
+-----------------
+You can also install NeSy4PPM directly from `PyPI <https://pypi.org/project/nesy4ppm/>`_. We always recommend using a virtual environment to avoid conflicts with your global Python packages::
+
+    pip install nesy4ppm
+
+Docker Installation
+-------------------
+
+You can also run NeSy4PPM using Docker:
 
 1. `Install Docker <https://www.docker.com/get-started>`_
-2. Pull the Lydia image:
 
-   .. code-block:: bash
+2. Pull and run the Docker image::
 
-      docker pull whitemech/lydia:latest
+     docker pull jamilaoukharijane/nesy4ppm:latest
+     docker run -it -p 8888:8888 jamilaoukharijane/nesy4ppm:latest
 
+3. Open http://127.0.0.1:8888/tree in your browser to launch Jupyter to run tutorial.
 
-3. Make the Docker image executable under the name ``lydia``. On Linux and macOS machines, the following commands should work:
+Usage
+=====
 
-   .. code-block:: bash
+You will find tutorials explaining how to utilize the different functionalities of NeSy4PPM.
 
-      echo '#!/usr/bin/env sh' > lydia
-      echo 'docker run -v$(pwd):/home/default whitemech/lydia lydia "$@"' >> lydia
-      sudo chmod u+x lydia
-      sudo mv lydia /usr/local/bin/
-
-
-More information can be found at `Logaut repository <https://github.com/whitemech/logaut>`_.
-
-Tutorials
-=========
-
-Here, you will find tutorials explaining how to utilize the different functionalities of NeSy4PPM.
-All tutorials can be downloaded and run from our
-`Github. <https://github.com/JamilaOUKHARIJANE/NeSy4PPM/tree/master/docs/source/tutorials>`_ The tutorials use the `Helpdesk log <https://data.4tu.nl/articles/dataset/Dataset_belonging_to_the_help_desk_log_of_an_Italian_Company/12675977>`_ as a running example.
+- All tutorials are available in the ``docs/source/tutorials/Suffix_Prediction_tutorial.ipynb`` or on `Github. <https://github.com/JamilaOUKHARIJANE/NeSy4PPM/blob/master/docs/source/tutorials/Suffix_Prediction_tutorial.ipynb>`_
+- You can download and run them locally in a Jupyter environment.
+- The tutorials use the
+  `Helpdesk log <https://data.4tu.nl/articles/_/12675977/1>`_ as a running example, but you can easily adapt it to work with other event logs.
 
 Repository Structure
 ====================
-- ``NeSy4PPM/learning``: contains the implementation of event log encoding and Neural Networks model training.
-- ``NeSy4PPM/ProbDeclmonitor``: contains the implementation of suffix prediction using a contextualized Neural predictions with BK.
-- ``tests/``: provides evaluation scripts for assessing the NeSy4PPM prediction performance.
-- ``docs/tutorials/``: contains step-by-step guides and examples to help users get started with NeSy4PPM.
+- ``NeSy4PPM/Data_preprocessing``: contains the implementation of event log loading and data preparation for Neural Networks model training.
+- ``NeSy4PPM/Training``: contains the implementation of Neural Networks model training.
+- ``NeSy4PPM/ProbDeclmonitor``: contains the implementation of Probabilistic Declare conformance checking.
+- ``NeSy4PPM/Prediction``: contains the implementation of suffix prediction using a contextualized Neural predictions with BK.
+- ``Evaluation.py``: provides evaluation script for assessing the NeSy4PPM prediction performance.
+- ``docs/source/tutorials/``: contains step-by-step guides and examples to help users get started with NeSy4PPM.
