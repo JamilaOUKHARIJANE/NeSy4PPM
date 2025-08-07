@@ -13,9 +13,10 @@ NeSy4PPM offers the following key features:
 
 Installation
 ============
+For installing NeSy4PPM, you have the following three alternative methods:
 
-Local Installation
-------------------
+1. Local Installation
+---------------------
 
 1. Clone or download the NeSy4PPM project::
 
@@ -46,16 +47,16 @@ Local Installation
 
      pip install -e .
 
-PyPI Installation
------------------
-You can also install NeSy4PPM directly from `PyPI <https://pypi.org/project/nesy4ppm/>`_. We always recommend using a virtual environment to avoid conflicts with your global Python packages::
+2. PyPI Installation
+--------------------
+You can install NeSy4PPM directly from `PyPI <https://pypi.org/project/nesy4ppm/>`_. We always recommend using a virtual environment to avoid conflicts with your global Python packages::
 
     pip install nesy4ppm
 
-Docker Installation
--------------------
+3. Docker Installation
+----------------------
 
-You can also run NeSy4PPM using Docker:
+You can run NeSy4PPM in an isolated Docker container:
 
 1. `Install Docker <https://www.docker.com/get-started>`_
 
@@ -64,7 +65,7 @@ You can also run NeSy4PPM using Docker:
      docker pull jamilaoukharijane/nesy4ppm:latest
      docker run -it -p 8888:8888 jamilaoukharijane/nesy4ppm:latest
 
-3. Open http://127.0.0.1:8888/tree in your browser to launch Jupyter to run tutorial.
+3. Open Jupyter Notebook in your browser: navigate to http://127.0.0.1:8888/tree to access the NeSy4PPM code and tutorials.
 
 Usage
 =====
