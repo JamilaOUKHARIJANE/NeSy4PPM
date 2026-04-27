@@ -24,4 +24,5 @@ NeSy4PPM offers the following key features:
    installation.rst
    tutorials.rst
    structure.rst
-
+   publications.rst
+   citing.rst

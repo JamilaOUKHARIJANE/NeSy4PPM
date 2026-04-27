@@ -4,11 +4,45 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="36c01caf-6b11-4e86-a29c-2907f79181fe" name="Changes" comment="" />
+    <list default="true" id="36c01caf-6b11-4e86-a29c-2907f79181fe" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/docs/source/publications.rst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/NeSy4PPM.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/NeSy4PPM.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NeSy4PPM/Data_preprocessing/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/NeSy4PPM/Data_preprocessing/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NeSy4PPM/Data_preprocessing/data_preprocessing.py" beforeDir="false" afterPath="$PROJECT_DIR$/NeSy4PPM/Data_preprocessing/data_preprocessing.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NeSy4PPM/Data_preprocessing/log_utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/NeSy4PPM/Data_preprocessing/log_utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NeSy4PPM/Data_preprocessing/shared_variables.py" beforeDir="false" afterPath="$PROJECT_DIR$/NeSy4PPM/Data_preprocessing/shared_variables.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NeSy4PPM/Data_preprocessing/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/NeSy4PPM/Data_preprocessing/utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NeSy4PPM/Evaluation.py" beforeDir="false" afterPath="$PROJECT_DIR$/NeSy4PPM/Evaluation.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NeSy4PPM/Prediction/Checkers.py" beforeDir="false" afterPath="$PROJECT_DIR$/NeSy4PPM/Prediction/Checkers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NeSy4PPM/Prediction/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/NeSy4PPM/Prediction/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NeSy4PPM/Prediction/create_event_log.py" beforeDir="false" afterPath="$PROJECT_DIR$/NeSy4PPM/Prediction/create_event_log.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NeSy4PPM/Prediction/inference_algorithm.py" beforeDir="false" afterPath="$PROJECT_DIR$/NeSy4PPM/Prediction/inference_algorithm.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NeSy4PPM/Prediction/predict_suffix.py" beforeDir="false" afterPath="$PROJECT_DIR$/NeSy4PPM/Prediction/predict_suffix.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NeSy4PPM/Prediction/prepare_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/NeSy4PPM/Prediction/prepare_data.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NeSy4PPM/ProbDeclmonitor/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/NeSy4PPM/ProbDeclmonitor/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NeSy4PPM/ProbDeclmonitor/autUtils.py" beforeDir="false" afterPath="$PROJECT_DIR$/NeSy4PPM/ProbDeclmonitor/autUtils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NeSy4PPM/ProbDeclmonitor/ltlUtils.py" beforeDir="false" afterPath="$PROJECT_DIR$/NeSy4PPM/ProbDeclmonitor/ltlUtils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NeSy4PPM/ProbDeclmonitor/probDeclPredictor.py" beforeDir="false" afterPath="$PROJECT_DIR$/NeSy4PPM/ProbDeclmonitor/probDeclPredictor.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NeSy4PPM/Training/Modulator.py" beforeDir="false" afterPath="$PROJECT_DIR$/NeSy4PPM/Training/Modulator.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NeSy4PPM/Training/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/NeSy4PPM/Training/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NeSy4PPM/Training/train_common.py" beforeDir="false" afterPath="$PROJECT_DIR$/NeSy4PPM/Training/train_common.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NeSy4PPM/Training/train_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/NeSy4PPM/Training/train_model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NeSy4PPM/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/NeSy4PPM/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.rst" beforeDir="false" afterPath="$PROJECT_DIR$/README.rst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/nesy4ppm-0.1-py3-none-any.whl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/nesy4ppm-0.1.tar.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/source/index.rst" beforeDir="false" afterPath="$PROJECT_DIR$/docs/source/index.rst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nesy4ppm.egg-info/PKG-INFO" beforeDir="false" afterPath="$PROJECT_DIR$/nesy4ppm.egg-info/PKG-INFO" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nesy4ppm.egg-info/SOURCES.txt" beforeDir="false" afterPath="$PROJECT_DIR$/nesy4ppm.egg-info/SOURCES.txt" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="EmbeddingIndexingInfo">
+    <option name="cachedIndexableFilesCount" value="128" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -32,6 +66,10 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="McpProjectServerCommands">
+    <commands />
+    <urls />
+  </component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
   </component>
@@ -46,26 +84,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Python.all_experiments.executor&quot;: &quot;Run&quot;,
-    &quot;Python.log_utils.executor&quot;: &quot;Run&quot;,
-    &quot;Python.results_aggregator.executor&quot;: &quot;Run&quot;,
-    &quot;Python.run_experiments.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/JOukharijane/Desktop/PostDoc/NeSy4PPM/docs/source&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;Jupyter Settings&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python.all_experiments.executor": "Run",
+    "Python.log_utils.executor": "Run",
+    "Python.results_aggregator.executor": "Run",
+    "Python.run_experiments.executor": "Run",
+    "RunOnceActivity.MCP Project settings loaded": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "/Users/jamilaoukharijane/NeSy4PPM",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\JOukharijane\Desktop\PostDoc\NeSy4PPM\docs\source" />
@@ -75,11 +117,11 @@
       <recent name="C:\Users\JOukharijane\Desktop\PostDoc\NeSy4PPM" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/docs/source" />
       <recent name="C:\Users\JOukharijane\Desktop\PostDoc\NeSy4PPM\NeSy4PPM\Prediction" />
       <recent name="C:\Users\JOukharijane\Desktop\PostDoc\NeSy4PPM\NeSy4PPM\commons" />
       <recent name="C:\Users\JOukharijane\Desktop\PostDoc\NeSy4PPM\docs\source\data\output" />
       <recent name="C:\Users\JOukharijane\Desktop\PostDoc\NeSy4PPM\output\keras_trans_index-based\results\CFR" />
-      <recent name="C:\Users\JOukharijane\Desktop\PostDoc\NeSy4PPM\output\keras_trans_index-based\results" />
     </key>
   </component>
   <component name="RunAnythingCache">
@@ -87,37 +129,11 @@
       <command value="pip " />
     </option>
   </component>
-  <component name="RunManager">
-    <configuration name="all_experiments" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
-      <module name="NeSy4PPM" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="SDK_NAME" value="Python 3.10 (NeSy4PPM)" />
-      <option name="WORKING_DIRECTORY" value="C:\Users\JOukharijane\Desktop\PostDoc\NeSy4PPM\docs\source\tutorials" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/docs/source/tutorials/all_experiments.py" />
-      <option name="PARAMETERS" value="--train_log=&quot;helpdesk_train.xes&quot; --test_log=&quot;helpdesk_test.xes&quot; --encoder=&quot;multi&quot;  --bk_file=&quot;BK_helpdesk.decl&quot;" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-1632447f56bf-JavaScript-PY-243.26574.90" />
-        <option value="bundled-python-sdk-c1fac28bca04-4df51de95216-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-243.26574.90" />
+        <option value="bundled-js-predefined-d6986cc7102b-3bd3a6803838-JavaScript-PY-261.22158.340" />
+        <option value="bundled-python-sdk-b63d5a1f7c97-b61e75351b1f-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-261.22158.340" />
       </set>
     </attachedChunks>
   </component>
@@ -143,6 +159,7 @@
       <workItem from="1750843439514" duration="41828000" />
       <workItem from="1751012510068" duration="10805000" />
       <workItem from="1751108014044" duration="14278000" />
+      <workItem from="1777297328583" duration="3468000" />
     </task>
     <servers />
   </component>
@@ -154,7 +171,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/NeSy4PPM/Prediction/prepare_data.py</url>
-          <line>167</line>
+          <line>160</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">

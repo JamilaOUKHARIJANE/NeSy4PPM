@@ -5,7 +5,7 @@ from keras import layers, Sequential
 from NeSy4PPM.Data_preprocessing.utils import Encodings, NN_model
 
 
-def create_checkpoints_path(log_name, model:NN_model, model_type,encoder:Encodings,output_folder):
+def create_checkpoints_path(log_name, model_type,output_folder):
     """
         Create a directory path and filename pattern for model checkpoints.
 
@@ -19,8 +19,7 @@ def create_checkpoints_path(log_name, model:NN_model, model_type,encoder:Encodin
         Returns:
             str: Full path pattern for saving checkpoint files.
         """
-    models_folder= model.value+'_'+ encoder.value
-    folder_path = output_folder / models_folder / 'models' / model_type / log_name
+    folder_path = output_folder / 'models' / model_type / log_name
     if not Path.exists(folder_path):
         Path.mkdir(folder_path, parents=True)
     checkpoint_name = folder_path / 'model_{epoch:03d}-{val_loss:.3f}.keras'

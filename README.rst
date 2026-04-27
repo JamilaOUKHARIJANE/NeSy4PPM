@@ -85,3 +85,21 @@ Repository Structure
 - ``NeSy4PPM/Prediction``: contains the implementation of suffix prediction using a contextualized Neural predictions with BK.
 - ``Evaluation.py``: provides evaluation script for assessing the NeSy4PPM prediction performance.
 - ``docs/source/tutorials/``: contains step-by-step guides and examples to help users get started with NeSy4PPM.
+
+
+Citing NeSy4PPM
+==============
+
+If you use NeSy4PPM in your research, please use the following BibTeX entry ::
+
+  @inproceedings{oukharijane2025,
+  title     = {NeSy4PPM: A Python Library for Neuro-Symbolic Predictive Process Monitoring},
+  author    = {Jamila Oukharijane and
+               Ivan Donadello and
+               Fabrizio Maria Maggi},
+  booktitle    = {{ICPM} Doctoral Consortium / Demo},
+  series       = {{CEUR} Workshop Proceedings},
+  volume       = {4088},
+  publisher    = {CEUR-WS.org},
+  year      = {2025}}
+

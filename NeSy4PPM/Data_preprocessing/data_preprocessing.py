@@ -77,7 +77,7 @@ def encode_prefixes(log_data: LogData ,prefixes, encoder:Encodings=Encodings.Ind
             num_features = len(chars) + len(chars_group) # + 1
             x = np.zeros((len(sentences) ,maxlen, num_features), dtype=np.float32)
         else:
-            if encoder == Encodings.Shrinked_based:
+            if encoder == Encodings.Shrunk_Index_based:
                 result_list = [x + y for x, y in itertools.product(chars, chars_group)]
                 target_to_int = dict((c, i + 1) for i, c in enumerate(result_list))
                 num_features = maxlen
@@ -114,7 +114,7 @@ def encode_prefixes(log_data: LogData ,prefixes, encoder:Encodings=Encodings.Ind
                 elif encoder == Encodings.Multi_encoders:
                     x_a[i, t] = act_to_int[char]
                     x_g[i, t] = res_to_int[sentence_group[t]]
-                elif encoder == Encodings.Shrinked_based:
+                elif encoder == Encodings.Shrunk_Index_based:
                     x[i, t] = target_to_int[char + sentence_group[t]]
                 else:
                     x[i, counter_act] = act_to_int[char]
@@ -145,7 +145,7 @@ def encode_prefixes(log_data: LogData ,prefixes, encoder:Encodings=Encodings.Ind
         print('Num. of Training sequences:', len(sentences))
 
         if encoder == Encodings.One_hot:
-            num_features = len(chars) + 1
+            num_features = len(chars)
             x = np.zeros((len(sentences), maxlen, num_features), dtype=np.float32)
         elif encoder == Encodings.Index_based:
             num_features = maxlen
@@ -178,9 +178,9 @@ def extract_encode_prefixes(log_data: LogData, encoder: Encodings = Encodings.In
     x, y_a, y_g = encode_prefixes(log_data, prefixes, encoder, resource)
     return x, y_a, y_g
 
-def end_to_end_process(log_path:Path,log_name=None,train_ratio=0.8, train_log=None, test_log=None, case_name_key = 'case:concept:name',act_name_key = 'concept:name'
+def end_to_end_process(log_path:Path,log_name=None,train_ratio=0.8, feedback_ratio=0, train_log=None, feedback_log=None, test_log=None, case_name_key = 'case:concept:name',act_name_key = 'concept:name'
                  ,res_name_key = 'org:resource',timestamp_key = 'time:timestamp',encoder: Encodings = Encodings.Index_based, resource: bool = False):
-    log_data = LogData(log_path=log_path,log_name=log_name,train_ratio=train_ratio, train_log=train_log, test_log=test_log,
+    log_data = LogData(log_path=log_path,log_name=log_name,train_ratio=train_ratio, feedback_ratio=feedback_ratio, train_log=train_log,feedback_log=feedback_log, test_log=test_log,
                                  case_name_key = case_name_key,act_name_key = act_name_key,res_name_key = res_name_key,timestamp_key = timestamp_key)
     x, y_a, y_g = extract_encode_prefixes(log_data, encoder=encoder, resource=resource)
     return log_data,x,y_a,y_g

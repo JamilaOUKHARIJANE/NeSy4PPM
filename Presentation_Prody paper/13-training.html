@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learning Layer Details</title>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="numberings.css">
+    <script src="animations.js" defer></script>
+    <style>
+       * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Source Sans Pro', sans-serif;
+            color: #333;
+            background-color: #f5f5f7;
+        }
+        .slide {
+            min-width: 1280px;
+            min-height: 720px;
+            position: relative;
+            overflow: hidden;
+            background-color: #ffffff;
+            display: flex;
+            flex-direction: column;
+        }
+        .header {
+            padding: 40px 70px 20px;
+            background-color: #1a237e;
+            color: white;
+        }
+        .title {
+            font-size: 40px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        .content {
+            flex-grow: 1;
+            padding: 20px 70px;
+            display: flex;
+            gap: 30px;
+            flex-direction: column;
+        }
+        .learning-flow {
+            display: flex;
+            margin-bottom: 30px;
+            align-items: center;
+        }
+        .flow-step {
+            flex: 1;
+            padding: 20px;
+            background-color: #e8eaf6;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            margin: 0 10px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        .flow-step:first-child {
+            margin-left: 0;
+        }
+        .flow-step:last-child {
+            margin-right: 0;
+        }
+        .step-number {
+            position: absolute;
+            top: -15px;
+            left: -15px;
+            width: 40px;
+            height: 40px;
+            background-color: #3f51b5;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 22px;
+            font-weight: 700;
+        }
+        .step-icon {
+            font-size: 36px;
+            color: #3f51b5;
+            margin-bottom: 15px;
+        }
+        .step-title {
+            font-size: 22px;
+            font-weight: 600;
+            color: #0f2041;
+            margin-bottom: 10px;
+        }
+        .step-description {
+            font-size: 18px;
+            color: #555;
+        }
+        .arrow-icon {
+            font-size: 36px;
+            color: #3f51b5;
+            margin: 0 5px;
+        }
+        .encoding-methods {
+            display: grid ;
+            grid-template-columns: repeat(2, minmax(20px,340px));
+            gap: 10px;
+            flex-grow: 1;
+        }
+        .method-column {
+            flex: 1;
+            padding: 0 10px;
+        }
+        .method-column:first-child {
+            padding-left: 0;
+        }
+        .method-column:last-child {
+            padding-right: 0;
+        }
+        .method-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            height: 100%;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            display: flex;
+            flex-direction: column;
+        }
+        .method-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .method-icon {
+            font-size: 28px;
+            color: #3f51b5;
+            margin-right: 15px;
+        }
+        .method-title {
+            font-size: 22px;
+            font-weight: 600;
+            color: #0f2041;
+        }
+        .method-description {
+            font-size: 18px;
+            color: #555;
+            margin-bottom: 15px;
+        }
+        .method-feature {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 8px;
+        }
+        .method-feature i {
+            color: #3f51b5;
+            margin-right: 10px;
+            font-size: 18px;
+            margin-top: 2px;
+        }
+        .method-feature-text {
+            font-size: 18px;
+            color: #333;
+        }
+        .highlight {
+            color: #3f51b5;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide" style="position: relative; width: 100%; height: 100vh;" slide="12">
+        <div class="header">
+            <h1 class="title">3.1 Learning Layer: NN Training</h1>
+        </div>
+        <div class="content">
+            <div class="learning-flow">
+                <div class="flow-step transparent">
+                    <div class="step-number">1</div>
+                    <i class="material-icons step-icon">code</i>
+                    <div class="step-title">Prefixes Extraction</div>
+                    <div class="step-description">Extract prefixes and targets </div>
+                </div>
+                <i class="material-icons arrow-icon transparent">arrow_forward</i>
+                <div class="flow-step transparent">
+                    <div class="step-number">2</div>
+                    <i class="material-icons step-icon">dataset</i>
+                    <div class="step-title">Prefix Encoding</div>
+                    <div class="step-description">Convert prefixes to numeric vectors</div>
+                </div>
+                <i class="material-icons arrow-icon">arrow_forward</i>
+                <div class="flow-step">
+                    <div class="step-number">3</div>
+                    <i class="material-icons step-icon">psychology</i>
+                    <div class="step-title">NN Training</div>
+                    <div class="step-description">Train neural network model</div>
+                </div>
+            </div>
+            <div class="content" style="flex-direction: row" >
+                <img src="images/prefixextraction.png" class="transparent" alt="trace" style="width: 30%; height: 80%" >
+                <div class="encoding-methods transparent" style="width: 80%">
+                <div class="method-column">
+                    <div class="method-card">
+                        <div class="method-header">
+                            <i class="material-icons method-icon">filter_1</i>
+                            <div class="method-title">One-Hot Encoding</div>
+                        </div>
+                        <div class="method-description">
+                            Binary vector representation for activities and resources
+                        </div>
+                    </div>
+                </div>
+
+                <div class="method-column">
+                    <div class="method-card">
+                        <div class="method-header">
+                            <i class="material-icons method-icon">filter_2</i>
+                            <div class="method-title">Index-Based Encoding</div>
+                        </div>
+                        <div class="method-description">
+                            Numeric indices for activities and resources
+                        </div>
+                    </div>
+                </div>
+
+                <div class="method-column">
+                    <div class="method-card">
+                        <div class="method-header">
+                            <i class="material-icons method-icon">filter_3</i>
+                            <div class="method-title">Shrinked Index-Based</div>
+                        </div>
+                        <div class="method-description">
+                            Joint index for activity-resource pairs
+                        </div>
+                    </div>
+                </div>
+
+                <div class="method-column">
+                    <div class="method-card">
+                        <div class="method-header">
+                            <i class="material-icons method-icon">filter_4</i>
+                            <div class="method-title">Multi-Encoders</div>
+                        </div>
+                        <div class="method-description">
+                            Separate embeddings with modulated representations
+                        </div>
+                    </div>
+                </div>
+            </div>
+                <div class="encoding-methods "  style="max-height: 50%" >
+                <div class="method-column">
+                    <div class="method-card">
+                        <div class="method-header">
+                            <i class="material-icons method-icon">filter_1</i>
+                            <div class="method-title">LSTM</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="method-column">
+                    <div class="method-card" style="width: 120%">
+                        <div class="method-header">
+                            <i class="material-icons method-icon">filter_2</i>
+                            <div class="method-title">Transformer</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+         <div class="slide-number"> </div>
+    </div>
+</body>
+</html>

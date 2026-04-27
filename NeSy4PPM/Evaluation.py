@@ -7,21 +7,26 @@ from pm4py.objects.log.util import dataframe_utils
 import os
 import pandas as pd
 from pm4py.objects.log.importer.xes import importer as xes_importer
-from pm4py.visualization.petri_net import visualizer as vis_factory
+from pm4py.visualization.petri_net import visualizer as petrinet_factory
 from pm4py.objects.conversion.log import converter as log_converter
 from NeSy4PPM.Data_preprocessing.log_utils import LogData
-from NeSy4PPM.Data_preprocessing.utils import NN_model, Encodings
+from NeSy4PPM.Data_preprocessing.utils import NN_model, Encodings, BK_type
+from pm4py.visualization.bpmn import visualizer as bpmn_visualizer
 
-
-def evaluate_all(log_data:LogData, model_arch:NN_model, encoder:Encodings, output_folder, filename, metrics, resource:bool=False,declare_model=None,
-                 petri_net_model=None, fitness_method=None):
-    models_folder = model_arch.value + "_" + encoder.value
+def evaluate_all(output_folder, filename, metrics, log_data:LogData=None, resource:bool=False,declare_model=None,
+                 petri_net_model=None, fitness_method=None,weight=None,prefix_len=None, traces_ids = [],results_fold = 'results'):
     eval_algorithm = "CF" + "R"*resource
-    folder_path = output_folder / models_folder / 'results' / eval_algorithm
+    folder_path = output_folder / results_fold / eval_algorithm
     file_path = os.path.join(folder_path, filename)
     if not os.path.exists(file_path):
         raise ValueError(f"File {file_path} does not exist")
     df_results = pd.read_csv(file_path, delimiter=',')
+    if prefix_len is not None:
+        df_results = df_results[df_results['Prefix length'] == prefix_len]
+    if weight is not None:
+        df_results = df_results[df_results["Weight"]== weight]
+    if traces_ids :
+        df_results = df_results[df_results['Case ID'].isin(traces_ids)]
     if "Fitness" in metrics or 'Compliance' in metrics:
         df_results['act'] = np.where(df_results['Predicted Acts'].notna() & (df_results['Predicted Acts'].str.strip() != ''),
                                      df_results['Trace Prefix Act'] + '>>'+df_results['Predicted Acts'],df_results['Trace Prefix Act'])
@@ -49,7 +54,10 @@ def evaluate_all(log_data:LogData, model_arch:NN_model, encoder:Encodings, outpu
             std_time =round(df_results['Time'].std(),3)
             results[metric]= {"Average time": average_time, "Standard deviation time": std_time}
         if metric == 'Damerau-Levenshtien similarity':
-            results[metric]= {"Activities": round(df_results['Damerau-Levenshtein Acts'].mean(),3), "Resources": round(df_results['Damerau-Levenshtein Resources'].mean(),3) if resource else None}
+            results[metric]= {"Activities": {"average": round(df_results['Damerau-Levenshtein Acts'].mean(),3),
+                                             "standard deviation": round(df_results['Damerau-Levenshtein Acts'].std(),3)},
+                              "Resources": {"average": round(df_results['Damerau-Levenshtein Resources'].mean(),3),
+                                            "standard deviation": round(df_results['Damerau-Levenshtein Resources'].std(),3)} if resource else None}
         if metric == 'Jaccard similarity':
             results[metric] = {"Activities": round(df_results['Jaccard Acts'].mean(),3),
                                "Resources": round(df_results['Jaccard Resources'].mean(),3) if resource else None}
@@ -102,7 +110,13 @@ def get_fitness(event_log,bk_model,method_fitness= "fitness_token_based_replay")
 def discover_petri_net(log_path):
     event_log = xes_importer.apply(str(log_path))
     net, initial_marking, final_marking = pm4py.discover_petri_net_inductive(event_log)
-    gviz = vis_factory.apply(net, initial_marking, final_marking)
-    vis_factory.view(gviz)
-    return {"net": net, "initial_marking": initial_marking, "final_marking": final_marking}
+    gviz = petrinet_factory.apply(net, initial_marking, final_marking)
+    petrinet_factory.view(gviz)
+    return {"net": net, "initial_marking": initial_marking, "final_marking": final_marking,"type":BK_type.Procedural}
 
+def discover_bpmn(log_path):
+    event_log = xes_importer.apply(str(log_path))
+    bpmn_graph = pm4py.discover_bpmn_inductive(event_log)
+    gviz = bpmn_visualizer.apply(bpmn_graph)
+    bpmn_visualizer.view(gviz)
+    return bpmn_graph

@@ -2,10 +2,11 @@
 This file was created in order to bring common variables and functions into one file to make code more clear
 """
 from pathlib import Path
-from NeSy4PPM.ProbDeclmonitor.probDeclPredictor import AggregationMethod
 
 BK_type = None
-aggregationMethod= AggregationMethod.SUM
+mona_file_name = None
+aggregationMethod= None
+constraint_i = 5
 beam_size = 3
 
 
@@ -19,7 +20,7 @@ declare_folder = input_folder / 'declare_models'
 log_folder = input_folder / 'logs'
 pn_folder = input_folder / 'petrinets'
 
-epochs = 100
+epochs = 200
 train_ratio = 0.8
 validation_split = 0.2
 

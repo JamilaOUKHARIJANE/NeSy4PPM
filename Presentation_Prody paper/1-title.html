@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A General Framework for Neuro-Symbolic Predictive Process Monitoring</title>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="nesy-logo.css">
+    <script src="animations.js" defer></script>
+    <link rel="stylesheet" href="numberings.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Source Sans Pro', sans-serif;
+            color: #333;
+            overflow: hidden;
+        }
+        .slide {
+            min-width: 1280px;
+            min-height: 720px;
+            position: relative;
+            overflow: hidden;
+            background-color: #ffffff;
+            display: flex;
+            flex-direction: column;
+        }
+        .content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            height: 100%;
+            padding: 60px;
+        }
+        .left-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding-right: 20px;
+        }
+        .right-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+        .title {
+            position: absolute;
+            font-size: 64px;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 30px;
+            background: linear-gradient(90deg, #1a237e, #3949ab);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            max-width: 190%;
+            text-align: center;
+        }
+        .authors {
+            font-size: 34px;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        .affiliation {
+            font-size: 32px;
+            color: #555;
+            margin-bottom: 40px;
+        }
+        .conf-badge {
+            position: relative;
+            top: 20px;
+            right: 40px;
+            left: 40px;
+            background: rgba(57, 73, 171, 0.1);
+            backdrop-filter: blur(5px);
+            padding: 8px 8px;
+            border-radius: 20px;
+            font-size: 40px;
+            font-weight: 600;
+            color: #3949ab;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide" style="position: relative; width: 100%; height: 100vh;" slide="0">
+        <div class="conf-badge" style="display: flex; align-items: center; gap: 10px;">
+            <img src="images/bpm_conf_logo.jpg" alt="BPM" style="width:70px; height:70px;">
+            <span>5th Workshop on Change, Drift, and Dynamics of Organizational Processes (ProDy)</span>
+        </div>
+        <div class="content" style="margin-bottom: 30px;">
+            <h1 class="title">A General Framework for Neuro-Symbolic Predictive <br>Process Monitoring</h1>
+        </div>
+        <div class="content" style="display: flex; top: 50%;flex-direction: column; gap: 10px; transform: translateY(-50%)">
+            <p class="authors">Jamila Oukharijane, Ivan Donadello, and Fabrizio Maria Maggi</p>
+            <p class="affiliation">Free University of Bozen-Bolzano, Italy</p>
+        </div>
+        <img src="images/UniBz-logo.png" alt="Unibz"
+             style="position: absolute; bottom: 20px; left: 20px; width:180px; height:120px;">
+        <img src="images/nesy4ppm_logo.png" alt="Nesy4ppm"
+             style="position: absolute; bottom: 20px; right: 20px; width:450px; height:180px;">
+
+    </div>
+</body>
+
+</html>

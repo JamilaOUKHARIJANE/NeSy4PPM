@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prefixes Extraction</title>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="animations.js" defer></script>
+    <link rel="stylesheet" href="numberings.css">
+  <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Source Sans Pro', sans-serif;
+            color: #333;
+            background-color: #f5f5f7;
+        }
+        .slide {
+            width: 1280px;
+            min-height: 720px;
+            position: relative;
+            overflow: hidden;
+            background-color: #ffffff;
+            display: flex;
+            flex-direction: column;
+        }
+        .header {
+            padding: 40px 70px 20px;
+            background: linear-gradient(135deg, #1a237e, #3949ab);
+            color: white;
+        }
+        .title {
+            font-size: 40px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        .content {
+            flex-grow: 1;
+            padding: 30px 70px;
+            display: flex;
+            flex-direction: column;
+        }
+        .step-indicator {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        .step-number {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #3949ab, #5c6bc0);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 28px;
+            font-weight: 700;
+            margin-right: 20px;
+            box-shadow: 0 4px 15px rgba(57, 73, 171, 0.3);
+        }
+        .step-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: #1a237e;
+        }
+        .main-content {
+            display: flex;
+            flex-grow: 1;
+            gap: 40px;
+        }
+        .image-container {
+            flex: 1.5;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .image-wrapper {
+            width: 100%;
+            border-radius: 16px;
+            overflow: hidden;
+          margin-top: -20px;
+        }
+        .image-wrapper img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        .details-container {
+            flex: 0.7;
+            display: flex;
+            flex-direction: column;
+        }
+        .detail-card {
+            background: linear-gradient(to bottom, #f9f9fb, #f5f7ff);
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        .detail-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 6px;
+            height: 100%;
+            background: linear-gradient(to bottom, #3949ab, #5c6bc0);
+        }
+        .detail-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1a237e;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .detail-title i {
+            margin-right: 10px;
+            color: #3949ab;
+            font-size: 22px;
+        }
+        .key-points {
+            list-style-type: none;
+        }
+        .key-point {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+            font-size: 20px;
+            color: #444;
+        }
+        .key-point i {
+            color: #3949ab;
+            margin-right: 10px;
+            font-size: 18px;
+            margin-top: 4px;
+            flex-shrink: 0;
+        }
+        .key-highlight {
+            font-weight: 600;
+            color: #1a237e;
+        }
+        .section-title {
+            font-size: 34px;
+            font-weight: 700;
+            color: #1a237e;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: start;
+        }
+        .section-title i {
+            margin-right: 10px;
+            color: #3949ab;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide" style="position: relative; width: 100%; height: 100vh;" slide="6">
+        <div class="header">
+            <h1 class="title">3.1 Learning Layer: Prefixes Extraction</h1>
+        </div>
+        <div class="content">
+          <img src="images/learninglayer.png" style="position: absolute;right: 10px; top: 15%; width: 20%; height: 10%; align-content:end">
+            <div class="step-indicator" style="flex-direction: row;">
+                <div><h3 class="section-title">
+                          <i class="fas fa-sitemap"></i>
+                              Learning Pipeline:
+                  </h3>
+                  <h3 class="section-title">     </h3>
+                </div>
+                <div class="step-number">1</div>
+                <h2 class="step-title">Prefixes Extraction</h2>
+            </div>
+            <div class="main-content">
+                <div class="image-container">
+                    <div class="image-wrapper">
+                        <img src="images/learning_step1.png" alt="Prefix Extraction Process">
+                    </div>
+                </div>
+
+                <div class="details-container">
+                    <div class="detail-card">
+                        <h3 class="detail-title">
+                            <i class="fas fa-cogs"></i>
+                            Process
+                        </h3>
+                        <ul class="key-points">
+                            <li class="key-point">
+                                <i class="fas fa-arrow-right"></i>
+                                <span>Extract <span class="key-highlight">sequential prefixes</span> from process traces</span>
+                            </li>
+                            <li class="key-point">
+                                <i class="fas fa-arrow-right"></i>
+                                <span>Generate <span class="key-highlight">input-output pairs</span> (X, y)</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="detail-card">
+                        <h3 class="detail-title">
+                            <i class="fas fa-lightbulb"></i>
+                            Key Concepts
+                        </h3>
+                        <ul class="key-points">
+                            <li class="key-point">
+                                <i class="fas fa-check-circle"></i>
+                                <span><span class="key-highlight">Prefix (X)</span>: Sequence of events up to a point</span>
+                            </li>
+                            <li class="key-point">
+                                <i class="fas fa-check-circle"></i>
+                                <span><span class="key-highlight">Target (y)</span>: Next activity, resource, or termination</span>
+                            </li>
+                            <li class="key-point">
+                                <i class="fas fa-check-circle"></i>
+                                <span><span class="key-highlight">Termination symbol (⊥)</span>: End of process</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+      <div class="slide-number"> </div>
+    </div>
+</body>
+</html>

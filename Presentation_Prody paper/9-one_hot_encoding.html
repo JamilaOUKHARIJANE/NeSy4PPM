@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prefix Encoding - One-hot</title>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="animations.js" defer></script>
+    <link rel="stylesheet" href="numberings.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Source Sans Pro', sans-serif;
+            color: #333;
+            background-color: #f5f5f7;
+        }
+        .slide {
+            width: 1280px;
+            min-height: 720px;
+            position: relative;
+            overflow: hidden;
+            background-color: #ffffff;
+            display: flex;
+            flex-direction: column;
+        }
+        .header {
+            padding: 40px 70px 20px;
+            background: linear-gradient(135deg, #1a237e, #3949ab);
+            color: white;
+        }
+        .title {
+            font-size: 40px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        .content {
+            flex-grow: 1;
+            padding: 30px 70px;
+            display: flex;
+            flex-direction: column;
+        }
+        .main-content {
+            display: flex;
+            flex-grow: 1;
+            gap: 40px;
+        }
+        .image-container {
+            flex: 1.2;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .image-wrapper img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        .details-container {
+            flex: 0.8;
+            display: flex;
+            flex-direction: column;
+        }
+        .detail-card {
+            background: linear-gradient(to bottom, #f9f9fb, #f5f7ff);
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        .detail-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 6px;
+            height: 100%;
+            background: linear-gradient(to bottom, #3949ab, #5c6bc0);
+        }
+        .detail-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1a237e;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .detail-title i {
+            margin-right: 10px;
+            color: #3949ab;
+            font-size: 22px;
+        }
+        .key-points {
+            list-style-type: none;
+        }
+        .key-point {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+            font-size: 20px;
+            color: #444;
+        }
+        .key-point i {
+            color: #3949ab;
+            margin-right: 10px;
+            font-size: 18px;
+            margin-top: 4px;
+            flex-shrink: 0;
+        }
+        .key-highlight {
+            font-weight: 600;
+            color: #1a237e;
+        }
+        .method-name {
+            font-size: 28px;
+            font-weight: 700;
+            color: #1a237e;
+            padding: 10px 30px;
+            background: linear-gradient(to right, #e8eaf6, #f5f7ff);
+            border-radius: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border: 2px solid #c5cae9;
+        }
+        .advantages {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        .advantage-tag {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+            font-weight: 600;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .advantage-tag i {
+            margin-right: 8px;
+            font-size: 16px;
+        }
+        .disadvantages {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        .disadvantage-tag {
+            background-color: #ffebee;
+            color: #c62828;
+            font-weight: 600;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .disadvantage-tag i {
+            margin-right: 8px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide" style="position: relative; width: 100%; height: 100vh;" slide="8">
+        <div class="header">
+            <h1 class="title">3.1 Learning Layer: Prefix Encoding</h1>
+        </div>
+        <div class="content">
+            <div class="step-indicator">
+                <h2 class="method-name">1. One-hot encoding</h2>
+            </div>
+            <div class="main-content">
+                <div class="image-container">
+                    <img src="images/onehot.png" alt="One-hot Encoding Matrix">
+                </div>
+
+                <div class="details-container">
+                    <div class="detail-card">
+                        <h3 class="detail-title">
+                            <i class="fas fa-info-circle"></i>
+                            Key Features
+                        </h3>
+                        <ul class="key-points">
+                            <li class="key-point">
+                                <i class="fas fa-check-circle"></i>
+                                <span><span class="key-highlight">Binary vectors</span> for activities and resources</span>
+                            </li>
+                            <li class="key-point">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Each position represents a <span class="key-highlight">specific activity</span> or <span class="key-highlight">resource</span></span>
+                            </li>
+                            <li class="key-point">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Value is <span class="key-highlight">1</span> if present, <span class="key-highlight">0</span> otherwise</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="detail-card">
+                        <h3 class="detail-title">
+                            <i class="fas fa-thumbs-up"></i>
+                            Advantages
+                        </h3>
+                        <div class="advantages">
+                            <div class="advantage-tag">
+                                <i class="fas fa-check"></i>
+                                No information loss
+                            </div>
+                            <div class="advantage-tag">
+                                <i class="fas fa-check"></i>
+                                Explicit representation
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="detail-card">
+                        <h3 class="detail-title">
+                            <i class="fas fa-thumbs-down"></i>
+                            Limitations
+                        </h3>
+                        <div class="disadvantages">
+                            <div class="disadvantage-tag">
+                                <i class="fas fa-times"></i>
+                                High dimensionality
+                            </div>
+                            <div class="disadvantage-tag">
+                                <i class="fas fa-times"></i>
+                                No semantic relationships
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slide-number"> </div>
+    </div>
+</body>
+</html>

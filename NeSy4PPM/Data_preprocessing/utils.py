@@ -25,12 +25,12 @@ class NN_model(Enum):
 class Encodings(Enum):
     One_hot = 'one-hot'
     Index_based = 'index-based'
-    Shrinked_based = 'shrinked index-based'
+    Shrunk_Index_based = 'shrunk index-based'
     Multi_encoders = 'multi-encoders'
 
 
-def extract_last_model_checkpoint(log_name: str, models_folder:str, model_type: str,ckeckpoint_folder=shared.output_folder) -> Path:
-    model_filepath = ckeckpoint_folder / models_folder / 'models' / model_type / log_name
+def extract_last_model_checkpoint(log_name: str, model_type: str,ckeckpoint_folder=shared.output_folder) -> Path:
+    model_filepath = ckeckpoint_folder / 'models' / model_type / log_name
     print(f"Model filepath: {model_filepath}")  # Debugging statement
 
     list_of_files = glob.glob(str(model_filepath / '*.keras'))
@@ -51,7 +51,7 @@ def load_bk(BK_file:Path):
         shared.BK_type = BK_type.Procedural
         net, initial_marking, final_marking = pm4py.read_pnml(BK_file)
         gviz = vis_factory.apply(net, initial_marking, final_marking)
-        #vis_factory.view(gviz)
+        #petrinet_factory.view(gviz)
         return {"net": net, "initial_marking":initial_marking, "final_marking":final_marking,"type":BK_type.Procedural}
     elif BK_file.endswith('.decl'):
         declare_model = DeclareModel().parse_from_file(BK_file)

@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank You & Q&A</title>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="animations.js" defer></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Source Sans Pro', sans-serif;
+            color: #333;
+            background-color: #ffffff;
+            overflow: hidden;
+        }
+        .slide {
+            width: 1280px;
+            min-height: 720px;
+            position: relative;
+            overflow: hidden;
+            background-color: #ffffff;
+            display: flex;
+            flex-direction: column;
+        }
+        .header {
+            padding: 40px 70px 20px;
+            background-color: #1a237e;
+            color: white;
+        }
+        .title {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 70px;
+        }
+        .thank-you {
+            font-size: 72px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, #1a237e, #3949ab, #5c6bc0);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-align: center;
+        }
+        .qa {
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 40px;
+            color: #555;
+            text-align: center;
+        }
+        .contact-container {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            margin-top: 30px;
+        }
+        .contact-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f8f9fa;
+            padding: 25px 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .contact-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+        }
+        .contact-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 15px;
+            font-size: 24px;
+            background: linear-gradient(135deg, #3949ab, #5c6bc0);
+            color: white;
+            box-shadow: 0 4px 10px rgba(57, 73, 171, 0.3);
+        }
+        .contact-label {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #1a237e;
+        }
+        .contact-value {
+            font-size: 20px;
+            color: #555;
+        }
+        .paper-info {
+            margin-top: 60px;
+            background: linear-gradient(145deg, #f8f9fa, #e9ecef);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+            max-width: 800px;
+            text-align: center;
+        }
+        .paper-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #1a237e;
+        }
+        .authors {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: #555;
+        }
+        .affiliation {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+        .library-link {
+            display: inline-flex;
+            align-items: center;
+            background: linear-gradient(135deg, #3949ab, #5c6bc0);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 30px;
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(57, 73, 171, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .library-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(57, 73, 171, 0.4);
+        }
+        .library-icon {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide" style="position: relative; width: 100%; height: 100vh;" slide="22">
+        <div class="header">
+            <h1 class="title">5th Workshop on Change, Drift, and Dynamics of Organizational Processes (ProDy)</h1>
+        </div>
+        <div class="content">
+            <div class="paper-info" style="margin-top: -30px">
+                  <div class="paper-title">A General Framework for Neuro-Symbolic Predictive Process Monitoring</div>
+                  <div class="authors">Jamila Oukharijane, Ivan Donadello, and Fabrizio Maria Maggi</div>
+                  <div class="affiliation">Free University of Bozen-Bolzano, Italy</div>
+            </div>
+            <h1 class="thank-you">Thank You</h1>
+            <h2 class="qa">Questions & Answers</h2>
+
+            <div class="contact-container">
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="contact-label">Email</div>
+                    <div class="contact-value">jamila.oukharijane@unibz.it</div>
+                </div>
+
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fab fa-github"></i>
+                    </div>
+                    <div class="contact-label">GitHub</div>
+                    <div class="contact-value">NeSy4PPM</div>
+                </div>
+                <img src="images/QR_code_nesy4ppm.png" style="margin-top: -10%" alt="QR-code nesy4PPM">
+            </div>
+        </div>
+    </div>
+</body>
+</html>

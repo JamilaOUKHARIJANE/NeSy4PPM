@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conclusions</title>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="numberings.css">
+    <script src="animations.js" defer></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Source Sans Pro', sans-serif;
+            color: #333;
+            background-color: #f5f5f7;
+            overflow: hidden;
+        }
+        .slide {
+            width: 1280px;
+            min-height: 720px;
+            position: relative;
+            overflow: hidden;
+            background-color: #ffffff;
+            display: flex;
+            flex-direction: column;
+        }
+        .header {
+            padding: 30px 70px 15px;
+            background: linear-gradient(90deg, #1a237e, #3949ab);
+            color: white;
+        }
+        .title {
+            font-size: 42px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 5px;
+            text-shadow: 0px 2px 4px rgba(0,0,0,0.2);
+        }
+        .content {
+            flex-grow: 1;
+            padding: 25px 70px;
+            display: flex;
+            gap: 30px;
+        }
+        .main-contributions {
+            flex: 1.2;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .findings-card {
+            background: linear-gradient(145deg, #f8f9fa, #e9ecef);
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            transition: transform 0.3s ease;
+        }
+        .findings-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+        }
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 15px;
+            flex-shrink: 0;
+            font-size: 24px;
+            background: linear-gradient(135deg, #3949ab, #5c6bc0);
+            color: white;
+            box-shadow: 0 4px 10px rgba(57, 73, 171, 0.3);
+        }
+        .card-title {
+            font-size: 26px;
+            font-weight: 800;
+            color: #1a237e;
+        }
+        .findings-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            flex-grow: 1;
+        }
+        .finding-item {
+            background-color: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            margin-top: -10px;
+        }
+        .finding-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        .finding-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 6px;
+            height: 100%;
+            background: linear-gradient(to bottom, #3949ab, #5c6bc0);
+        }
+        .finding-number {
+            font-size: 36px;
+            font-weight: 900;
+            color: rgba(57, 73, 171, 0.15);
+            position: absolute;
+            top: 10px;
+            right: 15px;
+        }
+        .finding-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #1a237e;
+            margin-bottom: 10px;
+            padding-right: 30px;
+        }
+        .finding-keywords {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .keyword {
+            background-color: #f5f5f5;
+            border-radius: 20px;
+            padding: 6px 14px;
+            font-size: 20px;
+            font-weight: 700;
+            color: #3949ab;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .contribution-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .highlight {
+            color: #7b1fa2;
+            font-weight: 800;
+        }
+        .hidden {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+
+    </style>
+</head>
+<body>
+    <div class="slide" style="position: relative; width: 100%; height: 100vh;" slide="20">
+        <div class="header">
+            <h1 class="title">5. Conclusions & Future Work</h1>
+        </div>
+        <div class="content">
+            <div class="main-contributions" style="flex:1.2; margin-top: -15px; margin-left: -20px">
+                <div class="findings-card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <h2 class="card-title">Key contributions: <span class="highlight"> A General NeSy framework</span> supports: </h2>
+                    </div>
+                    <div class="findings-grid">
+                        <div class="finding-item">
+                            <div class="finding-number">1</div>
+                            <h3 class="finding-title">Four<span class="highlight"> encoding methods</span></h3>
+                            <div class="finding-keywords">
+                                <span class="keyword">One-hot</span>
+                              <span class="keyword">Index-based</span>
+                                <span class="keyword">Shrinked Index-based</span>
+                                <span class="keyword">Multi-enocders</span>
+                            </div>
+                        </div>
+                        <div class="finding-item" style="height: 50%">
+                            <div class="finding-number">2</div>
+                            <h3 class="finding-title">Two<span class="highlight"> neural models</span></h3>
+                            <div class="finding-keywords">
+                                <span class="keyword">LSTM</span>
+                              <span class="keyword">Transformer</span>
+                            </div>
+                        </div>
+                        <div class="finding-item">
+                            <div class="finding-number">3</div>
+                            <h3 class="finding-title"><span class="highlight">Multiple BK </span> types</h3>
+                            <div class="finding-keywords">
+                                <span class="keyword">Declare</span>
+                                <span class="keyword">MP-Declare</span>
+                                <span class="keyword">Probabilistic Declare</span>
+                                <span class="keyword">Procedural model (BPMN, Petri Nets)</span>
+                            </div>
+                        </div>
+                        <div class="finding-item" style="margin-top: -30%">
+                            <div class="finding-number">4</div>
+                            <h3 class="finding-title"><span class="highlight">Various predictions modes</span></h3>
+                            <div class="finding-keywords">
+                                <span class="keyword">Beam search</span>
+                              <span class="keyword">Greedy search</span>
+                                <span class="keyword">Pure neural predictions</span>
+                                <span class="keyword">Post-predictions BK filtering (BK-filter)</span>
+                                <span class="keyword">Contextualized prediction with BK (Bs-BK)</span>
+                            </div>
+                        </div>
+                        <div class="finding-item">
+                            <div class="finding-number">5</div>
+                            <h3 class="finding-title"><span class="highlight">Multi-attribute suffix</span> prediction</h3>
+                            <div class="finding-keywords">
+                                <span class="keyword">Activity prediction</span>
+                                <span class="keyword">Activity and resource prediction</span>
+                            </div>
+                        </div>
+                        <div class="finding-item">
+                            <div class="finding-number">6</div>
+                            <h3 class="finding-title"><span class="highlight"> NeSy4PPM library</span> for practical implementation</h3>
+                            <div class="finding-keywords">
+                                <span class="keyword">Open source</span>
+                                <span class="keyword">Pypi </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="main-contributions hidden" data-order="1" style="flex: 0.8;">
+                <div class="findings-card">
+                    <div class="card-header">
+                        <div class="card-icon" style="background: linear-gradient(135deg, #7b1fa2, #9c27b0);">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        <h2 class="card-title">Future directions</h2>
+                    </div>
+                    <div class="contribution-list">
+                        <div class="finding-item" style="margin-top: 10px">
+                            <div class="finding-number">1</div>
+                           <div class="finding-title">
+                               Extend evaluation to <span class="highlight"> more real-world event logs </span>
+                            </div>
+                        </div>
+                        <div class="finding-item" style="margin-top: 10px">
+                            <div class="finding-number">2</div>
+                           <div class="finding-title">
+                               Investigate <span class="highlight">impact of  probabilistic declarative BK </span> during suffix prediction
+                            </div>
+                        </div>
+                        <div class="finding-item" style="margin-top: 10px">
+                            <div class="finding-number">3</div>
+                           <div class="finding-title">
+                               Extend framework to support <span class="highlight">fuzzy declarative models </span> for handling uncertainty
+                            </div>
+                        </div>
+                        <div class="finding-item" style="margin-top: 10px">
+                            <div class="finding-number">4</div>
+                           <div class="finding-title">
+                               Extend framework to incorporate <span class="highlight">BK during the training via loss function</span>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+        <div class="slide-number">  </div>
+    </div>
+</body>
+</html>

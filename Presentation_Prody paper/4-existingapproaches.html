@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>Related Work</title>
+
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+  <script src="animations.js" defer></script>
+  <link rel="stylesheet" href="numberings.css">
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --brand-dark: #1a237e;
+      --brand-mid:  #3949ab;
+      --ink: #333;
+      --muted: #666;
+      --chip-bg: #f5f5f5;
+      --card: #fff;
+      --panel: #f8f9fa;
+      --warn: #c62828;
+      --nesy: #9c27b0;
+      --learn: #3f51b5;
+    }
+    body { font-family: 'Source Sans Pro', sans-serif; color: var(--ink); background:#f5f5f7; height: 100vh; }
+
+    .slide { min-width: 1280px; min-height: 720px; height: 100vh; width: 100%; background: #fff; display: flex; flex-direction: column; overflow: hidden; position: relative; }
+    .header {
+            padding: 40px 70px 20px;
+            background-color: #1a237e;
+            color: white;
+        }
+        .title {
+            font-size: 40px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+    .content { flex: 1; padding: 28px 64px 40px; display: flex; flex-direction: column; gap: 28px; }
+
+
+    .approaches-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: stretch; }
+    .approach-header { display: flex; align-items: center; background: linear-gradient(135deg, var(--brand-dark), var(--brand-mid)); color: #fff; padding: 16px 20px; border-radius: 12px; box-shadow: 0 6px 16px rgba(0,0,0,.15);margin-top: -20px }
+    .approach-icon { width: 42px; height: 42px; border-radius: 50%; background: rgba(255,255,255,.2); display: flex; align-items: center; justify-content: center; margin-right: 16px; font-size: 30px; flex-shrink: 0; }
+    .approach-title { font-size: 26px; font-weight: 900; }
+
+
+    .approach-item { display: flex; justify-content: space-between; align-items: center; background: var(--card); border-radius: 12px; padding: 28px 30px; box-shadow: 0 6px 16px rgba(0,0,0,.08); transition: transform .2s ease, box-shadow .2s ease; }
+    .approach-item:hover { transform: translateY(-3px); box-shadow: 0 10px 24px rgba(0,0,0,.12); }
+
+    .item-content { flex: 1; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+    .item-keywords { display: flex; flex-wrap: wrap; gap: 12px; flex-direction: column ; margin-left: 0px}
+    .approach-item.incremental .item-keywords { flex-wrap: nowrap; justify-content: flex-start; }
+
+    .keyword { background: var(--chip-bg); border-radius: 12px; padding: 10px 16px; margin-left:0%; font-size: 22px; font-weight: 700; white-space: nowrap; }
+    .learning-keyword { background: rgba(63,81,181,.10); color: var(--learn); }
+
+    .limitations { background: linear-gradient(135deg, #ffebee, #ffcdd2); border-radius: 12px; padding: 10px;max-width: 350px; }
+    .limitations-title{ display: flex; align-items: center; gap: 2px; margin-bottom: 10px; font-size: 24px; font-weight: 900; color: var(--warn); }
+    .tags { display: flex; flex-wrap: wrap; gap: 10px; }
+    .tag { display: inline-flex; align-items: center; gap: 6px; background: rgba(0,0,0,.06); border-radius: 999px; padding: 8px 14px; font-size: 20px; font-weight: 700; color: var(--ink); }
+
+    .image-container { flex-shrink: 0; display: flex; align-items: center; justify-content: center; max-width: 80%; max-height: 70%;}
+    .approach-image { max-width: 100%; max-height: 80%; border-radius: 10px; box-shadow: 0 3px 8px rgba(0,0,0,.12); }
+    .challenge-title i {
+      margin-right: 10px;
+      color: #3949ab;
+    }
+    .limitations-content {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .challenge-box {
+            background: linear-gradient(135deg, #e8eaf6, #c5cae9);
+            border-left: 5px solid #3949ab;
+            padding: 20px 25px;
+            border-radius: 0 12px 12px 0;
+            margin-top: -40px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+
+    }
+    .challenge-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #1a237e;
+            display: flex;
+            align-items: center;
+    }
+    .challenge-text {
+            font-size: 20px;
+            line-height: 1.4;
+    }
+    .highlight {
+            color: #3949ab;
+            font-weight: 700;
+    }
+    .hidden {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+    .limitations-image-row {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+}
+  </style>
+</head>
+<body>
+  <div class="slide" style="position: relative; width: 100%; height: 100vh;" slide="3">
+    <div class="header">
+      <h1 class="title">2. Existing Approaches</h1>
+    </div>
+
+    <div class="content">
+      <div class="approaches-grid">
+        <div>
+          <div class="approach-header" style="width: 105%">
+            <div class="approach-icon"><i class="fas fa-sync-alt"></i></div>
+            <h2 class="approach-title">Continual learning</h2>
+          </div>
+          <div class="approach-item" style="flex: 1; display: flex; flex-direction: column; gap: 12px;">
+            <div class="limitations-image-row">
+              <div class="item-content" >
+                <div class="item-keywords" >
+                  <span class="keyword learning-keyword">Retraining model</span>
+                  <span class="keyword learning-keyword">Up-to date model</span>
+                </div>
+              </div>
+              <div class="limitations">
+                  <div class="limitations-title"><i class="fas fa-exclamation-triangle"></i> Limitations</div>
+                  <div class="tags">
+                    <span class="tag"><i class="fas fa-dollar-sign"></i> Costly retraining</span>
+                    <span class="tag"><i class="fas fa-database"></i> Requires large post-drift data</span>
+                  </div>
+                </div>
+              </div>
+          <img src="images/continuallearning.png" alt="Continual Learning Framework" class="image-container" >
+          </div>
+
+        </div>
+        <div class="hidden"  data-order="1" >
+          <div class="approach-header">
+            <div class="approach-icon"><i class="fas fa-plus-circle"></i></div>
+            <h2 class="approach-title">Incremental learning</h2>
+          </div>
+          <div class="approach-item incremental" style="flex: 1; display: flex; flex-direction: column; gap: 12px;">
+            <div class="item-content" >
+              <div class="limitations-image-row" style="margin-top: -20px">
+                <div class="item-keywords">
+                <span class="keyword learning-keyword">Updates models</span>
+                <span class="keyword learning-keyword">Small post-drift data</span>
+                <span class="keyword learning-keyword">No full retraining</span>
+              </div>
+                <div class="limitations">
+                  <div class="limitations-title"><i class="fas fa-exclamation-triangle"></i> Limitations</div>
+                  <div class="tags">
+                    <span class="tag"><i class="fas fa-bolt"></i> Not suitable for fast changes</span>
+                    <span class="tag"><i class="fas fa-database"></i> Requires post-drift data</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <img src="images/incrementallearning.png" alt="Incremental Learning Flowchart" class="image-container" > </div>
+          <div class="challenge-box hidden" data-order="2" style="margin-top: 20px" >
+          <h3 class="challenge-title">
+            <i class="fas fa-question-circle"></i>
+            Key Challenge
+          </h3>
+          <p class="challenge-text" >
+            Both approaches primarily effective for <span class="highlight">long-term drift</span>, limited scalability in <span class="highlight">fast-evolving environments</span></div>
+          </p>
+        </div>
+        </div>
+        </div>
+    </div>
+  </div>
+  <div class="slide-number"> </div>
+
+</body>
+</html>

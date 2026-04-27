@@ -1,20 +1,70 @@
+import os
 import re
 import itertools
+import signal
+import time
 from enum import Enum
+from pathlib import Path
 
+import ltlf2dfa
 import numpy as np
 
 from Declare4Py.ProcessModels.DeclareModel import DeclareModel
 from Declare4Py.ProcessModels.DeclareModel import DeclareModelTemplate
 from Declare4Py.ProcessModels.LTLModel import LTLModel
-
 from logaut import ltl2dfa
-
+from ltlf2dfa.base import MonaProgram
+from ltlf2dfa.ltlf2dfa import PACKAGE_DIR
 from scipy.optimize import linprog
-
 from NeSy4PPM.ProbDeclmonitor  import ltlUtils
 from NeSy4PPM.ProbDeclmonitor import autUtils
 from NeSy4PPM.ProbDeclmonitor.autUtils import TruthValue
+from subprocess import PIPE, Popen, TimeoutExpired
+from NeSy4PPM.Data_preprocessing import shared_variables as shared
+
+def createMonafile(p: str, filename:str):
+    """Extended version to Write the .mona file."""
+    try:
+        with open(Path(PACKAGE_DIR)/f"{filename}.mona", "w") as file:
+            file.write(p)
+    except IOError:
+        print("[ERROR]: Problem opening the automa.mona file!")
+
+
+def invoke_mona(filename:str):
+    """Execute the MONA tool."""
+    command = f"mona -q -u -w {Path(PACKAGE_DIR)/f'{filename}.mona'}"
+    process = Popen(
+        args=command,
+        stdout=PIPE,
+        stderr=PIPE,
+        preexec_fn=os.setsid,
+        shell=True,
+        encoding="utf-8",
+    )
+    try:
+        output, error = process.communicate(timeout=30)
+        return str(output).strip()
+    except TimeoutExpired:
+        os.killpg(os.getpgid(process.pid), signal.SIGTERM)
+        return False
+
+def to_dfa(f, mona_dfa_out=False) -> str:
+    """Translate to deterministic finite-state automaton."""
+    filename = shared.mona_file_name
+    p = MonaProgram(f)
+    mona_p_string = p.mona_program()
+    createMonafile(mona_p_string,filename)
+    mona_dfa = invoke_mona(filename)
+    if mona_dfa_out:
+        return mona_dfa
+    else:
+        assert mona_dfa_out is False
+        return ltlf2dfa.output2dot(mona_dfa)
+
+ltlf2dfa.ltlf2dfa.createMonafile = createMonafile
+ltlf2dfa.ltlf2dfa.invoke_mona = invoke_mona
+ltlf2dfa.ltlf2dfa.to_dfa = to_dfa
 
 
 class AggregationMethod(Enum):
@@ -82,7 +132,7 @@ class ProbDeclarePredictor:
                             
                             print(formula)
 
-        print("Activity Encodings: " + str(self.activityToEncoding))
+        print("Activity encodings: " + str(self.activityToEncoding))
 
         print()
         print("======")
@@ -97,7 +147,6 @@ class ProbDeclarePredictor:
         #acPairs = list(itertools.combinations(self.activityToEncoding.values(),2)) #Creates all possible activity pairs
         #simpleTraceFormula = simpleTraceFormula + "(!(" + ")) && (!( ".join([" && ".join([ac for ac in acPair]) for acPair in acPairs]) + "))))" #At most one proposition must always be true
         #print("Simple trace semantics formula (silently added to all scenarios): " + simpleTraceFormula)
-
         #Formula for enforcing simple trace semantics (allowing all propositions to be false, should allow processing activities that are not present in the decl model by simply setting all propositions to false)
         if len(self.activityToEncoding) > 1: #Simple trace semantics must be enforced if the declare model has more than one activiy
             acPairs = list(itertools.combinations(self.activityToEncoding.values(),2))
@@ -107,7 +156,7 @@ class ProbDeclarePredictor:
 
         #Used for creating the constraint scenarios, 1 - positive constraint, 0 - negated constraint
         self.scenarios = list(itertools.product([1, 0], repeat=len(self.constraintFormulas))) #Scenario with all positive constraints is first, and scenario with all negated constraints is last
-
+        start_time = time.time()
         #Creating automata for (and checking logical consistency of) each scenario
         for  scenario in self.scenarios:
             formulaComponents = []
@@ -141,7 +190,6 @@ class ProbDeclarePredictor:
                 self.inconsistentScenarios.append(scenario) #Name is used in the system of inequalities
             else:
                 print("Satisfiable: True")
-                scenarioDfa = scenarioDfa.minimize() #Calling minimize seems to be redundant with the ltlf2dfa backend, but keeping the call just in case
                 self.scenarioToDfa[scenario] = scenarioDfa #Used for processing the prefix and predicted events
                 #print(str(scenarioDfa.to_graphviz()))
 
@@ -162,7 +210,58 @@ class ProbDeclarePredictor:
         #for i in range(len(rhs_eq_values)):
         #    print(str(lhs_eq_coeficents[i]) + " = " + str(rhs_eq_values[i]))
 
-        bounds = [] #Tuples of upper and lower bounds for the value of each variable in the system of (in)equalities, where variables represent the probabilities of scenarios
+
+        #Setting the upper and lower bounds for the variables in the system of (in)equalities, where variables represent the probabilities of scenarios
+        bounds = []
+        for i, scenario in enumerate(self.scenarios):
+            if scenario in self.inconsistentScenarios:
+                bounds.append((0,0)) #Probability of an inconsistent scenario must be 0
+            else:
+                bounds.append((0,1)) #Probability of a consistent scenario must be between 0 and 1
+
+
+        #Finding the max possible probability for each consistent scenario
+        for i, scenario in enumerate(self.scenarios):
+            if scenario not in self.inconsistentScenarios:
+                c = [[0] * len(self.scenarios)]
+                maxProb = 0
+                minProb = 0
+                c[0][i] = -1 #For finding the max probability of the scenario at index i
+                c[0][i] = 1 #For finding the min probability of the scenario at index i
+
+                #Solving the system of (in)equalities for max probability of the scenario at index i
+                c[0][i] = -1 #For finding the max probability of the scenario at index i
+                res = linprog(c, A_eq=lhs_eq_coeficents, b_eq=rhs_eq_values, bounds=bounds)
+                print(res.message)
+                if res.success:
+                    maxProb = res.x[i]
+                else:
+                    print("No event log can match input constraint probabilities") #For example, the probabilities of Existence[a] and Absence[a] must add up to 1 in every conceivable event log
+                    break
+
+                #Solving the system of (in)equalities for min probability of the scenario at index i
+                c[0][i] = 1 #For finding the min probability of the scenario at index i
+                res = linprog(c, A_eq=lhs_eq_coeficents, b_eq=rhs_eq_values, bounds=bounds)
+                print(res.message)
+                if res.success:
+                    minProb = res.x[i]
+
+                scenarioProbability = (minProb+maxProb)/2 #For using the average of the min and max probability
+                #scenarioProbability = maxProb #For using the max probability
+                self.scenarioToProbability[self.scenarios[i]] = scenarioProbability
+
+                print("    " + "Scenario " + "".join(map(str, scenario)) + " minProb: " + str(minProb))
+                print("    " + "Scenario " + "".join(map(str, scenario)) + " maxProb: " + str(maxProb))
+
+        print("Scenario scores:")
+        for scenario, probability in self.scenarioToProbability.items():
+            print("    Scenario " + "".join(map(str, scenario)) + " score: " + str(probability) + "")
+
+
+
+
+
+        """ bounds = [] #Tuples of upper and lower bounds for the value of each variable in the system of (in)equalities, where variables represent the probabilities of scenarios
         maxSatProbSum = 0
         maxSatIndex = 0
         for i, scenario in enumerate(self.scenarios):
@@ -183,6 +282,9 @@ class ProbDeclarePredictor:
         
         c = [[0] * len(self.scenarios)]
         c[0][maxSatIndex] = -1 #Leads to a solution where the scenario at maxSatIndex gets the highest possible probability
+
+        #c[0][9] = -1
+
         print()
 
         #c = [[1] * len(self.scenarios)] #Leads to consistent probability values for all scenarios without optimizing for any scenario
@@ -197,7 +299,7 @@ class ProbDeclarePredictor:
                 print("Scenario " + "".join(map(str, self.scenarios[scenarioIndex])) + " probability: " + str(scenarioProbability))
                 self.scenarioToProbability[self.scenarios[scenarioIndex]] = scenarioProbability
         else:
-            print("No event log can match input constraint probabilities") #For example, the probabilities of Existence[a] and Absence[a] must add up to 1 in every conceivable event log 
+            print("No event log can match input constraint probabilities") #For example, the probabilities of Existence[a] and Absence[a] must add up to 1 in every conceivable event log  """
 
 
         print()
@@ -205,9 +307,10 @@ class ProbDeclarePredictor:
         print("Calculation of scenario probabilities done")
         print("======")
         print()
+        print("Computation time of all scenarios", time.time() - start_time)
 
     
-    def processPrefix(self, prefix: list[str], aggregationMethod: AggregationMethod=AggregationMethod.SUM) -> dict[str|bool, np.float64]: #Processes a given prefix based on the currently loaded model
+    def processPrefix(self, prefix: list[str], aggregationMethod: AggregationMethod) -> dict[str|bool, np.float64]: #Processes a given prefix based on the currently loaded model
 
         print()
         print("======")
@@ -249,9 +352,9 @@ class ProbDeclarePredictor:
                     for scenario, scenarioDfa in self.scenarioToDfa.items():
                         successor = list(scenarioDfa.get_successors(scenarioToPrefixEndState[scenario], {activityEncoding: True}))[0] #This is a DFA so there is only one successor
                         if not(autUtils.get_state_truth_value(self.scenarioToDfa[scenario], successor, self.activityToEncoding.values()) is TruthValue.PERM_VIOL):
-                            tmpProbabilities.append(self.scenarioToProbability[scenario])
+                            if self.scenarioToProbability[scenario]> 0.0: tmpProbabilities.append(self.scenarioToProbability[scenario])
                             print("    " + "".join(map(str, scenario)) + " (probability: " + str(self.scenarioToProbability[scenario]) + ")")
-                    nextEventScores[activity] = get_aggregate_score(tmpProbabilities, aggregationMethod)#Aggregate score for the activity according to the selected aggregationMethod
+                    nextEventScores[activity] = get_aggregate_score(tmpProbabilities, aggregationMethod) #Aggregate score for the activity according to the selected aggregationMethod
                 
                 #Recommendation for any activities not present in the declare model
                 tmpProbabilities = []
@@ -259,9 +362,9 @@ class ProbDeclarePredictor:
                 for scenario, scenarioDfa in self.scenarioToDfa.items():
                     successor = list(scenarioDfa.get_successors(scenarioToPrefixEndState[scenario], {}))[0] #This is a DFA so there is only one successor
                     if not(autUtils.get_state_truth_value(self.scenarioToDfa[scenario], successor, self.activityToEncoding.values()) is TruthValue.PERM_VIOL):
-                        tmpProbabilities.append(self.scenarioToProbability[scenario])
+                        if self.scenarioToProbability[scenario] > 0.0: tmpProbabilities.append(self.scenarioToProbability[scenario])
                         print("    " + "".join(map(str, scenario)) + " (probability: " + str(self.scenarioToProbability[scenario]) + ")")
-                nextEventScores[activity] = get_aggregate_score(tmpProbabilities, aggregationMethod)#Aggregate score for the activity according to the selected aggregationMethod
+                nextEventScores[True] = get_aggregate_score(tmpProbabilities, aggregationMethod)#Aggregate score for the activity according to the selected aggregationMethod
 
 
                 break
@@ -275,13 +378,15 @@ class ProbDeclarePredictor:
     
 @staticmethod
 def get_aggregate_score(tmpProbabilities: list[np.float64], aggregationMethod: AggregationMethod) -> np.float64:
-    if aggregationMethod is AggregationMethod.SUM: #The score of an event is the sum of the probabilities of scenbarios which are still possible after executing that event
-        return np.sum(tmpProbabilities)
-    elif aggregationMethod is AggregationMethod.MAX: #The score of an event is the probability of the most likely scenbario which is still possible after executing that event
-        return np.max(tmpProbabilities)
+    if not tmpProbabilities: return 0.0
     elif aggregationMethod is AggregationMethod.AVG: #The score of an event is the average of the probabilities of scenbarios which are still possible after executing that event
         return np.average(tmpProbabilities)
+    elif aggregationMethod is AggregationMethod.MAX: #The score of an event is the probability of the most likely scenbario which is still possible after executing that event
+        return np.max(tmpProbabilities)
+    elif aggregationMethod is AggregationMethod.SUM: #The score of an event is the sum of the probabilities of scenbarios which are still possible after executing that event
+        return np.sum(tmpProbabilities)
     elif aggregationMethod is AggregationMethod.MIN: #The score of an event is the probability of the least likely scenbario which is still possible after executing that event
         return np.min(tmpProbabilities)
     else:
         print("Unsupported score aggregation method " + str(aggregationMethod))
+        return 0.0

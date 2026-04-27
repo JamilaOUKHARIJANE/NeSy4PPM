@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Introduction & Motivation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="animations.js" defer></script>
+    <link rel="stylesheet" href="numberings.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Source Sans Pro', sans-serif;
+            color: #333;
+            background-color: #f5f5f7;
+        }
+        .slide {
+            min-width: 1280px;
+            min-height: 720px;
+            position: relative;
+            overflow: hidden;
+            background-color: #ffffff;
+            display: flex;
+            flex-direction: column;
+        }
+        .header {
+            padding: 40px 70px 20px;
+            background-color: #1a237e;
+            color: white;
+        }
+        .title {
+            font-size: 40px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        .content {
+            flex-grow: 1;
+            padding: 25px 70px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+        .left-panel {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .right-panel {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .section {
+            margin-bottom: 20px;
+        }
+        .section-title {
+            font-size: 34px;
+            font-weight: 700;
+            color: #1a237e;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .section-title i {
+            margin-right: 10px;
+            color: #3949ab;
+        }
+        .key-points {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        .key-point {
+            background-color: #f5f7fa;
+            border-radius: 8px;
+            padding: 15px;
+            display: flex;
+            align-items: flex-start;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .key-point:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+        }
+        .key-point i {
+            color: #3949ab;
+            margin-right: 10px;
+            margin-top: 3px;
+            font-size: 24px;
+        }
+        .key-point-text {
+            font-size: 24px;
+            font-weight: 500;
+        }
+        .highlight {
+            color: #3949ab;
+            font-weight: 700;
+        }
+        .challenge-title i {
+            margin-right: 10px;
+            color: #3949ab;
+        }
+        .chart-container {
+            width: 100%;
+            height: 300px;
+            margin-bottom: 20px;
+        }
+        .drift-visual {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .drift-stage {
+            text-align: center;
+            width: 30%;
+        }
+        .drift-icon {
+            font-size: 36px;
+            margin-bottom: 10px;
+            color: #1a237e;
+        }
+        .drift-label {
+            font-size: 22px;
+            font-weight: 600;
+            color: #1a237e;
+            margin-bottom: 5px;
+        }
+        .drift-desc {
+            font-size: 14px;
+            color: #666;
+        }
+        .arrow {
+            display: flex;
+            align-items: center;
+            color: #3949ab;
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide" style="position: relative; width: 100%; height: 100vh;" slide="2">
+        <div class="header">
+            <h1 class="title">1. Motivation & Problem statement</h1>
+        </div>
+        <div class="content" style="display: flex; width: 100%; height: 100%;">
+            <div class="left-panel" style="flex: 2; padding: 20px;" >
+                <div>
+                    <div class="section">
+                        <h2 class="section-title">
+                            <i class="fas fa-chart-line"></i>
+                            Predictive Process Monitoring (PPM)
+                        </h2>
+                        <div class="key-points">
+                            <div class="key-point">
+                                <i class="fas fa-database"></i>
+                                <span class="key-point-text">Uses <span class="highlight">historical logs</span></span>
+                            </div>
+                            <div class="key-point">
+                                <i class="fas fa-bullseye"></i>
+                                <span class="key-point-text">Predicts <span class="highlight">outcome</span></span>
+                            </div>
+                            <div class="key-point">
+                                <i class="fas fa-clock"></i>
+                                <span class="key-point-text">Predicts <span class="highlight">time</span></span>
+                            </div>
+                            <div class="key-point">
+                                <i class="fas fa-forward"></i>
+                                <span class="key-point-text">Predicts <span class="highlight">next events</span></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section hidden" data-order="1">
+                        <h2 class="section-title" style=" margin-top: 50px; color: #f44336;">
+                            <i class="fas fa-exclamation-triangle" style=" color: #f44336;"></i>
+                            Key Challenge: Concept Drift
+                        </h2>
+                        <div class="key-points">
+                            <div class="key-point">
+                                <i class="fas fa-sync-alt"></i>
+                                <span class="key-point-text"><span class="highlight">Models degrade</span> over time</span>
+                            </div>
+                            <div class="key-point">
+                                <i class="fas fa-chart-area"></i>
+                                <span class="key-point-text"><span class="highlight">Data distribution</span> changes</span>
+                            </div>
+                            <div class="key-point">
+                                <i class="fas fa-random"></i>
+                                <span class="key-point-text"><span class="highlight">Process behavior</span> evolves</span>
+                            </div>
+                            <div class="key-point">
+                                <i class="fas fa-times-circle"></i>
+                                <span class="key-point-text"><span class="highlight">Predictions become</span> inaccurate</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="right-panel hidden" data-order="1" style="flex: 1; padding: 20px; display: flex; justify-content: start; align-items: start; margin-top: 40px;">
+                <div class="chart-container" style="width: 100%; max-width: 400px;">
+                    <canvas id="driftChart"></canvas>
+                </div>
+            </div>
+            <div class="drift-visual hidden" data-order="1" style="position: absolute;margin-bottom: 40px; bottom: 20px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 30px;">
+                    <div class="drift-stage">
+                        <i class="fas fa-chart-line drift-icon"></i>
+                        <div class="drift-label">Initial Model</div>
+                        <div class="drift-desc">High accuracy on training data</div>
+                    </div>
+
+                    <div class="arrow">
+                        <i class="fas fa-plus-circle"></i>
+                    </div>
+
+                    <div class="drift-stage">
+                        <i class="fas fa-exchange-alt drift-icon"></i>
+                        <div class="drift-label">Concept Drift</div>
+                        <div class="drift-desc">Process behavior changes</div>
+                    </div>
+
+                    <div class="arrow">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+
+                    <div class="drift-stage ">
+                        <i class="fas fa-question-circle drift-icon " style=" color: #f44336;"></i>
+                        <div class="drift-label" style="color: red">How to address PPM under concept drift</div>
+                    </div>
+                </div>
+        </div>
+    </div>
+    <div class="slide-number"> </div>
+
+    <script>
+        // Model drift visualization
+        const ctx = document.getElementById('driftChart').getContext('2d');
+        const driftChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                datasets: [
+                    {
+                        label: 'Model Accuracy',
+                        data: [0.95, 0.93, 0.90, 0.85, 0.78, 0.70, 0.65, 0.60, 0.55, 0.50, 0.48, 0.45],
+                        borderColor: '#1a237e',
+                        backgroundColor: 'rgba(26, 35, 126, 0.1)',
+                        borderWidth: 3,
+                        tension: 0.4,
+                        fill: true
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Model Performance Over Time',
+                        font: {
+                            size: 18,
+                            weight: 'bold'
+                        }
+                    },
+                    legend: {
+                        position: 'bottom'
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        min: 0.4,
+                        max: 1,
+                        title: {
+                            display: true,
+                            text: 'Accuracy'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Time'
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+
+</body>
+</html>
+
+

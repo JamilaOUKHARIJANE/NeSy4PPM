@@ -1,15 +1,18 @@
+from collections import Counter
+from statistics import median
 import pandas as pd
 import pm4py
 from pathlib import Path
-
+from pm4py.objects.conversion.log import converter as log_converter
+from pm4py.utils import get_properties
 
 class LogData:
     log: pd.DataFrame
     log_name: str
-    train_log_name: str
-    test_log_name: str
     max_len: int
+    median: int
     training_trace_ids = [str]
+    feedback_trace_ids = [str]
     evaluation_trace_ids = [str]
 
     # Gathered from encoding
@@ -21,54 +24,68 @@ class LogData:
     act_name_key: str
     res_name_key: str
     timestamp_key: str
-    timestamp_key2: str
-    timestamp_key3: str
-    timestamp_key4: str
-    label_name_key: str
-    label_pos_val: str
-    label_neg_val: str
-    compliance_th: float
-    evaluation_th: float
     evaluation_prefix_start: int
     evaluation_prefix_end: int
 
-    def __init__(self, log_path:Path,log_name=None,train_ratio=0.8, train_log=None, test_log=None, case_name_key = 'case:concept:name',act_name_key = 'concept:name'
-                 ,res_name_key = 'org:resource',timestamp_key = 'time:timestamp'):
+    def __init__(self, log_path:Path,log_name=None,train_ratio=0.8,feedback_ratio=0, train_log=None, feedback_log=None,test_log=None, case_name_key = 'case:concept:name',act_name_key = 'concept:name'
+                 ,res_name_key = 'org:resource',timestamp_key = 'time:timestamp', min_support=0.01):
         self.case_name_key = case_name_key
         self.act_name_key = act_name_key
         self.res_name_key = res_name_key
         self.timestamp_key = timestamp_key
-        self.test_log_name = test_log
-        self.train_log_name= train_log
-        self.log_name = Path(log_name).stem if log_name  else None
-        if self.log_name is not None and self.train_log_name is None and self.test_log_name is None:
+        self.log_name = Path(log_name).stem if log_name else None
+
+        # Simple Train/feedback/Test Split  (if you want feedback set use a feedback ratio different to 0)
+        if self.log_name is not None and train_log is None and test_log is None:
             self.log= self.read_log(log_path, log_name)
-            trace_ids = self.log[self.case_name_key].unique().tolist()
-            # Simple Train/Test Split based on shared variables
-            sorting_cols = [self.timestamp_key, self.act_name_key]
-            if self.res_name_key in self.log.columns:
-                sorting_cols.append(self.res_name_key)
-            self.log = self.log.sort_values(sorting_cols, ascending=True, kind='mergesort')
+            self.log = self.log.sort_values(by=[self.case_name_key, self.timestamp_key, self.act_name_key])
+            self.remove_variant_outliers(min_support)
             grouped = self.log.groupby(self.case_name_key)
             start_timestamps = grouped[self.timestamp_key].min().reset_index()
             start_timestamps = start_timestamps.sort_values(self.timestamp_key, ascending=True, kind='mergesort')
-            train_ids = list(start_timestamps[self.case_name_key])[:int(train_ratio * len(start_timestamps))]
-            test_ids = [trace for trace in trace_ids if trace not in train_ids]
-            # Outputs
-            self.training_trace_ids = train_ids
-            self.evaluation_trace_ids = test_ids
-        elif self.train_log_name is not None and self.test_log_name is not None:
-            train_log = self.read_log(log_path, self.train_log_name)
-            test_log = self.read_log(log_path, self.test_log_name)
-            self.log_name = Path(self.train_log_name).stem
-            self.log = pd.concat([train_log, test_log], axis=0, ignore_index=True)
-            self.training_trace_ids = train_log[self.case_name_key].unique().tolist()
-            self.evaluation_trace_ids = test_log[self.case_name_key].unique().tolist()
+            case_ids = start_timestamps[self.case_name_key].tolist()
+            self.training_trace_ids = case_ids[:int(train_ratio * len(case_ids))]
+            self.feedback_trace_ids = case_ids[int(train_ratio * len(case_ids)):int((train_ratio+feedback_ratio) * len(case_ids))]
+            self.evaluation_trace_ids = case_ids[int((train_ratio+feedback_ratio) * len(case_ids)):]
+        # Read Train, feedback and Test sets (feedback is optional) from .csv or .xes or .xes.gz file or a Dataframe
+        elif train_log is not None and test_log is not None:
+            if not isinstance(train_log, pd.DataFrame): train_log = self.read_log(log_path, train_log)
+            if feedback_log is not None and not isinstance(feedback_log, pd.DataFrame):
+                feedback_log = self.read_log(log_path, feedback_log)
+                feedback_log[self.case_name_key] = feedback_log[self.case_name_key].astype(str).apply(lambda x: x if x.endswith('_feedback') else x + '_feedback')
+            if not isinstance(test_log, pd.DataFrame): test_log = self.read_log(log_path, test_log)
+            test_log[self.case_name_key] = test_log[self.case_name_key].astype(str).apply(lambda x: x if x.endswith('_test') else x + '_test')
+            logs_to_concat = [train_log, test_log] if feedback_log is None else [train_log, feedback_log, test_log]
+            self.log = pd.concat(logs_to_concat, axis=0, ignore_index=True)
+            cases_ids= self.log[self.case_name_key].tolist()
+            self.training_trace_ids = train_log[train_log[self.case_name_key].isin(cases_ids)][self.case_name_key].unique().tolist()
+            self.feedback_trace_ids = feedback_log[feedback_log[self.case_name_key].isin(cases_ids)][self.case_name_key].unique().tolist() if feedback_log is not None else []
+            self.evaluation_trace_ids = test_log[test_log[self.case_name_key].isin(cases_ids)][self.case_name_key].unique().tolist()
         else:
-            raise ValueError("An event log or a train_log with a test_log are required")
+            raise ValueError("An event log or a train_log with a test_log is required")
         self.encode_log(self.res_name_key in self.log.columns)
         trace_sizes = list(self.log.value_counts(subset=[self.case_name_key], sort=False))
         self.max_len = max(trace_sizes)
+        self.median = median(trace_sizes)
+
+    def remove_variant_outliers(self, min_support):
+        def get_variant_supports(event_log) -> Counter:
+            return Counter([",".join(event["concept:name"] for event in trace) for trace in event_log])
+
+        parameters = get_properties(self.log, case_id_key=self.case_name_key,
+                                    activity_key=self.act_name_key,
+                                    timestamp_key=self.timestamp_key)
+        log = log_converter.apply(self.log, variant=log_converter.Variants.TO_EVENT_LOG, parameters=parameters)
+
+        variant_supports = {variant for variant, count in get_variant_supports(log).items()}
+        keep_varaints = variant_supports.copy()
+        for v in variant_supports:
+            if (get_variant_supports(log)[v] < min_support * (len(log))):  # filter the log to keep variants that have at least more than 1% log traces
+                keep_varaints.remove(v)
+        filtered_traces = [trace for trace in log if ",".join(event["concept:name"] for event in trace) in keep_varaints]
+        case_ids = list({trace.attributes["concept:name"] for trace in filtered_traces})
+        self.log = self.log[self.log[self.case_name_key].isin(case_ids)]
+
 
     def encode_log(self, resource: bool, ascii_offset = 161):
         act_set = list(self.log[self.act_name_key].unique())
@@ -89,7 +106,7 @@ class LogData:
             log=log[cols]
             log[self.timestamp_key] = pd.to_datetime(log[self.timestamp_key])
         elif log_name.endswith('.csv'):
-            log = pd.read_csv(log_path)
+            log = pd.read_csv(log_path/ log_name)
             log.columns = log.columns.str.strip()
             cols = [self.case_name_key, self.act_name_key, self.timestamp_key]
             if self.res_name_key in log.columns:

@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beam Search Algorithm</title>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="numberings.css">
+    <script src="animations.js" defer></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Source Sans Pro', sans-serif;
+            color: #333;
+            background-color: #f5f5f7;
+        }
+        .slide {
+            min-width: 1280px;
+            min-height: 720px;
+            position: relative;
+            overflow: hidden;
+            background-color: #ffffff;
+            display: flex;
+            flex-direction: column;
+        }
+        .header {
+            padding: 40px 70px 20px;
+            background-color: #1a237e;
+            color: white;
+        }
+        .title {
+            font-size: 40px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        .content {
+            flex-grow: 1;
+            padding: 30px 70px;
+            display: flex;
+            flex-direction: column;
+        }
+        .algorithm-container {
+            display: flex;
+            gap: 30px;
+            flex-grow: 1;
+        }
+        .algorithm-visual {
+            flex: 2;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            margin-left: -4%;
+        }
+        .algorithm-image {
+            width: 90%;
+            height: 50%;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            margin-left: -10px;
+            align-items: start;
+        }
+        .algorithm-details {
+            flex: 0.8;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-right: -5%;
+            margin-left: -10%;
+            margin-top: -20px;
+        }
+        .detail-card {
+            background-color: #f5f7fa;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .detail-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .detail-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #3949ab;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+        .detail-title {
+            font-size: 22px;
+            font-weight: 600;
+            color: #1a237e;
+        }
+        .detail-content {
+            flex-grow: 1;
+        }
+        .point-text {
+            font-size: 20px;
+            line-height: 1.4;
+        }
+        .algorithm-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .algorithm-step {
+            display: flex;
+            align-items: center;
+            background-color: white;
+            padding: 12px 15px;
+            border-radius: 6px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        .step-number {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: #3949ab;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 16px;
+            font-weight: 600;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+        .step-text {
+            font-size: 22px;
+            line-height: 1.3;
+        }
+        .formula {
+            background-color: #e8eaf6;
+            border-radius: 6px;
+            padding: 15px;
+            margin-top: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 20px;
+        }
+        .highlight {
+            color: #3949ab;
+            font-weight: 600;
+        }
+        .material-icons {
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide"  style="position: relative; width: 100%; height: 100vh;" slide="14">
+        <div class="header">
+            <h1 class="title">3.2 Prediction Layer</h1>
+        </div>
+        <div class="content">
+            <div class="algorithm-container">
+                <div class="algorithm-visual">
+                    <img src="images/BS_step1.png" alt="General NeSy framework architecture" class="algorithm-image" id="img0"  >
+                    <img src="images/BS_step2.png" alt="General NeSy framework architecture" id="img1" style="display: none;" data-order="1" class="algorithm-image" >
+                    <img src="images/BS_step3.png" alt="General NeSy framework architecture" class="algorithm-image" id="img2" style="display: none;" data-order="2">
+                    <img src="images/BS_step4.png" alt="General NeSy framework architecture" class="algorithm-image" id="img3" style="display: none;" data-order="3">
+                    <img src="images/BS_5.png" alt="General NeSy framework architecture"  id="img4" style="display: none; height: 70%; width: 90%" data-order="4">
+                </div>
+
+                <div class="algorithm-details">
+                    <div class="detail-card">
+                        <div class="detail-header">
+                            <div class="detail-icon">
+                                <i class="material-icons">search</i>
+                            </div>
+                            <h2 class="detail-title">BK-contextualized prediction steps:</h2>
+                        </div>
+                        <div class="detail-content">
+                            <div class="algorithm-steps">
+                                <div class="algorithm-step">
+                                    <div class="step-number">1</div>
+                                    <div class="step-text">
+                                        <span class="highlight">ExpandBranches</span>: Extends each prefix with all possible activity-resource pairs by computing:
+                                    </div>
+                                </div>
+                                <div class="step-text hidden" data-order="1" style="margin-left: 10%">
+                                        <span style="font-weight: 600;">- $\color{blue}{\mathrm{NN}(\langle \sigma, (a, r) \rangle)}$: NN probabilities</span> of each activity-resource pairs
+                                    </div>
+                                    <div class="step-text hidden" data-order="2" style="margin-left: 10%">
+                                        <span style="font-weight: 600;">- $\color{orange}{\mathcal{C}(\langle \sigma, (a, r) \rangle,\mathcal{BK})}$: Compliance with BK</span>:
+                                        <ul style="margin-left: 50px; display: grid; grid-template-columns: repeat(2, 1fr); ">
+                                            <li><span class="highlight">Declare</span></li>
+                                            <li><span class="highlight">MP-declare</span></li>
+                                            <li><span class="highlight">Probabilistic Declare</span></li>
+                                            <li><span class="highlight"> Procedural model (petri nets, BPMN)</span></li>
+                                            <li><span class="highlight"> Fuzzy </span></li>
+                                          </ul>
+
+                                    </div>
+                                <div class="algorithm-step hidden" data-order="3">
+                                    <div class="step-number">2</div>
+                                    <div class="step-text">
+                                        <span class="highlight">Score Calculation</span>: Combines NN probabilities with BK compliance
+                                    </div>
+                                </div>
+                                <div class="algorithm-step hidden" data-order="3">
+                                    \[ score_{\langle \sigma, (a, r) \rangle} = score_{\sigma}\cdot \color{blue}{\mathrm{NN}(\langle \sigma, (a, r) \rangle)}\color{red}{^{1-w}}\cdot
+                                        \color{orange}{\mathcal{C}(\langle \sigma, (a, r) \rangle,\mathcal{BK})}\color{red}{^w} \]
+                                </div>
+                                <div class="algorithm-step hidden" data-order="4">
+                                    <div class="step-number">3</div>
+                                    <div class="step-text">
+                                        <span class="highlight">TopRank</span>: Selects highest scoring branches for next iteration
+                                    </div>
+                                </div>
+                                <div class="algorithm-step hidden" data-order="4">
+                                    <div class="step-number">4</div>
+                                    <div class="step-text">
+                                        Returns the top <span class="highlight">compliant suffix</span> that reaches termination
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slide-number">  </div>
+    </div>
+<script>
+    window.MathJax = {
+      tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</body>
+</html>
