@@ -5,36 +5,63 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="36c01caf-6b11-4e86-a29c-2907f79181fe" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/docs/source/publications.rst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/NeSy4PPM.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/NeSy4PPM.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NeSy4PPM/Data_preprocessing/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/NeSy4PPM/Data_preprocessing/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NeSy4PPM/Data_preprocessing/data_preprocessing.py" beforeDir="false" afterPath="$PROJECT_DIR$/NeSy4PPM/Data_preprocessing/data_preprocessing.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NeSy4PPM/Data_preprocessing/log_utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/NeSy4PPM/Data_preprocessing/log_utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NeSy4PPM/Data_preprocessing/shared_variables.py" beforeDir="false" afterPath="$PROJECT_DIR$/NeSy4PPM/Data_preprocessing/shared_variables.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NeSy4PPM/Data_preprocessing/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/NeSy4PPM/Data_preprocessing/utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NeSy4PPM/Evaluation.py" beforeDir="false" afterPath="$PROJECT_DIR$/NeSy4PPM/Evaluation.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NeSy4PPM/Prediction/Checkers.py" beforeDir="false" afterPath="$PROJECT_DIR$/NeSy4PPM/Prediction/Checkers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NeSy4PPM/Prediction/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/NeSy4PPM/Prediction/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NeSy4PPM/Prediction/create_event_log.py" beforeDir="false" afterPath="$PROJECT_DIR$/NeSy4PPM/Prediction/create_event_log.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NeSy4PPM/Prediction/inference_algorithm.py" beforeDir="false" afterPath="$PROJECT_DIR$/NeSy4PPM/Prediction/inference_algorithm.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NeSy4PPM/Prediction/predict_suffix.py" beforeDir="false" afterPath="$PROJECT_DIR$/NeSy4PPM/Prediction/predict_suffix.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NeSy4PPM/Prediction/prepare_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/NeSy4PPM/Prediction/prepare_data.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NeSy4PPM/ProbDeclmonitor/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/NeSy4PPM/ProbDeclmonitor/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NeSy4PPM/ProbDeclmonitor/autUtils.py" beforeDir="false" afterPath="$PROJECT_DIR$/NeSy4PPM/ProbDeclmonitor/autUtils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NeSy4PPM/ProbDeclmonitor/ltlUtils.py" beforeDir="false" afterPath="$PROJECT_DIR$/NeSy4PPM/ProbDeclmonitor/ltlUtils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NeSy4PPM/ProbDeclmonitor/probDeclPredictor.py" beforeDir="false" afterPath="$PROJECT_DIR$/NeSy4PPM/ProbDeclmonitor/probDeclPredictor.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NeSy4PPM/Training/Modulator.py" beforeDir="false" afterPath="$PROJECT_DIR$/NeSy4PPM/Training/Modulator.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NeSy4PPM/Training/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/NeSy4PPM/Training/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NeSy4PPM/Training/train_common.py" beforeDir="false" afterPath="$PROJECT_DIR$/NeSy4PPM/Training/train_common.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NeSy4PPM/Training/train_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/NeSy4PPM/Training/train_model.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NeSy4PPM/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/NeSy4PPM/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.rst" beforeDir="false" afterPath="$PROJECT_DIR$/README.rst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/nesy4ppm-0.1-py3-none-any.whl" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/nesy4ppm-0.1.tar.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/source/index.rst" beforeDir="false" afterPath="$PROJECT_DIR$/docs/source/index.rst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nesy4ppm.egg-info/PKG-INFO" beforeDir="false" afterPath="$PROJECT_DIR$/nesy4ppm.egg-info/PKG-INFO" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nesy4ppm.egg-info/SOURCES.txt" beforeDir="false" afterPath="$PROJECT_DIR$/nesy4ppm.egg-info/SOURCES.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/1-title.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/10-Indexbased_encoding.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/11-ShrinkedIndex_encoding.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/12-multi_encoders.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/13-training.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/14-predictionlayer.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/15-BS_details.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/16-predictionlayer_step3.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/17-experimentsetup.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/18-datasets.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/19-activity_prediction_results.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/2-Outline.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/20-act-res_prediction_results.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/21-Conclusions.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/3-Motivation_problem.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/4-existingapproaches.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/5-Nesy_solution.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/6-Framework.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/7-prefix_extraction.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/8-encodings.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/9-one_hot_encoding.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/animations.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/images/Act_res_SP_results.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/images/Activity_SP_results.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/images/BS_5.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/images/BS_step1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/images/BS_step2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/images/BS_step3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/images/BS_step4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/images/QR_code_nesy4ppm.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/images/UniBz-logo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/images/bpm_conf_logo.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/images/compliance.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/images/continuallearning.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/images/formula.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/images/framework step2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/images/framework_learning.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/images/framework_step3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/images/incrementallearning.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/images/indexbased.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/images/learning_step1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/images/learninglayer.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/images/multi-encoder-step1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/images/multi-encoder_step2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/images/multi-encoder_step3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/images/nesy4ppm.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/images/nesy4ppm_logo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/images/nesy_approach.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/images/nesy_approach2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/images/nesy_approach3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/images/onehot.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/images/prefixextraction.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/images/shrinkedindex.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/numberings.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/teaser.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/thanks.html" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -159,7 +186,7 @@
       <workItem from="1750843439514" duration="41828000" />
       <workItem from="1751012510068" duration="10805000" />
       <workItem from="1751108014044" duration="14278000" />
-      <workItem from="1777297328583" duration="3468000" />
+      <workItem from="1777297328583" duration="4620000" />
     </task>
     <servers />
   </component>
