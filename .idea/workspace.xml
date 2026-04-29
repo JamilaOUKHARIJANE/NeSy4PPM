@@ -6,62 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="36c01caf-6b11-4e86-a29c-2907f79181fe" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/1-title.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/10-Indexbased_encoding.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/11-ShrinkedIndex_encoding.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/12-multi_encoders.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/13-training.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/14-predictionlayer.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/15-BS_details.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/16-predictionlayer_step3.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/17-experimentsetup.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/18-datasets.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/19-activity_prediction_results.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/2-Outline.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/20-act-res_prediction_results.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/21-Conclusions.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/3-Motivation_problem.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/4-existingapproaches.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/5-Nesy_solution.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/6-Framework.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/7-prefix_extraction.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/8-encodings.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/9-one_hot_encoding.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/animations.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/images/Act_res_SP_results.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/images/Activity_SP_results.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/images/BS_5.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/images/BS_step1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/images/BS_step2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/images/BS_step3.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/images/BS_step4.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/images/QR_code_nesy4ppm.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/images/UniBz-logo.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/images/bpm_conf_logo.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/images/compliance.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/images/continuallearning.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/images/formula.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/images/framework step2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/images/framework_learning.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/images/framework_step3.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/images/incrementallearning.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/images/indexbased.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/images/learning_step1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/images/learninglayer.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/images/multi-encoder-step1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/images/multi-encoder_step2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/images/multi-encoder_step3.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/images/nesy4ppm.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/images/nesy4ppm_logo.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/images/nesy_approach.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/images/nesy_approach2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/images/nesy_approach3.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/images/onehot.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/images/prefixextraction.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/images/shrinkedindex.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/numberings.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/teaser.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation_Prody paper/thanks.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/NeSy4PPM/Data_preprocessing/log_utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/NeSy4PPM/Data_preprocessing/log_utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NeSy4PPM/Prediction/inference_algorithm_old.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/NeSy4PPM/Prediction/prepare_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/NeSy4PPM/Prediction/prepare_data.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/source/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/docs/source/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pyproject.toml" beforeDir="false" afterPath="$PROJECT_DIR$/pyproject.toml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,7 +18,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="EmbeddingIndexingInfo">
-    <option name="cachedIndexableFilesCount" value="128" />
+    <option name="cachedIndexableFilesCount" value="132" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -111,30 +60,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python.all_experiments.executor": "Run",
-    "Python.log_utils.executor": "Run",
-    "Python.results_aggregator.executor": "Run",
-    "Python.run_experiments.executor": "Run",
-    "RunOnceActivity.MCP Project settings loaded": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "codeWithMe.voiceChat.enabledByDefault": "false",
-    "git-widget-placeholder": "master",
-    "last_opened_file_path": "/Users/jamilaoukharijane/NeSy4PPM",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.all_experiments.executor&quot;: &quot;Run&quot;,
+    &quot;Python.log_utils.executor&quot;: &quot;Run&quot;,
+    &quot;Python.results_aggregator.executor&quot;: &quot;Run&quot;,
+    &quot;Python.run_experiments.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/jamilaoukharijane/NeSy4PPM&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\JOukharijane\Desktop\PostDoc\NeSy4PPM\docs\source" />
@@ -186,7 +135,12 @@
       <workItem from="1750843439514" duration="41828000" />
       <workItem from="1751012510068" duration="10805000" />
       <workItem from="1751108014044" duration="14278000" />
-      <workItem from="1777297328583" duration="4620000" />
+      <workItem from="1777297328583" duration="6014000" />
+      <workItem from="1777360394372" duration="43000" />
+      <workItem from="1777360453306" duration="355000" />
+      <workItem from="1777454071152" duration="25000" />
+      <workItem from="1777473340848" duration="137000" />
+      <workItem from="1777473574299" duration="628000" />
     </task>
     <servers />
   </component>
@@ -196,11 +150,6 @@
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/NeSy4PPM/Prediction/prepare_data.py</url>
-          <line>160</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/NeSy4PPM/Prediction/predict_suffix.py</url>
           <line>15</line>

@@ -28,7 +28,7 @@ class LogData:
     evaluation_prefix_end: int
 
     def __init__(self, log_path:Path,log_name=None,train_ratio=0.8,feedback_ratio=0, train_log=None, feedback_log=None,test_log=None, case_name_key = 'case:concept:name',act_name_key = 'concept:name'
-                 ,res_name_key = 'org:resource',timestamp_key = 'time:timestamp', min_support=0.01):
+                 ,res_name_key = 'org:resource',timestamp_key = 'time:timestamp', min_support=0.0):
         self.case_name_key = case_name_key
         self.act_name_key = act_name_key
         self.res_name_key = res_name_key

@@ -144,22 +144,20 @@ def get_beam_size(self, NodePrediction, current_child_node, bk_model, weight, pr
     act_prefix = prefix_trace.cropped_line
     prefix_trace = prefix_trace.cropped_trace if isinstance(prefix_trace, NodePrediction) else prefix_trace
     if resource:
-        prob_matrix = np.log(prediction) + np.log(res_prediction[:, np.newaxis])
+        prob_matrix = (prediction[:, np.newaxis] + res_prediction[np.newaxis, :])/2
         if bk_model and bk_model["type"] == BK_type.Declare:
-            for res_pred_idx, act_pred_idx in np.ndindex(prob_matrix.shape):
+            for act_pred_idx, res_pred_idx in np.ndindex(prob_matrix.shape):
                 temp_prediction = target_ind_to_act[act_pred_idx + 1]
                 temp_res_prediction = target_ind_to_res[res_pred_idx + 1]
-                BK_res = declare_compliance_checking(log_data, temp_prediction, temp_res_prediction, bk_model["model"],
-                                                         prefix_trace, resource)
-                prob_matrix[res_pred_idx][act_pred_idx] = (prob_matrix[res_pred_idx][act_pred_idx] * 0.5 * (1-weight)) + (BK_res * weight)
+                BK_res = declare_compliance_checking(log_data, bk_model["model"], prefix_trace, temp_prediction, temp_res_prediction, resource)
+                prob_matrix[act_pred_idx, res_pred_idx] = np.log(prob_matrix[act_pred_idx, res_pred_idx]) * (1-weight) + (BK_res * weight)
         sorted_prob_matrix = np.argsort(prob_matrix, axis=None)[::-1]
     else:
         if bk_model and bk_model["type"] == BK_type.Declare:
             BK_res = np.zeros(len(target_ind_to_act), dtype=np.float32)
             for f in range(1, len(target_ind_to_act) + 1):
                 temp_prediction = target_ind_to_act[f]
-                BK_res [f-1] = declare_compliance_checking(log_data, temp_prediction, None, bk_model["model"],
-                                                                     prefix_trace, resource)
+                BK_res [f-1] = declare_compliance_checking(log_data,bk_model["model"], prefix_trace, temp_prediction)
             score =BK_res if prediction is None else [(np.log(a) * (1-weight)) + (b * weight) for a, b in zip(prediction, BK_res)]
         elif bk_model and bk_model["type"] == BK_type.ProbDeclare:
             prefix_act = [log_data.act_enc_mapping[index] for index in act_prefix]
@@ -187,10 +185,10 @@ def get_beam_size(self, NodePrediction, current_child_node, bk_model, weight, pr
         prefix_trace = prefix_trace.cropped_trace if isinstance(prefix_trace, NodePrediction) else prefix_trace
 
         if resource:
-            res_pred_idx, act_pred_idx = np.unravel_index(sorted_prob_matrix[j], prob_matrix.shape)
+            act_pred_idx, res_pred_idx = np.unravel_index(sorted_prob_matrix[j], prob_matrix.shape)
             temp_prediction = target_ind_to_act[act_pred_idx + 1]
             temp_res_prediction = target_ind_to_res[res_pred_idx + 1]
-            probability_this = prob_matrix[res_pred_idx][act_pred_idx]
+            probability_this = prob_matrix[act_pred_idx, res_pred_idx]
         else:
             pred_idx = np.argsort(score)[len(score) - j - 1]
             temp_prediction = target_ind_to_act[pred_idx + 1]
@@ -208,7 +206,8 @@ def get_beam_size(self, NodePrediction, current_child_node, bk_model, weight, pr
         self.put(temp)
     return self
 
-def declare_compliance_checking(log_data, bk_model, prefix_trace, temp_prediction:None, temp_res_prediction:None, resource=False):
+def declare_compliance_checking(log_data, bk_model, prefix_trace, temp_prediction= "!", temp_res_prediction= "!", resource=False):
+    completed_trace = False
     if temp_prediction == "!" or (resource and temp_res_prediction == "!"):
         completed_trace = True
         temp_cropped_trace_next = prefix_trace.copy()
@@ -282,4 +281,3 @@ def fitness_checking(log_data, method_fitness, target_indices_char, cache_fitnes
         fitness = [f / sum(fitness) for f in fitness]
 
     return fitness
-
