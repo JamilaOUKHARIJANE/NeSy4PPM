@@ -19,9 +19,9 @@ def predict_evaluate(log_data: LogData, models_folder:Path, encoder: Encodings, 
     evaluation_traces = log_data.log[log_data.log[log_data.case_name_key].isin(log_data.evaluation_trace_ids)]
     if evaluation_trace_ids is not None:
         evaluation_traces = log_data.log[log_data.log[log_data.case_name_key].isin(evaluation_trace_ids)]
-    prediction_type = 'CF' + 'R' * resource
 
-    folder_path = models_folder / 'results21' / prediction_type
+    prediction_type = 'CF' + 'R' * resource
+    folder_path = models_folder / 'results' / prediction_type
     if not Path.exists(folder_path):
         Path.mkdir(folder_path, parents=True)
     print(f"{'Activity' + ' & Resource'*resource} Prediction ...")

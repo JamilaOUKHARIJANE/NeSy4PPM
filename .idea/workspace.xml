@@ -6,11 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="36c01caf-6b11-4e86-a29c-2907f79181fe" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NeSy4PPM/Data_preprocessing/log_utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/NeSy4PPM/Data_preprocessing/log_utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NeSy4PPM/Prediction/inference_algorithm_old.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/NeSy4PPM/Prediction/prepare_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/NeSy4PPM/Prediction/prepare_data.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/source/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/docs/source/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pyproject.toml" beforeDir="false" afterPath="$PROJECT_DIR$/pyproject.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NeSy4PPM/Plotting/plot_weights.py" beforeDir="false" afterPath="$PROJECT_DIR$/NeSy4PPM/Plotting/plot_weights.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NeSy4PPM/Prediction/predict_suffix.py" beforeDir="false" afterPath="$PROJECT_DIR$/NeSy4PPM/Prediction/predict_suffix.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -141,6 +138,7 @@
       <workItem from="1777454071152" duration="25000" />
       <workItem from="1777473340848" duration="137000" />
       <workItem from="1777473574299" duration="628000" />
+      <workItem from="1777477627137" duration="972000" />
     </task>
     <servers />
   </component>
