@@ -10,11 +10,11 @@ NeSy4PPM is the first Python package designed for both single-attribute (e.g., a
 
 NeSy4PPM offers the following key features:
 
-1. **Symbolic knowledge integration**: supports declarative and procedural BK, including DECLARE, MP-DECLARE (multi-perspective DECLARE), ProbDECLARE (probabilistic DECLARE), and Petri nets.
+1. **Symbolic knowledge decoding-time integration**: contextualizes neural predictions with declarative or procedural knowledge, including DECLARE, MP-DECLARE (multi-perspective DECLARE), ProbDECLARE (probabilistic DECLARE), and Petri nets.
 
 2. **Flexible learning**: provides multiple prefix encoding methods and supports LSTM (Long Short-Term Memory) and Transformer architectures.
 
-3. **Drift-aware prediction**: contextualizes neural predictions using BK in real-time, enhancing prediction accuracy and compliance in dynamic environments.
+3. **SDFA-constrained decoding**: combines neural next-event probabilities with a stochastic deterministic finite automaton (SDFA) during beam search, with optional pruning of infeasible transitions and suffixes that cannot terminate within the remaining prediction horizon.
 
 .. toctree::
    :maxdepth: 2

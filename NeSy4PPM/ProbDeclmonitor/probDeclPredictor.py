@@ -60,7 +60,7 @@ def to_dfa(f, mona_dfa_out=False) -> str:
         return mona_dfa
     else:
         assert mona_dfa_out is False
-        return ltlf2dfa.output2dot(mona_dfa)
+        return ltlf2dfa.ltlf2dfa.output2dot(mona_dfa)
 
 ltlf2dfa.ltlf2dfa.createMonafile = createMonafile
 ltlf2dfa.ltlf2dfa.invoke_mona = invoke_mona

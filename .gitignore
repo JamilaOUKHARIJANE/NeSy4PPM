@@ -1,0 +1,15 @@
+# Python-generated files
+__pycache__/
+*.py[cod]
+
+# Package build artifacts
+build/
+dist/
+*.egg-info/
+
+# Generated documentation
+docs/build/
+
+# Local editor and operating-system files
+.idea/
+.DS_Store

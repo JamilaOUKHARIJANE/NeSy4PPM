@@ -5,11 +5,11 @@ NeSy4PPM is the first Python package designed for both single-attribute (e.g., a
 
 NeSy4PPM offers the following key features:
 
-1. **Symbolic knowledge integration**: supports declarative and procedural BK, including DECLARE, MP-DECLARE (multi-perspective DECLARE), ProbDECLARE (probabilistic DECLARE), and Petri nets.
+1. **Symbolic knowledge decoding-time integration**: contextualizes neural predictions with declarative or procedural knowledge, including DECLARE, MP-DECLARE (multi-perspective DECLARE), ProbDECLARE (probabilistic DECLARE), and Petri nets.
 
 2. **Flexible learning**: provides multiple prefix encoding methods and supports LSTM (Long Short-Term Memory) and Transformer architectures.
 
-3. **Drift-aware prediction**: contextualizes neural predictions using BK in real-time, enhancing prediction accuracy and compliance in dynamic environments.
+3. **SDFA-constrained decoding**: combines neural next-event probabilities with a stochastic deterministic finite automaton (SDFA) during beam search, with optional pruning of infeasible transitions and suffixes that cannot terminate within the remaining prediction horizon.
 
 Installation
 ============
@@ -83,6 +83,7 @@ Repository Structure
 - ``NeSy4PPM/Training``: contains the implementation of Neural Networks model training.
 - ``NeSy4PPM/ProbDeclmonitor``: contains the implementation of Probabilistic Declare conformance checking.
 - ``NeSy4PPM/Prediction``: contains the implementation of suffix prediction using a contextualized Neural predictions with BK.
+- ``NeSy4PPM/StochasticDFA``: contains SDFA loading, replay, conformance, and Declare-to-SDFA conversion utilities used for constrained decoding.
 - ``Evaluation.py``: provides evaluation script for assessing the NeSy4PPM prediction performance.
 - ``docs/source/tutorials/``: contains step-by-step guides and examples to help users get started with NeSy4PPM.
 

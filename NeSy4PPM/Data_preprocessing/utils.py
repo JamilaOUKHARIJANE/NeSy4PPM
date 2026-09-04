@@ -10,13 +10,16 @@ from NeSy4PPM.ProbDeclmonitor.probDeclPredictor import ProbDeclarePredictor
 from NeSy4PPM.Data_preprocessing import shared_variables as shared
 from NeSy4PPM.Data_preprocessing.log_utils import LogData
 from pm4py.visualization.petri_net import visualizer as vis_factory
+from NeSy4PPM.StochasticDFA.SDFA import StochasticDFA
 
 class BK_type(Enum):
     Procedural = 'Procedural'
     Declare = '(MP)Declare'
     ProbDeclare = 'ProbDeclare'
-    Procedural_End = 'Procedural_At_end'
-    Declare_End = 'Declare_At_end'
+    SDFA = 'SDFA'
+    SDFA_END = 'SDFA_PostPrediction'
+    Procedural_END = 'Procedural_At_end'
+    Declare_END = 'Declare_At_end'
 
 class NN_model(Enum):
     LSTM = 'LSTM'
@@ -63,6 +66,10 @@ def load_bk(BK_file:Path):
         probDeclarePredictor = ProbDeclarePredictor()
         probDeclarePredictor.loadProbDeclModel(BK_file)
         return {"model": probDeclarePredictor,"type":BK_type.ProbDeclare}
+    elif BK_file.endswith('.sdfa'):
+        automaton = StochasticDFA.from_sdfa_file(BK_file)
+        return {"model": automaton, "type": BK_type.SDFA}
+
     else:
         raise ValueError(
             f"The BK model '{BK_file}' must be one of the following types:\n"
@@ -81,33 +88,3 @@ def discover_Petri_nets(log_data: LogData,pn_folder:Path=shared.pn_folder):
         Path.mkdir(pn_folder, parents=True)
     bk_filename = pn_folder / (log_data.log_name.value + '.pnml')
     pm4py.write_pnml(net, initial_marking, final_marking, bk_filename)
-
-def prepare_encoded_data(log_data: LogData, resource: bool):
-    """
-    Get all possible symbols for activities and resources and annotate them with integers.
-    """
-    act_name_key = log_data.act_name_key
-    act_chars = log_data.log[act_name_key].unique().tolist()
-    act_chars.sort()
-    target_act_chars = copy.copy(act_chars)
-    target_act_chars.append('!')
-
-    act_to_int = dict((c, i+1) for i, c in enumerate(act_chars))
-    target_act_to_int = dict((c, i+1) for i, c in enumerate(target_act_chars))
-    target_int_to_act = dict((i+1, c) for i, c in enumerate(target_act_chars))
-
-    if resource:
-        res_name_key = log_data.res_name_key
-        res_chars = list(log_data.log[res_name_key].unique())
-        res_chars.sort()
-        target_res_chars = copy.copy(res_chars)
-        target_res_chars.append('!')
-        res_to_int = dict((c, i+1) for i, c in enumerate(res_chars))
-        target_res_to_int = dict((c, i+1) for i, c in enumerate(target_res_chars))
-        target_int_to_res = dict((i+1, c) for i, c in enumerate(target_res_chars))
-    else:
-        res_chars = None
-        res_to_int = None
-        target_res_to_int = None
-        target_int_to_res = None
-    return act_chars, res_chars, act_to_int, target_act_to_int, target_int_to_act, res_to_int, target_res_to_int, target_int_to_res

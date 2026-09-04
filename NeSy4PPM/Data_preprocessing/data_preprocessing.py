@@ -5,7 +5,7 @@ from pathlib import Path
 import numpy as np
 
 from NeSy4PPM.Data_preprocessing.log_utils import LogData
-from NeSy4PPM.Data_preprocessing.utils import Encodings, prepare_encoded_data
+from NeSy4PPM.Data_preprocessing.utils import Encodings
 
 
 def extract_trace_prefixes(log_data: LogData, resource: bool =False):
@@ -28,7 +28,7 @@ def extract_trace_prefixes(log_data: LogData, resource: bool =False):
 
 def encode_prefixes(log_data: LogData ,prefixes, encoder:Encodings=Encodings.Index_based,resource: bool =False) -> tuple:
     chars, chars_group, act_to_int, target_act_to_int, target_int_to_act, res_to_int, target_res_to_int, target_int_to_res \
-        = prepare_encoded_data(log_data, resource)
+ = log_data.prepare_encoded_data(resource)
     # Adding '!' to identify end of trace
     training_lines = [x + '!' for x in prefixes['acts']]
 

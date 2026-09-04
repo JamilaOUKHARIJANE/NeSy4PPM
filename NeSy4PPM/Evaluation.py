@@ -1,3 +1,5 @@
+from pathlib import Path
+
 import numpy as np
 import pm4py
 from Declare4Py.D4PyEventLog import D4PyEventLog
@@ -10,22 +12,36 @@ from pm4py.objects.log.importer.xes import importer as xes_importer
 from pm4py.visualization.petri_net import visualizer as petrinet_factory
 from pm4py.objects.conversion.log import converter as log_converter
 from NeSy4PPM.Data_preprocessing.log_utils import LogData
-from NeSy4PPM.Data_preprocessing.utils import NN_model, Encodings, BK_type
+from NeSy4PPM.Data_preprocessing.utils import BK_type
 from pm4py.visualization.bpmn import visualizer as bpmn_visualizer
 
-def evaluate_all(output_folder, filename, metrics, log_data:LogData=None, resource:bool=False,declare_model=None,
-                 petri_net_model=None, fitness_method=None,weight=None,prefix_len=None, traces_ids = [],results_fold = 'results'):
-    eval_algorithm = "CF" + "R"*resource
-    folder_path = output_folder / results_fold / eval_algorithm
-    file_path = os.path.join(folder_path, filename)
+from NeSy4PPM.Prediction.Checkers import TraceDeclareAnalyzer
+
+
+def evaluate_all(output_folder, filename, metrics, log_data:LogData=None, resource:bool=False,
+                 bk_model=None,fitness_method="fitness_token_based_replay",weight=None,prefix_len=None, traces_ids = [],
+                 rbc_min=None, rbc_max=None):
+    file_path = os.path.join(output_folder, filename)
     if not os.path.exists(file_path):
-        raise ValueError(f"File {file_path} does not exist")
-    df_results = pd.read_csv(file_path, delimiter=',')
+        results={}
+        results["Time"] = {"Average time": 0, "Standard deviation time": 0}
+        results["EBC"] = 0
+        results['Damerau-Levenshtien similarity'] = {"Activities": 0, "Resources":  None}
+        if 'Compliance' in metrics: results["Compliance"] = 0
+        if "Fitness" in metrics: results["Fitness"] = 0
+        if "SDFA Conformance" in metrics: results["SDFA Conformance"] = {
+                "feasibility_rate": 0.0,
+                "termination_rate": 0.0,
+            }
+        return results
+    df_results = pd.read_csv(os.path.join(output_folder, filename), delimiter=',')
     if prefix_len is not None:
         df_results = df_results[df_results['Prefix length'] == prefix_len]
     if weight is not None:
         df_results = df_results[df_results["Weight"]== weight]
     if traces_ids :
+        df_results['Case ID'] = df_results['Case ID'].astype(str).apply(
+            lambda x: x if x.endswith('_test') else x + '_test')
         df_results = df_results[df_results['Case ID'].isin(traces_ids)]
     if "Fitness" in metrics or 'Compliance' in metrics:
         df_results['act'] = np.where(df_results['Predicted Acts'].notna() & (df_results['Predicted Acts'].str.strip() != ''),
@@ -36,7 +52,7 @@ def evaluate_all(output_folder, filename, metrics, log_data:LogData=None, resour
         selected_columns = df_results[['Case ID','Prefix length','act', 'res']].copy() if resource else df_results[['Case ID','Prefix length','act']].copy()
         selected_columns['concept:name'] = selected_columns['act'].str.split('>>')
         selected_columns["time:timestamp"] = pd.to_datetime(log_data.log[log_data.timestamp_key], unit='s')
-        selected_columns['case:concept:name'] = selected_columns["Case ID"] + '_' + selected_columns['Prefix length'].astype(str)
+        selected_columns['case:concept:name'] = selected_columns["Case ID"] + '_' + selected_columns['Prefix length'].astype(str)+ '_'+ selected_columns.index.astype(str)
         if resource:
             selected_columns['org:resource'] = selected_columns['res'].str.split('>>')
             log1 = selected_columns.explode(['concept:name', 'org:resource'], ignore_index=True)
@@ -53,11 +69,32 @@ def evaluate_all(output_folder, filename, metrics, log_data:LogData=None, resour
             average_time=round(df_results['Time'].mean(),3)
             std_time =round(df_results['Time'].std(),3)
             results[metric]= {"Average time": average_time, "Standard deviation time": std_time}
+        if metric == "SDFA Conformance":
+            def split_activities(value):
+                if pd.isna(value) or str(value).strip() == "":
+                    return []
+                return [activity.strip() for activity in str(value).split(">>") if activity.strip()]
+
+            predictions = [
+                (split_activities(row["Trace Prefix Act"]), split_activities(row["Predicted Acts"]))
+                for _, row in df_results.iterrows()
+            ]
+            compliance_metrics = bk_model.compute_compliance_metrics(predictions)
+            results[metric] = {
+                key: round(value, 3)
+                for key, value in compliance_metrics.items()
+            }
+
+        if metric == 'EBC' :
+            EBC_values = pd.to_numeric(df_results["EBC"], errors="coerce").dropna()
+            if EBC_values.empty or rbc_min == rbc_max:
+                results[metric] = 0.0
+            else:
+                results[metric] = round(((EBC_values - rbc_min) / (rbc_max - rbc_min)).clip(0, 1).mean(), 3)
+
         if metric == 'Damerau-Levenshtien similarity':
-            results[metric]= {"Activities": {"average": round(df_results['Damerau-Levenshtein Acts'].mean(),3),
-                                             "standard deviation": round(df_results['Damerau-Levenshtein Acts'].std(),3)},
-                              "Resources": {"average": round(df_results['Damerau-Levenshtein Resources'].mean(),3),
-                                            "standard deviation": round(df_results['Damerau-Levenshtein Resources'].std(),3)} if resource else None}
+            results[metric]= {"Activities": round(df_results['Damerau-Levenshtein Acts'].mean(),3),
+                              "Resources": round(df_results['Damerau-Levenshtein Resources'].mean(),3) if resource else None}
         if metric == 'Jaccard similarity':
             results[metric] = {"Activities": round(df_results['Jaccard Acts'].mean(),3),
                                "Resources": round(df_results['Jaccard Resources'].mean(),3) if resource else None}
@@ -65,10 +102,10 @@ def evaluate_all(output_folder, filename, metrics, log_data:LogData=None, resour
             log1["lifecycle:transition"] = "complete"
             log1 = dataframe_utils.convert_timestamp_columns_in_df(log1)
             event_log = log_converter.apply(log1)
-            compliance = log_conformance(event_log, declare_model["model"])
+            compliance = log_conformance(event_log, bk_model)
             results[metric] = compliance
         if metric == "Fitness":
-            fintness = get_fitness(log1, petri_net_model,fitness_method)
+            fintness = get_fitness(log1, bk_model,fitness_method)
             results[metric] = fintness
     return results
 
@@ -79,8 +116,8 @@ def log_conformance(log, bk_model):
     d_log.log_length = len(d_log.log)
     d_log.timestamp_key = 'time:timestamp'
     d_log.activity_key = 'concept:name'
-    #d_log.parse_xes_log(str(log_path))
-    basic_checker = MPDeclareAnalyzer(log=d_log, declare_model=bk_model, consider_vacuity=True)
+    basic_checker = TraceDeclareAnalyzer(log=d_log, declare_model=bk_model,
+                                         consider_vacuity=False, completed=True)
     conf_check_res: MPDeclareResultsBrowser = basic_checker.run()
     state = conf_check_res.get_metric(metric="state")
     total_traces = len(state)

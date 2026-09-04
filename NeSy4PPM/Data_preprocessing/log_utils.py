@@ -1,3 +1,4 @@
+import copy
 from collections import Counter
 from statistics import median
 import pandas as pd
@@ -18,6 +19,10 @@ class LogData:
     # Gathered from encoding
     act_enc_mapping: {str, str}
     res_enc_mapping: {str, str}
+    target_int_to_act: {int, str}
+    target_int_to_res: {int, str}
+    act_to_int: {str, int}
+    res_to_int: {str, int}
 
     # Gathered from manual log analysis
     case_name_key: str
@@ -89,12 +94,25 @@ class LogData:
 
     def encode_log(self, resource: bool, ascii_offset = 161):
         act_set = list(self.log[self.act_name_key].unique())
-        self.act_enc_mapping = dict((chr(idx+ascii_offset), elem) for idx, elem in enumerate(act_set))
+        self.act_enc_mapping = dict((chr(idx + ascii_offset), elem) for idx, elem in enumerate(act_set))
         self.log.replace(to_replace={self.act_name_key: {v: k for k, v in self.act_enc_mapping.items()}}, inplace=True)
+        act_chars = self.log[self.act_name_key].unique().tolist()
+        act_chars.sort()
+        self.act_to_int = dict((c, i + 1) for i, c in enumerate(act_chars))
+        target_act_chars = copy.copy(act_chars)
+        target_act_chars.append('!')
+        self.target_int_to_act = dict((i + 1, c) for i, c in enumerate(target_act_chars))
+        self.res_to_int = None
         if resource:
             res_set = list(self.log[self.res_name_key].unique())
             self.res_enc_mapping = dict((chr(idx+ascii_offset), elem) for idx, elem in enumerate(res_set))
             self.log.replace(to_replace={self.res_name_key: {v: k for k, v in self.res_enc_mapping.items()}}, inplace=True)
+            res_chars = list(self.log[self.res_name_key].unique())
+            res_chars.sort()
+            target_res_chars = copy.copy(res_chars)
+            self.res_to_int = dict((c, i + 1) for i, c in enumerate(res_chars))
+            target_res_chars.append('!')
+            self.target_int_to_res = dict((i + 1, c) for i, c in enumerate(target_res_chars))
 
     def read_log(self, log_path, log_name):
         if log_name.endswith('.xes') or log_name.endswith('.xes.gz'):
@@ -117,6 +135,34 @@ class LogData:
         else:
             raise RuntimeError(f"Extension of {log_name} must be in ['.xes', '.xes.gz', '.csv'].")
         return log
+
+    def prepare_encoded_data(self, resource: bool):
+        """
+        Get all possible symbols for activities and resources and annotate them with integers.
+        """
+        act_chars = self.log[self.act_name_key].unique().tolist()
+        act_chars.sort()
+        target_act_chars = copy.copy(act_chars)
+        target_act_chars.append('!')
+
+        act_to_int = dict((c, i + 1) for i, c in enumerate(act_chars))
+        target_act_to_int = dict((c, i + 1) for i, c in enumerate(target_act_chars))
+        target_int_to_act = dict((i + 1, c) for i, c in enumerate(target_act_chars))
+
+        if resource:
+            res_chars = list(self.log[self.res_name_key].unique())
+            res_chars.sort()
+            target_res_chars = copy.copy(res_chars)
+            target_res_chars.append('!')
+            res_to_int = dict((c, i + 1) for i, c in enumerate(res_chars))
+            target_res_to_int = dict((c, i + 1) for i, c in enumerate(target_res_chars))
+            target_int_to_res = dict((i + 1, c) for i, c in enumerate(target_res_chars))
+        else:
+            res_chars = None
+            res_to_int = None
+            target_res_to_int = None
+            target_int_to_res = None
+        return act_chars, res_chars, act_to_int, target_act_to_int, target_int_to_act, res_to_int, target_res_to_int, target_int_to_res
 
 
 
