@@ -73,7 +73,7 @@ Usage
 You will find tutorials explaining how to utilize the different functionalities of NeSy4PPM.
 
 - All tutorials using BK (procedural, MP-Declare and Probabilistic Declare during prediction) are available in the ``docs/source/tutorials/Suffix_Prediction_tutorial.ipynb`` or on `Github. <https://github.com/JamilaOUKHARIJANE/NeSy4PPM/blob/master/docs/source/tutorials/Suffix_Prediction_tutorial.ipynb>`_
-- Tutorial about **stochastic DFA constrained decoding** is available in in the ``docs/source/tutorials/Stochastic_guided_suffix_prediction.ipynb`` or on `Github. <https://github.com/JamilaOUKHARIJANE/NeSy4PPM/blob/master/docs/source/tutorials/Stochastic_guided_suffix_prediction.ipynb>`_
+- Tutorial about **stochastic DFA constrained decoding** is available in the ``docs/source/tutorials/Stochastic_guided_suffix_prediction.ipynb`` or on `Github. <https://github.com/JamilaOUKHARIJANE/NeSy4PPM/blob/master/docs/source/tutorials/Stochastic_guided_suffix_prediction.ipynb>`_
 - You can download and run them locally in a Jupyter environment.
 - The tutorials use the
   `Helpdesk log <https://data.4tu.nl/articles/_/12675977/1>`_ as a running example, but you can easily adapt it to work with other event logs.
