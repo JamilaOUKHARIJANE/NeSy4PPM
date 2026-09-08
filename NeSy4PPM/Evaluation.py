@@ -19,14 +19,15 @@ from NeSy4PPM.Prediction.Checkers import TraceDeclareAnalyzer
 
 
 def evaluate_all(output_folder, filename, metrics, log_data:LogData=None, resource:bool=False,
-                 bk_model=None,fitness_method="fitness_token_based_replay",weight=None,prefix_len=None, traces_ids = [],
-                 rbc_min=None, rbc_max=None):
+                 sdfa_model=None, declare_model=None, petri_net_model=None,fitness_method="fitness_token_based_replay",
+                 weight=None, prefix_len=None, traces_ids = [], rbc_min=None, rbc_max=None):
     file_path = os.path.join(output_folder, filename)
     if not os.path.exists(file_path):
         results={}
-        results["Time"] = {"Average time": 0, "Standard deviation time": 0}
-        results["EBC"] = 0
-        results['Damerau-Levenshtien similarity'] = {"Activities": 0, "Resources":  None}
+        if 'Time' in metrics: results["Time"] = 0
+        if 'nEBC' in metrics:  results["nEBC"] = 0
+        if 'Damerau-Levenshtien similarity' in metrics:  results['Damerau-Levenshtien similarity'] = {"Activities": 0, "Resources":  None}
+        if 'Jaccard similarity' in metrics:  results['Jaccard similarity'] = {"Activities": 0, "Resources":  None}
         if 'Compliance' in metrics: results["Compliance"] = 0
         if "Fitness" in metrics: results["Fitness"] = 0
         if "SDFA Conformance" in metrics: results["SDFA Conformance"] = {
@@ -66,9 +67,7 @@ def evaluate_all(output_folder, filename, metrics, log_data:LogData=None, resour
     results ={}
     for metric in metrics:
         if metric == 'Time':
-            average_time=round(df_results['Time'].mean(),3)
-            std_time =round(df_results['Time'].std(),3)
-            results[metric]= {"Average time": average_time, "Standard deviation time": std_time}
+            results[metric]= round(df_results['Time'].mean(),3)
         if metric == "SDFA Conformance":
             def split_activities(value):
                 if pd.isna(value) or str(value).strip() == "":
@@ -79,13 +78,13 @@ def evaluate_all(output_folder, filename, metrics, log_data:LogData=None, resour
                 (split_activities(row["Trace Prefix Act"]), split_activities(row["Predicted Acts"]))
                 for _, row in df_results.iterrows()
             ]
-            compliance_metrics = bk_model.compute_compliance_metrics(predictions)
+            compliance_metrics = sdfa_model.compute_compliance_metrics(predictions)
             results[metric] = {
                 key: round(value, 3)
                 for key, value in compliance_metrics.items()
             }
 
-        if metric == 'EBC' :
+        if metric == 'nEBC' :
             EBC_values = pd.to_numeric(df_results["EBC"], errors="coerce").dropna()
             if EBC_values.empty or rbc_min == rbc_max:
                 results[metric] = 0.0
@@ -102,10 +101,10 @@ def evaluate_all(output_folder, filename, metrics, log_data:LogData=None, resour
             log1["lifecycle:transition"] = "complete"
             log1 = dataframe_utils.convert_timestamp_columns_in_df(log1)
             event_log = log_converter.apply(log1)
-            compliance = log_conformance(event_log, bk_model)
+            compliance = log_conformance(event_log, declare_model)
             results[metric] = compliance
         if metric == "Fitness":
-            fintness = get_fitness(log1, bk_model,fitness_method)
+            fintness = get_fitness(log1, petri_net_model,fitness_method)
             results[metric] = fintness
     return results
 

@@ -6,9 +6,10 @@ from torch import nn
 
 
 class SymbolicDFA:
-    def __init__(self, labels, folder_path):
+    def __init__(self, labels, folder_path, dataset):
         self.labels = labels
         self.folder_path = folder_path
+        self.dataset = dataset
         self.graph = nx.MultiDiGraph()
         self.initial_state = None
         self.accepting_state = None
@@ -19,13 +20,13 @@ class SymbolicDFA:
         ast = parser(formula)
         dot = ast.to_dfa()
 
-        with open(os.path.join(self.folder_path, 'symbolicDFA.dot'), 'w+') as file:
+        with open(os.path.join(self.folder_path, f'{self.dataset}_symbolicDFA.dot'), 'w+') as file:
             file.write(dot)
 
         self.build_from_file()
 
     def build_from_file(self):
-        with open(os.path.join(self.folder_path, 'symbolicDFA.dot'), 'r') as file:
+        with open(os.path.join(self.folder_path, f'{self.dataset}_symbolicDFA.dot'), 'r') as file:
             dot = file.read()
 
         #token_symbols = symbols(self.labels)
@@ -101,7 +102,7 @@ node [height = .5, width = .5];
             transitions_string += f'{src} -> {dst} [label="{label}"];\n'
         transitions_string += "}"
 
-        with open(os.path.join(self.folder_path, 'simpleDFA_final.dot'), 'w+') as file:
+        with open(os.path.join(self.folder_path, f'{self.dataset}_simpleDFA_final.dot'), 'w+') as file:
             file.write(intro + end + '\n' + start + '\n' + transitions_string)
 
 

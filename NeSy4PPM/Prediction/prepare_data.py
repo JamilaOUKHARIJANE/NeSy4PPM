@@ -136,7 +136,7 @@ def encode(crop_trace: pd.DataFrame, log_data, encoder:Encodings, maxlen: int, c
     return x
 
 def compute_score(prefix_trace, child_node, log_data, bk_model, weight, resource=False, feasibility_pruning=False,
-                  end_distance_pruning=False, ProbAgg_method=None, method_fitness=None, cache_fitness=None):
+                  termination_pruning=False, ProbAgg_method=None, method_fitness=None, cache_fitness=None):
     prediction = None
     SDFA_states = None
     # Compute NN score.
@@ -198,7 +198,7 @@ def compute_score(prefix_trace, child_node, log_data, bk_model, weight, resource
                             SDFA_prob = 0
                             next_SDFA_state = child_node.SDFA_state
 
-                    if end_distance_pruning :
+                    if termination_pruning :
                         termination_distance = sdfa_model.termination_distance(next_SDFA_state)
                         if termination_distance > R:
                             continue
@@ -223,26 +223,16 @@ def compute_score(prefix_trace, child_node, log_data, bk_model, weight, resource
 
     return score, SDFA_states
 
-class _DynamicValue:
-    def __init__(self, value_getter):
-        self._value_getter = value_getter
-
-    @property
-    def value(self):
-        return self._value_getter()
-
 def get_beam_size(self, NodePrediction, current_node, bk_model, weight, log_data, resource, beam_size, cache_fitness,
-                  method_fitness, ProbAgg_method):
+                  method_fitness, ProbAgg_method, termination_pruning=False, feasibility_pruning=False,):
     SDFA_state = current_node.SDFA_state
     prefix_trace = current_node.cropped_trace
-    end_distance_pruning = _DynamicValue(lambda:shared.end_distance_pruning).value
-    feasibility_pruning= _DynamicValue(lambda: shared.hard_pruning).value
     score, SDFA_states = compute_score(prefix_trace, current_node, log_data, bk_model, weight, resource=resource,
                                        ProbAgg_method=ProbAgg_method, method_fitness=method_fitness,feasibility_pruning=feasibility_pruning,
-                                       end_distance_pruning=end_distance_pruning,
+                                       termination_pruning=termination_pruning,
                                        cache_fitness=cache_fitness)
 
-    if feasibility_pruning or end_distance_pruning:
+    if feasibility_pruning or termination_pruning:
         valid_indices = np.flatnonzero(np.isfinite(score))
         valid_indices = valid_indices[np.argsort(score.flat[valid_indices])[::-1]]
     else:

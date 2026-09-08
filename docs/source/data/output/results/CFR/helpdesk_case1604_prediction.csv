@@ -1,0 +1,6 @@
+Case ID,Prefix length,Trace Prefix Act,Ground truth,Predicted Acts,Damerau-Levenshtein Acts,Jaccard Acts,Trace Prefix Res,Ground Truth Resources,Predicted Resources,Damerau-Levenshtein Resources,Jaccard Resources,Weight,Time,EBC
+Case 1604_test,1,Assign seriousness,Take in charge ticket>>Wait>>Resolve ticket>>Closed,Take in charge ticket>>Resolve ticket>>Closed,0.75,0.75,Value 1,Value 1>>Value 1>>Value 1>>Value 3,Value 1>>Value 1>>Value 3,0.75,1.0,0.9,2.8994991779327393,30
+Case 1604_test,2,Assign seriousness>>Take in charge ticket,Wait>>Resolve ticket>>Closed,Resolve ticket>>Closed,0.6666666666666667,0.6666666666666666,Value 1>>Value 1,Value 1>>Value 1>>Value 3,Value 1>>Value 3,0.6666666666666667,1.0,0.9,1.9104199409484863,21
+Case 1604_test,3,Assign seriousness>>Take in charge ticket>>Wait,Resolve ticket>>Closed,Resolve ticket>>Closed,1.0,1.0,Value 1>>Value 1>>Value 1,Value 1>>Value 3,Value 1>>Value 3,1.0,1.0,0.9,2.029973030090332,21
+Case 1604_test,4,Assign seriousness>>Take in charge ticket>>Wait>>Resolve ticket,Closed,Closed,1.0,1.0,Value 1>>Value 1>>Value 1>>Value 1,Value 3,Value 3,1.0,1.0,0.9,1.1384809017181396,12
+Case 1604_test,4,Assign seriousness>>Take in charge ticket>>Wait>>Resolve ticket,Closed,Closed,1.0,1.0,Value 1>>Value 1>>Value 1>>Value 1,Value 3,Value 3,1.0,1.0,0.9,1.1384809017181396,12

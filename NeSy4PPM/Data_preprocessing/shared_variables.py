@@ -9,12 +9,7 @@ aggregationMethod= None
 constraint_i = 5
 beam_size = 3
 
-############### SDFA configurations #######################
-hard_pruning=False
-end_distance_pruning=False
 #####################################
-
-BK_end = False
 root_folder = Path(__file__).resolve().parents[2] / "docs" / "source"
 data_folder = root_folder / "data"
 input_folder = data_folder / "input"

@@ -369,67 +369,60 @@ def write_sdfa(
     output_path.write_text("\n".join(output_lines) + "\n", encoding="utf-8")
 
 
-def main(datasets = ["BPI2013_In","BPIC2012"],
-         log_path = Path.cwd().parent.parent / "docs" / "source" / 'data' / 'Procedural' / 'input'/ "logs",
-         declare_path=Path.cwd().parent.parent / "docs" / "source" / 'data' / 'Procedural' / 'input'/ 'declare_models') -> int:
-    for dataset in datasets:
-        log_data = LogData(log_path=log_path, log_name=dataset, train_log=dataset + f"_train.xes",
-                           feedback_log=dataset + f"_feedback.xes",
-                           test_log=dataset + "_test.xes")
-        dfa_folder = os.path.join(log_path.parent,'DFA', dataset)
-        labels = [clean_activity_name(activity) for activity in list(log_data.act_enc_mapping.values())]
-        activities_mapping = {clean_activity_name(activity): activity for activity in list(log_data.act_enc_mapping.values())}
-        symbolic_dfa = SymbolicDFA(labels, dfa_folder)
-        if not os.path.exists(dfa_folder):
-            os.makedirs(dfa_folder)
-            declare_model = Model(declare_path, dataset)
-            symbolic_dfa.build_from_formula(declare_model.to_ltl())
-        else:
-            symbolic_dfa.build_from_file()
+def Declare2SDFA(log_data:LogData, dataset, log_path,feedback_log_path, declare_path) -> int:
+    dfa_folder = os.path.join(log_path.parent, 'SDFA',"declarative")
+    os.makedirs(dfa_folder, exist_ok=True)
+    labels = [clean_activity_name(activity) for activity in list(log_data.act_enc_mapping.values())]
+    activities_mapping = {clean_activity_name(activity): activity for activity in
+                          list(log_data.act_enc_mapping.values())}
+    symbolic_dfa = SymbolicDFA(labels, dfa_folder,dataset)
+    if not os.path.exists(os.path.join(dfa_folder, f'{dataset}_symbolicDFA.dot')):
+        declare_model = Model(declare_path, dataset)
+        symbolic_dfa.build_from_formula(declare_model.to_ltl())
+    else:
+        symbolic_dfa.build_from_file()
 
-        dot_path = (log_path.parent/'DFA'/ dataset / "simpleDFA_final.dot")
-        feedback_log_path = log_path / f"{dataset}_feedback.xes"
-        sdfa_output_path = (log_path.parent/'DFA'/ dataset / f"{dataset}.sdfa")
+    dot_path = (log_path.parent/ 'SDFA'/"declarative" / f"{dataset}_simpleDFA_final.dot")
+    sdfa_output_path = (log_path.parent/ 'SDFA'/"declarative" / f"{dataset}.sdfa")
 
-        ( lines, states,complete_transitions, accepting_states, initial_state) = read_dfa(dot_path)
-        print("Initial state:", initial_state)
-        print("Accepting states:", accepting_states)
-        print("Number states:", len(states))
-        print("Number transitions:", len(complete_transitions))
+    (lines, states, complete_transitions, accepting_states, initial_state) = read_dfa(dot_path)
+    print("Initial state:", initial_state)
+    print("Accepting states:", accepting_states)
+    print("Number states:", len(states))
+    print("Number transitions:", len(complete_transitions))
 
-        ordinary_transitions,termination_allowed_states = compute_runtime_dfa(complete_transitions, accepting_states)
-        traces, display_labels = read_log_tokens(feedback_log_path)
-        edge_counts,termination_counts, missing, invalid_termination,= replay_traces(traces, ordinary_transitions, termination_allowed_states, initial_state)
-        transition_probabilities, implicit_tau = compute_probabilities(states,ordinary_transitions,edge_counts,termination_counts,termination_allowed_states)
-        write_sdfa(sdfa_output_path,states,accepting_states,ordinary_transitions,transition_probabilities,implicit_tau,edge_counts, activities_mapping, initial_state)
+    ordinary_transitions, termination_allowed_states = compute_runtime_dfa(complete_transitions, accepting_states)
+    traces, display_labels = read_log_tokens(feedback_log_path)
+    edge_counts, termination_counts, missing, invalid_termination, = replay_traces(traces, ordinary_transitions,
+                                                                                   termination_allowed_states,
+                                                                                   initial_state)
+    transition_probabilities, implicit_tau = compute_probabilities(states, ordinary_transitions, edge_counts,
+                                                                   termination_counts, termination_allowed_states)
+    write_sdfa(sdfa_output_path, states, accepting_states, ordinary_transitions, transition_probabilities, implicit_tau,
+               edge_counts, activities_mapping, initial_state)
 
-        print(f"Wrote {sdfa_output_path}")
-        print(f"Replayed {len(traces)} traces")
-        print(f"Preserved states: {sorted(states, key=int)}")
-        print(f"Preserved activity transitions: {len(ordinary_transitions)}")
-        print( "Termination-enabled states: " f"{sorted(termination_allowed_states, key=int)}")
-        print("Implicit termination probabilities: "+ ", ".join(f"tau({state})={implicit_tau.get(state, 0.0):.12f}"
-                for state in sorted(states, key=int)))
-        print(f"Counted {sum(edge_counts.values())} observed activity transitions")
-        print(f"Counted {sum(termination_counts.values())} valid terminations")
+    print(f"Wrote {sdfa_output_path}")
+    print(f"Replayed {len(traces)} traces")
+    print(f"Preserved states: {sorted(states, key=int)}")
+    print(f"Preserved activity transitions: {len(ordinary_transitions)}")
+    print("Termination-enabled states: " f"{sorted(termination_allowed_states, key=int)}")
+    print("Implicit termination probabilities: " + ", ".join(f"tau({state})={implicit_tau.get(state, 0.0):.12f}"
+                                                             for state in sorted(states, key=int)))
+    print(f"Counted {sum(edge_counts.values())} observed activity transitions")
+    print(f"Counted {sum(termination_counts.values())} valid terminations")
 
-        if missing:
-            print(f"Stopped {sum(missing.values())} traces early because no "
-                "DFA edge matched:")
-            for (state, token), count in missing.most_common(10):
-                print(f"  state={state} token={token} count={count}")
-            if len(missing) > 10:
-                print(f"  ... {len(missing) - 10} more")
+    if missing:
+        print(f"Stopped {sum(missing.values())} traces early because no "
+              "DFA edge matched:")
+        for (state, token), count in missing.most_common(10):
+            print(f"  state={state} token={token} count={count}")
+        if len(missing) > 10:
+            print(f"  ... {len(missing) - 10} more")
 
-        if invalid_termination:
-            print(f"Found {sum(invalid_termination.values())} traces ending in "
-                "states where valid termination is not permitted:"
-            )
-            for state, count in invalid_termination.most_common(10):
-                print(f"  state={state} count={count}")
+    if invalid_termination:
+        print(f"Found {sum(invalid_termination.values())} traces ending in "
+              "states where valid termination is not permitted:"
+              )
+        for state, count in invalid_termination.most_common(10):
+            print(f"  state={state} count={count}")
 
-    return 0
-
-
-if __name__ == "__main__":
-    raise SystemExit(main())

@@ -13,7 +13,7 @@ from jellyfish import damerau_levenshtein_distance
 from NeSy4PPM.Data_preprocessing.log_utils import LogData
 from NeSy4PPM.Data_preprocessing.utils import Encodings, BK_type
 from NeSy4PPM.Prediction.prepare_data import get_beam_size, encode, get_pn_fitness, declare_compliance_checking
-from NeSy4PPM.Training.train_common import get_keras_custom_objects
+from NeSy4PPM.Training.train_common import CustomTransformer
 import absl.logging
 absl.logging.set_verbosity(absl.logging.ERROR)
 from tqdm import tqdm
@@ -21,12 +21,12 @@ from tqdm import tqdm
 
 def load_trained_model(model_file: Path):
     model_file = Path(model_file)
-    return keras.models.load_model(model_file, custom_objects=get_keras_custom_objects())
+    return keras.models.load_model(model_file, custom_objects={'CustomTransformer': CustomTransformer})
 
 def run_experiments(log_data: LogData, evaluation_traces: pd.DataFrame, encoder: Encodings, model_file: Path,
                     output_file: Path, bk_model,
                     method_fitness = None, ProbAgg_method=None, resource: bool = False, weight: float = 0.0,
-                    bk_end: bool = False, beam_size: int = 1, prefix_size:int=0):
+                    bk_end: bool = False, beam_size: int = 1, prefix_size:int=0,termination_pruning=False, feasibility_pruning=False):
     maxlen = log_data.max_len
     model = load_trained_model(model_file)
 
@@ -138,7 +138,7 @@ def run_experiments(log_data: LogData, evaluation_traces: pd.DataFrame, encoder:
             return predicted, predicted_group
         return predicted, None
 
-    def apply_trace(trace, prefix_size, log_data, predict_size, bk_model, method_fitness, resource, weight, bk_end, beam_size):
+    def apply_trace(trace, prefix_size, log_data, predict_size, bk_model, method_fitness, resource, weight, bk_end, beam_size, termination_pruning, feasibility_pruning):
 
         if len(trace) > prefix_size:
             trace_name = trace[log_data.case_name_key].iloc[0]
@@ -198,7 +198,7 @@ def run_experiments(log_data: LogData, evaluation_traces: pd.DataFrame, encoder:
                             # (Local: for each branch): Get the best `beam_size` children for the current node.
                             frontier_nodes = get_beam_size(frontier_nodes, NodePrediction, current_node,
                                                            bk_model, weight, log_data, resource, beam_size,
-                                                           cache_fitness, method_fitness, ProbAgg_method )
+                                                           cache_fitness, method_fitness, ProbAgg_method, termination_pruning, feasibility_pruning )
                     if stop_expansion:
                         break
                     # (Global: for the entire beam search): Keep only the best `beam_size` children
@@ -340,7 +340,8 @@ def run_experiments(log_data: LogData, evaluation_traces: pd.DataFrame, encoder:
                                                                                                                  resource,
                                                                                                                  weight,
                                                                                                                  bk_end,
-                                                                                                                 beam_size))
+                                                                                                                 beam_size,
+                                                                                                                 termination_pruning, feasibility_pruning))
     else:
         prefix_percentages = [0.1, 0.25, 0.5, 0.75, 0.9]
         for percentage in prefix_percentages:  # prefix_size in range(log_data.evaluation_prefix_start, log_data.evaluation_prefix_end+1):
@@ -358,4 +359,5 @@ def run_experiments(log_data: LogData, evaluation_traces: pd.DataFrame, encoder:
                                                                                                                      resource,
                                                                                                                      weight,
                                                                                                                      bk_end,
-                                                                                                                     beam_size))
+                                                                                                                     beam_size,
+                                                                                                                     termination_pruning, feasibility_pruning))

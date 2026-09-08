@@ -1,0 +1,28 @@
+activity Resolve ticket
+bind Resolve ticket: org:resource
+activity Assign seriousness
+bind Assign seriousness: org:resource
+activity Closed
+bind Closed: org:resource
+activity Take in charge ticket
+bind Take in charge ticket: org:resource
+activity Wait
+bind Wait: org:resource
+org:resource: ¡, ¢, £, ¤, §, ¨, ©, ª, «, ¬, ®, ¯, °, ², ³
+Choice[Closed, Take in charge ticket] | | |
+Choice[Closed, Wait] | | |
+Not Chain Succession[Assign seriousness, Closed] | | |
+Choice[Closed, Resolve ticket] | | |
+Choice[Assign seriousness, Wait] | | |
+Choice[Resolve ticket, Take in charge ticket] | | |
+Choice[Assign seriousness, Resolve ticket] | | |
+Choice[Assign seriousness, Closed] | | |
+Choice[Resolve ticket, Wait] | | |
+Choice[Assign seriousness, Take in charge ticket] | | |
+Chain Precedence[Resolve ticket, Closed] | | |
+Alternate Precedence[Assign seriousness, Closed] | | |
+Not Succession[Closed, Resolve ticket] | | |
+Not Succession[Resolve ticket, Assign seriousness] | | |
+Not Succession[Closed, Assign seriousness] | | |
+Succession[Assign seriousness, Resolve ticket] | | |
+Succession[Resolve ticket, Closed] | | |
